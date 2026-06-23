@@ -505,7 +505,7 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
       <button class="btn-primary full yellow" onclick="loginUser()" id="login-btn" style="margin-top:8px">Log in →</button>
 
       <p style="font-size:13px;color:var(--text-muted);text-align:center;margin-top:10px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
-        <a href="#" onclick="resetPassword();return false;" style="color:var(--text)">Forgot password?</a>
+        <a onclick="resetPassword()" style="color:var(--text);cursor:pointer">Forgot password?</a>
       </p>
       <div class="auth-divider">or</div>
       <p class="auth-link">New customer? <a onclick="showPage('unlock')">Enter your access key →</a></p>
@@ -640,20 +640,24 @@ function updateHeader(page) {
     el.innerHTML = `<button class="btn-outline" style="font-size:13px" onclick="logoutUser()">Log out</button>`;
   } else if (page === 'landing') {
     el.innerHTML = `<div style="display:flex;gap:8px;align-items:center">
-      <a href="#" onclick="showPage('login');return false;" class="btn-outline" style="font-size:13px">Log in</a>
+      <button onclick="showPage('login')" class="btn-outline" style="font-size:13px">Log in</button>
       <a href="https://claireoasis.gumroad.com/l/kcdjwp" target="_blank" class="btn-primary yellow" style="font-size:13px;padding:8px 16px">Get access — $9.99</a>
     </div>`;
   } else {
-    el.innerHTML = `<a href="#" onclick="showPage('landing');return false;" class="btn-outline" style="font-size:13px">← Home</a>`;
+    el.innerHTML = `<button onclick="showPage('landing')" class="btn-outline" style="font-size:13px">← Home</button>`;
   }
 }
 
 // On load: check if user is already logged in
 window.addEventListener('load', async () => {
   updateHeader('landing');
-  const { data: { session } } = await supabase.auth.getSession();
-  if (session) {
-    loadTool(session.user.email);
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+      loadTool(session.user.email);
+    }
+  } catch(e) {
+    console.log('Session check failed:', e);
   }
   const params = new URLSearchParams(window.location.search);
   if (params.get('page') === 'unlock') showPage('unlock');
