@@ -312,7 +312,7 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
             <div class="field-group">
               <label class="field-label">Number of travelers</label>
               <select id="d-num" onchange="buildDemoTravelers()" style="max-width:120px">
-                <option>1</option><option selected>2</option><option>3</option><option>4</option>
+                <option>1</option><option>2</option><option selected>3</option><option>4</option>
               </select>
             </div>
             <div id="demo-traveler-forms"></div>
@@ -764,19 +764,67 @@ function demoStep(n) {
 
 function buildDemoTravelers() {
   const n=parseInt(document.getElementById('d-num').value);
-  const defaults=[{name:'Mom',age:35,g:'Female'},{name:'Jake',age:8,g:'Male'},{name:'Baby Lily',age:0,g:'Female'},{name:'Dad',age:38,g:'Male'}];
+  const defaults=[
+    {name:'Baby Emma',age:0,g:'Female',role:'baby'},
+    {name:'Liam',age:3,g:'Male',role:'toddler'},
+    {name:'Sophie',age:7,g:'Female',role:'child'},
+    {name:'Dad',age:38,g:'Male',role:'adult'},
+  ];
   const c=document.getElementById('demo-traveler-forms');
   c.innerHTML='';
   for(let i=0;i<n;i++){
-    const d=defaults[i]||{name:`Traveler ${i+1}`,age:30,g:'Female'};
+    const d=defaults[i]||{name:`Traveler ${i+1}`,age:30,g:'Female',role:'adult'};
+    const isBaby=d.role==='baby';
+    const isToddler=d.role==='toddler';
     c.innerHTML+=`<div class="traveler-card"><h4>${d.name}</h4>
       <div class="field-row">
-        <div><label class="field-label">Age</label><input type="number" id="dt-age${i}" value="${d.age}" min="0" max="100"></div>
+        <div><label class="field-label">Age</label><input type="number" id="dt-age${i}" value="${d.age}" min="0" max="100" oninput="dUpdateFollowUp(${i})"></div>
         <div><label class="field-label">Gender</label><select id="dt-g${i}"><option ${d.g==='Female'?'selected':''}>Female</option><option ${d.g==='Male'?'selected':''}>Male</option><option>Non-binary</option></select></div>
-      </div></div>`;
+      </div>
+      ${isBaby?`<div style="padding-top:10px;border-top:1px solid var(--border);margin-top:4px">
+        <label class="field-label">How is ${d.name} fed?</label>
+        <select id="dt-feeding${i}">
+          <option value="nursing">Breastfed — nursing directly</option>
+          <option value="bottle">Breastfed — pumped via bottle</option>
+          <option value="formula">Formula fed</option>
+        </select>
+      </div>`:''}
+      ${isToddler?`<div style="padding-top:10px;border-top:1px solid var(--border);margin-top:4px">
+        <label class="field-label">Is ${d.name} potty trained?</label>
+        <select id="dt-potty${i}">
+          <option value="no">Not yet — still in diapers / pull-ups</option>
+          <option value="partial">Partially — in training</option>
+          <option value="yes">Yes — fully potty trained</option>
+        </select>
+      </div>`:''}
+      <div id="dt-followup${i}"></div>
+    </div>`;
   }
 }
 buildDemoTravelers();
+
+function dUpdateFollowUp(i){
+  const age=parseInt(document.getElementById('dt-age'+i).value)||0;
+  const role=roleFromAge(age);
+  const el=document.getElementById('dt-followup'+i);
+  if(role==='baby'){
+    el.innerHTML=`<div style="padding-top:10px;border-top:1px solid var(--border);margin-top:4px">
+      <label class="field-label">How is this baby fed?</label>
+      <select id="dt-feeding${i}">
+        <option value="nursing">Breastfed — nursing directly</option>
+        <option value="bottle">Breastfed — pumped via bottle</option>
+        <option value="formula">Formula fed</option>
+      </select></div>`;
+  } else if(role==='toddler' && age>=2 && age<=3){
+    el.innerHTML=`<div style="padding-top:10px;border-top:1px solid var(--border);margin-top:4px">
+      <label class="field-label">Is this toddler potty trained?</label>
+      <select id="dt-potty${i}">
+        <option value="no">Not yet — still in diapers / pull-ups</option>
+        <option value="partial">Partially — in training</option>
+        <option value="yes">Yes — fully potty trained</option>
+      </select></div>`;
+  } else { el.innerHTML=''; }
+}
 
 function runDemo() {
   const days=parseInt(document.getElementById('d-days').value)||7;
@@ -785,24 +833,34 @@ function runDemo() {
   const packAll=document.getElementById('d-laundry').value==='no';
   const activities=[...document.querySelectorAll('#dqs0 .activity-check-grid input:checked')].map(e=>e.value);
   const n=parseInt(document.getElementById('d-num').value);
-  const tNames=['Mom','Jake','Baby Lily','Dad'];
+  const defaults=[
+    {name:'Baby Emma',age:0,g:'Female',role:'baby'},
+    {name:'Liam',age:3,g:'Male',role:'toddler'},
+    {name:'Sophie',age:7,g:'Female',role:'child'},
+    {name:'Dad',age:38,g:'Male',role:'adult'},
+  ];
 
   let html='';
-  for(let i=0;i<Math.min(n,1);i++){
+  for(let i=0;i<Math.min(n,3);i++){
     const age=parseInt(document.getElementById('dt-age'+i).value)||0;
     const role=roleFromAge(age);
     const g=document.getElementById('dt-g'+i).value;
-    const name=tNames[i];
-    const items=buildSections({role,gender:g},days,nights,climate,packAll,activities).flatMap(s=>s.items);
-    const showFull=items.slice(0,5);
-    const showBlur=items.slice(5,9);
-    html+=`<div style="margin-bottom:12px"><div class="list-cat-head">${name} <span style="font-size:11px;font-weight:400;color:var(--text-muted)">${roleLabel(role)}</span></div>`;
+    const d=defaults[i]||{name:`Traveler ${i+1}`};
+    const feedingEl=document.getElementById('dt-feeding'+i);
+    const pottyEl=document.getElementById('dt-potty'+i);
+    const feeding=feedingEl?feedingEl.value:null;
+    const potty=pottyEl?pottyEl.value:null;
+    const items=buildSections({role,gender:g,feeding,potty},days,nights,climate,packAll,activities).flatMap(s=>s.items);
+    const showFull=items.slice(0,4);
+    const showBlur=items.slice(4,7);
+    html+=`<div style="margin-bottom:16px">
+      <div class="list-cat-head">${d.name} <span style="font-size:11px;font-weight:400;color:var(--text-muted)">${roleLabel(role)}</span></div>`;
     showFull.forEach(item=>{html+=`<div class="preview-row"><div class="pcheck"></div><span class="pname">${item.name}</span><span class="pqty">× ${item.qty}</span></div>`;});
     html+=`<div class="blurred">`;
     showBlur.forEach(item=>{html+=`<div class="preview-row"><div class="pcheck"></div><span class="pname">${item.name}</span><span class="pqty">× ${item.qty}</span></div>`;});
     html+=`</div></div>`;
   }
-  if(n>1) html+=`<p style="font-size:12px;color:var(--text-muted);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:8px 0;border-top:1px solid var(--border)">+ ${n-1} more traveler list${n-1>1?'s':''} included with your purchase</p>`;
+
   document.getElementById('demo-list-output').innerHTML=html;
   document.getElementById('d-list-meta').textContent=`${n} traveler${n>1?'s':''} · ${days} days / ${nights} nights · ${climate}`;
   demoStep(2);
