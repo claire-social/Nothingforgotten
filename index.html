@@ -126,13 +126,7 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
 .feat-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .feat-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 
-.testi-section { padding: 48px 0; border-top: 1px solid var(--border); }
-.testi-section h2 { text-align: center; margin-bottom: 32px; }
-.testi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.testi-card { background: var(--bg-soft); border-radius: var(--radius-lg); padding: 20px; }
-.testi-stars { color: var(--yellow-dark); font-size: 13px; margin-bottom: 8px; }
-.testi-card blockquote { font-size: 14px; line-height: 1.65; color: var(--text); margin-bottom: 10px; font-style: italic; }
-.testi-name { font-size: 12px; color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+
 
 .faq-section { padding: 48px 0; border-top: 1px solid var(--border); }
 .faq-section h2 { text-align: center; margin-bottom: 32px; }
@@ -365,18 +359,7 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
     </div>
   </section>
 
-  <section class="testi-section">
-    <div class="container">
-      <p class="section-eyebrow">What travelers say</p>
-      <h2>Real families, real trips</h2>
-      <div class="testi-grid">
-        <div class="testi-card"><div class="testi-stars">★★★★★</div><blockquote>"I used to spend an hour making a packing list before every trip. This took me 90 seconds and thought of things I never would have."</blockquote><p class="testi-name">— Amanda R., mom of 3</p></div>
-        <div class="testi-card"><div class="testi-stars">★★★★★</div><blockquote>"The baby section alone is worth it. It even calculated how many diapers we'd need per day. We didn't forget a single thing."</blockquote><p class="testi-name">— James T., first-time dad</p></div>
-        <div class="testi-card"><div class="testi-stars">★★★★★</div><blockquote>"Finally something that understands packing for a 2-year-old is completely different from packing for a 10-year-old."</blockquote><p class="testi-name">— Priya M., 2 kids</p></div>
-        <div class="testi-card"><div class="testi-stars">★★★★★</div><blockquote>"$9.99 for something I'll use every single trip? No-brainer. I've already used it four times since buying."</blockquote><p class="testi-name">— Courtney L., frequent traveler</p></div>
-      </div>
-    </div>
-  </section>
+
 
   <section class="faq-section">
     <div class="container">
@@ -398,8 +381,8 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
       <a href="https://claireoasis.gumroad.com/l/kcdjwp" target="_blank" class="btn-primary yellow" style="font-size:16px;padding:14px 32px">Get instant access — $9.99</a>
       <p style="margin-top:12px;font-size:12px;color:var(--text-hint);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">No subscription · Unlimited trips · Works on any device</p>
       <p style="margin-top:16px;font-size:13px;color:var(--text-muted);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
-        Already purchased? <a href="#" onclick="showPage('unlock');return false;" style="color:var(--text)">Enter your access key →</a>
-        &nbsp;·&nbsp; <a href="#" onclick="showPage('login');return false;" style="color:var(--text)">Log in →</a>
+        Already purchased? <a onclick="showPage('unlock')" style="color:var(--text);cursor:pointer;text-decoration:underline">Enter your access key →</a>
+        &nbsp;·&nbsp; <a onclick="showPage('login')" style="color:var(--text);cursor:pointer;text-decoration:underline">Log in →</a>
       </p>
     </div>
   </section>
@@ -407,8 +390,8 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
   <footer class="site-footer">
     <div class="container">
       © 2025 Nothing Forgotten ·
-      <a href="#" onclick="showPage('unlock');return false;" style="color:inherit">Unlock access</a> ·
-      <a href="#" onclick="showPage('login');return false;" style="color:inherit">Log in</a>
+      <a onclick="showPage('unlock')" style="color:inherit;cursor:pointer">Unlock access</a> ·
+      <a onclick="showPage('login')" style="color:inherit;cursor:pointer">Log in</a>
     </div>
   </footer>
 </div>
@@ -887,19 +870,51 @@ function buildToolTravelers(){
       <div class="field-row">
         <div><label class="field-label">Gender</label><select id="tn-g${i}"><option>Female</option><option>Male</option><option>Non-binary / prefer not to say</option></select></div>
         <div><label class="field-label">Age group</label>
-          <select id="tn-role${i}">
+          <select id="tn-role${i}" onchange="tShowFollowUp(${i})">
             <option value="baby">Baby (under 1)</option><option value="toddler">Toddler (1–4)</option>
             <option value="child">Child (5–12)</option><option value="teen">Teen (13–17)</option>
             <option value="adult" selected>Adult (18+)</option>
           </select>
         </div>
-      </div></div>`;
+      </div>
+      <div id="tn-followup${i}" style="display:none"></div>
+    </div>`;
   }
   for(let i=0;i<n;i++) tUpdateRole(i);
 }
 buildToolTravelers();
 
-function tUpdateRole(i){const a=parseInt(document.getElementById('tn-age'+i).value)||0;document.getElementById('tn-role'+i).value=roleFromAge(a);}
+function tShowFollowUp(i){
+  const role=document.getElementById('tn-role'+i).value;
+  const age=parseInt(document.getElementById('tn-age'+i).value)||0;
+  const el=document.getElementById('tn-followup'+i);
+  if(role==='baby'){
+    el.style.display='block';
+    el.innerHTML=`<div class="field-group" style="margin-top:4px;padding-top:12px;border-top:1px solid var(--border)">
+      <label class="field-label">How is this baby fed?</label>
+      <select id="tn-feeding${i}">
+        <option value="nursing">Breastfed — nursing directly</option>
+        <option value="bottle">Breastfed — pumped via bottle</option>
+        <option value="formula">Formula fed</option>
+      </select>
+    </div>`;
+  } else if(role==='toddler' && age>=2 && age<=3){
+    el.style.display='block';
+    el.innerHTML=`<div class="field-group" style="margin-top:4px;padding-top:12px;border-top:1px solid var(--border)">
+      <label class="field-label">Is this toddler potty trained?</label>
+      <select id="tn-potty${i}">
+        <option value="no">Not yet — still in diapers / pull-ups</option>
+        <option value="partial">Partially — in training</option>
+        <option value="yes">Yes — fully potty trained</option>
+      </select>
+    </div>`;
+  } else {
+    el.style.display='none';
+    el.innerHTML='';
+  }
+}
+
+function tUpdateRole(i){const a=parseInt(document.getElementById('tn-age'+i).value)||0;document.getElementById('tn-role'+i).value=roleFromAge(a);tShowFollowUp(i);}
 
 let toolTravelers=[],toolLists={},toolExpanded={};
 
@@ -912,7 +927,17 @@ function generateToolLists(){
   const n=parseInt(document.getElementById('t-num').value);
   toolTravelers=[];
   for(let i=0;i<n;i++){
-    toolTravelers.push({name:document.getElementById('tn-name'+i).value||`Traveler ${i+1}`,age:parseInt(document.getElementById('tn-age'+i).value)||0,gender:document.getElementById('tn-g'+i).value,role:document.getElementById('tn-role'+i).value});
+    const role=document.getElementById('tn-role'+i).value;
+    const feedingEl=document.getElementById('tn-feeding'+i);
+    const pottyEl=document.getElementById('tn-potty'+i);
+    toolTravelers.push({
+      name:document.getElementById('tn-name'+i).value||`Traveler ${i+1}`,
+      age:parseInt(document.getElementById('tn-age'+i).value)||0,
+      gender:document.getElementById('tn-g'+i).value,
+      role,
+      feeding:feedingEl?feedingEl.value:null,
+      potty:pottyEl?pottyEl.value:null,
+    });
   }
   toolLists={};toolExpanded={};
   toolTravelers.forEach(t=>{toolLists[t.name]=buildSections(t,days,nights,climate,packAll,activities);});
@@ -967,7 +992,7 @@ function roleFromAge(a){if(a<1)return'baby';if(a<=4)return'toddler';if(a<=12)ret
 function roleLabel(r){return{baby:'Baby (under 1)',toddler:'Toddler (1–4)',child:'Child (5–12)',teen:'Teen (13–17)',adult:'Adult (18+)'}[r]||r;}
 
 function buildSections(t,days,nights,climate,packAll,activities){
-  const{role,gender}=t;
+  const{role,gender,feeding,potty}=t;
   const isCold=climate.includes('Cold')||climate.includes('Mixed');
   const isWarm=climate.includes('Warm')||climate.includes('Hot');
   const isFemale=gender==='Female';const isMale=gender==='Male';
@@ -976,13 +1001,77 @@ function buildSections(t,days,nights,climate,packAll,activities){
 
   if(role==='baby'){
     s.push({cat:'Clothing',items:[{name:'Onesies / bodysuits',qty:days*3},{name:'Pajamas / sleepsacks',qty:Math.ceil(nights/2)+1},{name:'Pants / leggings',qty:Math.ceil(days*1.5)},...(isCold?[{name:'Warm jacket / bunting',qty:1},{name:'Knit hat',qty:2}]:[]),{name:'Socks',qty:days*2},{name:'Shoes / booties',qty:2}]});
-    s.push({cat:'Feeding',items:[{name:'Baby bottles',qty:4},{name:'Formula / breast milk storage bags',qty:days*6},{name:'Bibs',qty:days*4},{name:'Burp cloths',qty:days*3},{name:'Bottle brush & soap',qty:1}]});
+
+    // Feeding items vary by feeding type
+    const isNursing=feeding==='nursing';
+    const isBottle=feeding==='bottle';
+    const isFormula=feeding==='formula'||!feeding;
+    let feedItems=[{name:'Bibs',qty:days*4},{name:'Burp cloths',qty:days*3}];
+    if(isNursing){
+      feedItems=[
+        {name:'Nursing cover / privacy blanket',qty:1},
+        {name:'Nursing pads (disposable)',qty:days*4},
+        {name:'Nipple cream (Lanolin)',qty:1},
+        {name:'Reusable milk storage bags',qty:10},
+        ...feedItems,
+      ];
+    } else if(isBottle){
+      feedItems=[
+        {name:'Baby bottles',qty:6},
+        {name:'Breast milk storage bags',qty:days*4},
+        {name:'Portable breast pump + charger',qty:1},
+        {name:'Cooler bag + ice packs (for milk)',qty:1},
+        {name:'Bottle brush & soap',qty:1},
+        ...feedItems,
+      ];
+    } else {
+      feedItems=[
+        {name:'Baby bottles',qty:4},
+        {name:'Formula (pre-measured containers)',qty:days*6},
+        {name:'Bottle brush & soap',qty:1},
+        {name:'Formula dispenser / organizer',qty:1},
+        ...feedItems,
+      ];
+    }
+    s.push({cat:'Feeding',items:feedItems});
+
     s.push({cat:'Diapering',items:[{name:'Diapers',qty:days*8},{name:'Baby wipes (packs)',qty:Math.ceil(days/3)+1},{name:'Diaper rash cream',qty:1},{name:'Changing pad',qty:1},{name:'Trash bags / wet bags',qty:days*2}]});
     s.push({cat:'Sleep',items:[{name:'Portable crib / travel bassinet',qty:1},{name:'Fitted sheet (travel size)',qty:2},{name:'Sound machine / white noise app',qty:1},{name:'Pacifiers',qty:3},{name:'Baby monitor',qty:1}]});
     s.push({cat:'Health & safety',items:[{name:'Baby Tylenol / fever reducer',qty:1},{name:'Nasal aspirator',qty:1},{name:'Baby sunscreen (SPF 50)',qty:1},{name:'Baby carrier / wrap',qty:1},{name:'Thermometer',qty:1}]});
   } else if(role==='toddler'){
     s.push({cat:'Clothing',items:[{name:'T-shirts / tops',qty:outfits+1},{name:'Pants / shorts',qty:outfits},{name:'Pajamas',qty:Math.ceil(nights/2)+1},{name:'Underwear / pull-ups',qty:days*2},{name:'Socks',qty:days+2},{name:'Shoes',qty:2},...(isCold?[{name:'Jacket / coat',qty:1},{name:'Gloves & hat',qty:1}]:[])]});
-    s.push({cat:'Diapering / potty',items:[{name:'Pull-ups / diapers',qty:days*5},{name:'Wipes (packs)',qty:Math.ceil(days/4)+1},{name:'Portable potty seat',qty:1},{name:'Changing pad',qty:1}]});
+
+    // Potty training affects diapering section
+    const fullyTrained=potty==='yes';
+    const inTraining=potty==='partial';
+    const notTrained=potty==='no'||!potty;
+    let pottyItems=[];
+    if(fullyTrained){
+      pottyItems=[
+        {name:'Extra underwear (accidents happen)',qty:days+4},
+        {name:'Portable travel potty seat',qty:1},
+        {name:'Wipes (packs)',qty:Math.ceil(days/4)+1},
+        {name:'Waterproof mattress pad / liner',qty:1},
+        {name:'Change of clothes (easy access)',qty:3},
+      ];
+    } else if(inTraining){
+      pottyItems=[
+        {name:'Pull-ups',qty:days*4},
+        {name:'Training underwear (backup)',qty:days+2},
+        {name:'Portable travel potty seat',qty:1},
+        {name:'Wipes (packs)',qty:Math.ceil(days/4)+1},
+        {name:'Changing pad',qty:1},
+        {name:'Change of clothes (easy access)',qty:3},
+      ];
+    } else {
+      pottyItems=[
+        {name:'Diapers / pull-ups',qty:days*5},
+        {name:'Wipes (packs)',qty:Math.ceil(days/4)+1},
+        {name:'Portable potty seat',qty:1},
+        {name:'Changing pad',qty:1},
+      ];
+    }
+    s.push({cat:'Diapering / potty',items:pottyItems});
     s.push({cat:'Food & snacks',items:[{name:'Snack pouches',qty:days*3},{name:'Favorite snacks (packs)',qty:days*2},{name:'Sippy cup / water bottle',qty:2},{name:'Bib',qty:3},{name:'Utensils set',qty:1}]});
     s.push({cat:'Sleep',items:[{name:'Travel sound machine',qty:1},{name:'Favorite stuffed animal / comfort item',qty:1},{name:'Portable travel crib (if needed)',qty:1},{name:'Nightlight (portable)',qty:1}]});
     s.push({cat:'Entertainment',items:[{name:'Tablet / kids device + charger',qty:1},{name:'Toddler headphones',qty:1},{name:'Small activity books / stickers',qty:2},{name:'Crayons & coloring pages',qty:1}]});
