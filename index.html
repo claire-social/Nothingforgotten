@@ -615,9 +615,9 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
 // =====================================================
 const SUPABASE_URL = 'https://dmgslmqcoyqqlihqjslm.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRtZ3NsbXFjb3lxcWxpaHFqc2xtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNjc5NTMsImV4cCI6MjA5Nzc0Mzk1M30.CF33F8Dkxkgzc-fIkJEbJLjrmGm8ppN5KPwdNJClZRE';
-let supabase;
+let sb;
 try {
-  supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 } catch(e) {
   console.warn('Supabase init failed:', e);
   supabase = null;
@@ -658,8 +658,8 @@ function updateHeader(page) {
 window.addEventListener('load', async () => {
   updateHeader('landing');
   try {
-    if (supabase) {
-      const { data: { session } } = await supabase.auth.getSession();
+    if (sb) {
+      const { data: { session } } = await sb.auth.getSession();
       if (session) { loadTool(session.user.email); }
     }
   } catch(e) { console.warn('Session check failed:', e); }
@@ -676,9 +676,9 @@ async function validateKey() {
   const btn = document.getElementById('key-btn');
   btn.innerHTML = '<span class="loading-spinner"></span>Checking key…';
   btn.disabled = true;
-  if (!supabase) { errEl.textContent = 'Connection error — please refresh and try again.'; errEl.style.display = 'block'; btn.innerHTML = 'Continue →'; btn.disabled = false; return; }
+  if (!sb) { errEl.textContent = 'Connection error — please refresh and try again.'; errEl.style.display = 'block'; btn.innerHTML = 'Continue →'; btn.disabled = false; return; }
   try {
-    const { data, error } = await supabase.from('access_keys').select('*').eq('key', val).eq('used', false).single();
+    const { data, error } = await sb.from('access_keys').select('*').eq('key', val).eq('used', false).single();
     if (error || !data) { errEl.textContent = 'This key has already been used or is invalid. If you think this is a mistake, reply to your receipt email.'; errEl.style.display = 'block'; btn.innerHTML = 'Continue →'; btn.disabled = false; return; }
     validatedKey = val;
     showPage('signup');
@@ -695,14 +695,14 @@ async function createAccount() {
   if (!email || !password) { errEl.textContent = 'Please fill in all fields.'; errEl.style.display = 'block'; return; }
   if (password.length < 8) { errEl.textContent = 'Password must be at least 8 characters.'; errEl.style.display = 'block'; return; }
   if (password !== confirm) { errEl.textContent = 'Passwords don\'t match.'; errEl.style.display = 'block'; return; }
-  if (!supabase) { errEl.textContent = 'Connection error — please refresh and try again.'; errEl.style.display = 'block'; return; }
+  if (!sb) { errEl.textContent = 'Connection error — please refresh and try again.'; errEl.style.display = 'block'; return; }
   const btn = document.getElementById('signup-btn');
   btn.innerHTML = '<span class="loading-spinner"></span>Creating account…';
   btn.disabled = true;
   try {
-    const { data, error } = await supabase.auth.signUp({ email, password });
+    const { data, error } = await sb.auth.signUp({ email, password });
     if (error) { errEl.textContent = error.message; errEl.style.display = 'block'; btn.innerHTML = 'Create my account →'; btn.disabled = false; return; }
-    await supabase.from('access_keys').update({ used: true, used_by: email, used_at: new Date().toISOString() }).eq('key', validatedKey);
+    await sb.from('access_keys').update({ used: true, used_by: email, used_at: new Date().toISOString() }).eq('key', validatedKey);
     loadTool(email);
   } catch(e) { errEl.textContent = 'Something went wrong — please try again.'; errEl.style.display = 'block'; btn.innerHTML = 'Create my account →'; btn.disabled = false; }
 }
@@ -715,12 +715,12 @@ async function loginUser() {
   const succEl = document.getElementById('login-success');
   errEl.style.display = 'none'; succEl.style.display = 'none';
   if (!email || !password) { errEl.textContent = 'Please enter your email and password.'; errEl.style.display = 'block'; return; }
-  if (!supabase) { errEl.textContent = 'Connection error — please refresh and try again.'; errEl.style.display = 'block'; return; }
+  if (!sb) { errEl.textContent = 'Connection error — please refresh and try again.'; errEl.style.display = 'block'; return; }
   const btn = document.getElementById('login-btn');
   btn.innerHTML = '<span class="loading-spinner"></span>Logging in…';
   btn.disabled = true;
   try {
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });
     if (error) { errEl.textContent = 'Incorrect email or password. Try again, or reset your password below.'; errEl.style.display = 'block'; btn.innerHTML = 'Log in →'; btn.disabled = false; return; }
     loadTool(email);
   } catch(e) { errEl.textContent = 'Something went wrong — please try again.'; errEl.style.display = 'block'; btn.innerHTML = 'Log in →'; btn.disabled = false; }
@@ -733,14 +733,14 @@ async function resetPassword() {
   const succEl = document.getElementById('login-success');
   if (!email) { errEl.textContent = 'Enter your email address above first.'; errEl.style.display = 'block'; return; }
   errEl.style.display = 'none';
-  if (supabase) await supabase.auth.resetPasswordForEmail(email, { redirectTo: 'https://nothingforgotten.co' });
+  if (sb) await sb.auth.resetPasswordForEmail(email, { redirectTo: 'https://nothingforgotten.co' });
   succEl.textContent = '✓ Password reset email sent — check your inbox.';
   succEl.style.display = 'block';
 }
 
 // ── AUTH: LOGOUT ──────────────────────────────
 async function logoutUser() {
-  try { if (supabase) await supabase.auth.signOut(); } catch(e) {}
+  try { if (sb) await sb.auth.signOut(); } catch(e) {}
   showPage('landing');
 }
 
