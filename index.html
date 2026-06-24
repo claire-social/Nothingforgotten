@@ -1086,95 +1086,86 @@ function buildSections(t, days, nights, climate, packAll, activities){
   const isBottle=feeding==='bottle';
   const isFormula=feeding==='formula'||(!feeding&&role==='baby');
 
+  // ── LAUNDRY CAP ──
+  // If user has laundry access (!packAll), cap all day-based quantities
+  // at a 7-day equivalent so lists don't balloon for long trips.
+  const LAUNDRY_CAP = 7;
+  const d = !packAll ? Math.min(days, LAUNDRY_CAP) : days;
+  const n = !packAll ? Math.min(nights, LAUNDRY_CAP) : nights;
+
   // Quantity helpers from spreadsheet
   const qShortSleeve = ()=>{
     if(!isWarm&&!isMixed) return 0;
-    const base=ageNum>=5?Math.ceil(days*1.25):Math.ceil(days*1.5);
+    const base=ageNum>=5?Math.ceil(d*1.25):Math.ceil(d*1.5);
     if(isMixed) return Math.ceil(base/2);
     return base;
   };
   const qLongSleeve = ()=>{
     if(isWarm) return 0;
-    const base=ageNum>=5?Math.ceil(days*1.25):Math.ceil(days*1.5);
+    const base=ageNum>=5?Math.ceil(d*1.25):Math.ceil(d*1.5);
     if(isCold) return base;
-    return Math.ceil(base/2); // mild/mixed
+    return Math.ceil(base/2);
   };
   const qSweater = ()=>{
     if(!isCold) return 0;
-    return ageNum>=5?Math.ceil(days*1.15):Math.ceil(days*1.25);
+    return ageNum>=5?Math.ceil(d*1.15):Math.ceil(d*1.25);
   };
   const qSocks = ()=>{
-    let base=isCold?days:Math.ceil(days/2);
-    if(ageNum<=4) base+=Math.ceil(days/3);
+    let base=isCold?d:Math.ceil(d/2);
+    if(ageNum<=4) base+=Math.ceil(d/3);
     return base;
   };
-  const qBathing = ()=>isBeach&&(isWarm||isHot)?Math.ceil(days/3):0;
+  const qBathing = ()=>isBeach&&(isWarm||isHot)?Math.ceil(d/3):0;
 
   let clothing=[], entertainment=[], feeding_items=[], firstaid=[], sleep=[], travelgear=[], toiletries=[], work=[];
 
   // ── CLOTHING ──
-  // Short sleeve tops
   const ss=qShortSleeve(); if(ss>0) clothing.push({name:'Short Sleeve Tops',qty:ss});
-  // Long sleeve tops
   const ls=qLongSleeve(); if(ls>0) clothing.push({name:'Long Sleeve Tops',qty:ls});
-  // Sweaters (cold only)
   const sw=qSweater(); if(sw>0) clothing.push({name:'Sweaters',qty:sw});
-  // Sweatshirts
-  if(!isWarm) clothing.push({name:'Sweatshirts',qty:days>5?2:1});
-  // Light sweater/jacket (mild/mixed only)
-  if(isMild||isMixed) clothing.push({name:'Light Sweater / Jacket',qty:days>5?2:1});
-  // Dinner outfits
-  clothing.push({name:'Dinner Outfits',qty:Math.ceil(nights/2)});
-  // Socks
+  if(!isWarm) clothing.push({name:'Sweatshirts',qty:d>5?2:1});
+  if(isMild||isMixed) clothing.push({name:'Light Sweater / Jacket',qty:d>5?2:1});
+  clothing.push({name:'Dinner Outfits',qty:Math.ceil(n/2)});
   clothing.push({name:'Socks',qty:qSocks()});
-  // Sleeping underwear (age 2+, unless not potty trained)
-  if(ageNum>=2&&(ageNum>3||fullyTrained)) clothing.push({name:'Sleeping Underwear',qty:nights});
-  // Diapers
+  if(ageNum>=2&&(ageNum>3||fullyTrained)) clothing.push({name:'Sleeping Underwear',qty:n});
+  // Diapers — always use real days (not capped) since you can't re-use diapers
   if(role==='baby') clothing.push({name:'Diapers',qty:Math.min(ageNum<1?days*10:days*6,50)});
   if((role==='toddler')&&notPottyTrained){
     const diaperQty=ageNum<=2?Math.min(days*6,50):Math.min(days*5,50);
     clothing.push({name:'Diapers / Pull-ups',qty:diaperQty});
   }
-  // Wipes (under 4)
+  // Wipes — always use real days (disposable, not re-usable)
   if(ageNum<4) clothing.push({name:'Wipes',qty:Math.ceil(days/5)});
-  // Winter items (cold only)
   if(isCold){
     clothing.push({name:'Winter Hat',qty:1});
     clothing.push({name:'Winter Gloves',qty:1});
     clothing.push({name:'Winter Coat',qty:1});
   }
-  // Ski gear (cold + ski activity, age 4+)
   if(isSki&&isCold&&ageNum>=4){
     clothing.push({name:'Ski / Snowboard Jacket',qty:1});
     clothing.push({name:'Snow Pants',qty:1});
     clothing.push({name:'Ski Helmet',qty:1});
     clothing.push({name:'Ski Goggles',qty:1});
     clothing.push({name:'Mittens / Snow Gloves',qty:1});
-    clothing.push({name:'Base Layer Top',qty:days});
-    clothing.push({name:'Base Layer Bottom',qty:days});
-    clothing.push({name:'Ski/Snowboard Boot Socks',qty:days});
+    clothing.push({name:'Base Layer Top',qty:d});
+    clothing.push({name:'Base Layer Bottom',qty:d});
+    clothing.push({name:'Ski/Snowboard Boot Socks',qty:d});
     clothing.push({name:'Ski / Snowboard Boots',qty:1});
   }
-  // Bras (female, age 12+)
-  if(isFemale&&ageNum>=12) clothing.push({name:'Regular Bra',qty:Math.ceil(days/3)});
+  if(isFemale&&ageNum>=12) clothing.push({name:'Regular Bra',qty:Math.ceil(d/3)});
   if(isFemale&&ageNum>=14) clothing.push({name:'Strapless Bra',qty:1});
-  if(isFemale&&ageNum>=14&&isGym) clothing.push({name:'Sports Bra',qty:Math.ceil(days/2)});
-  // Purse (female 14+)
+  if(isFemale&&ageNum>=14&&isGym) clothing.push({name:'Sports Bra',qty:Math.ceil(d/2)});
   if(isFemale&&ageNum>=14) clothing.push({name:'Purse',qty:1});
-  // Sandals (warm/hot/mixed)
-  if(isWarm||isMixed) clothing.push({name:'Sandals',qty:Math.ceil(days*2/3)});
-  // Athleisure (gym, age 10+)
+  if(isWarm||isMixed) clothing.push({name:'Sandals',qty:Math.ceil(d*2/3)});
   if(isGym&&ageNum>=10){
-    clothing.push({name:'Athleisure Tops',qty:Math.ceil(days/2)});
-    clothing.push({name:'Athleisure Bottoms',qty:Math.ceil(days/2)});
+    clothing.push({name:'Athleisure Tops',qty:Math.ceil(d/2)});
+    clothing.push({name:'Athleisure Bottoms',qty:Math.ceil(d/2)});
   }
-  // Swimsuit
   if(qBathing()>0) clothing.push({name:'Swimsuit',qty:qBathing()});
   if(isBeach&&isWarm) clothing.push({name:'Sun Hat',qty:1});
   if(isBeach) clothing.push({name:'Sunglasses',qty:1});
-  if(isBeach&&isWarm&&isFemale) clothing.push({name:'Swimsuit Cover-up',qty:Math.ceil(days/3)});
-  // Sleeping bra (breastfeeding moms, 25+)
-  if(isFemale&&ageNum>=25&&anyBreastfeeding()) clothing.push({name:'Sleeping Bra (nursing)',qty:Math.ceil(nights/2)});
+  if(isBeach&&isWarm&&isFemale) clothing.push({name:'Swimsuit Cover-up',qty:Math.ceil(d/3)});
+  if(isFemale&&ageNum>=25&&anyBreastfeeding()) clothing.push({name:'Sleeping Bra (nursing)',qty:Math.ceil(n/2)});
   // Baby camping chair
   if(ageNum<=2) travelgear.push({name:'Baby Camping Chair',qty:1});
 
@@ -1204,13 +1195,13 @@ function buildSections(t, days, nights, climate, packAll, activities){
   // Baby-specific feeding
   if(role==='baby'){
     feeding_items.push({name:'Baby Bottles',qty:4});
-    feeding_items.push({name:'Bibs',qty:Math.min(days*4,20)});
-    feeding_items.push({name:'Burp Cloths',qty:Math.min(days*3,15)});
+    feeding_items.push({name:'Bibs',qty:Math.min(d*4,20)});
+    feeding_items.push({name:'Burp Cloths',qty:Math.min(d*3,15)});
     feeding_items.push({name:'Portable Drying Rack',qty:1,link:'https://go.shopmy.us/p-66544192'});
     feeding_items.push({name:'Vitamin D Drops',qty:1});
     if(isNursing||isBottle){
       feeding_items.push({name:'Multi Bottle Cooler Bag',qty:1,link:'https://go.shopmy.us/p-66544416'});
-      feeding_items.push({name:'Milk Storage Bags',qty:nights*3});
+      feeding_items.push({name:'Milk Storage Bags',qty:n*3});
       feeding_items.push({name:'Ceres Chill',qty:1,link:'https://go.shopmy.us/p-66544127'});
     }
     if(isNursing){
@@ -1228,7 +1219,7 @@ function buildSections(t, days, nights, climate, packAll, activities){
       feeding_items.push({name:'Single Bottle Cooler Bag',qty:1,link:'https://go.shopmy.us/p-66544290'});
     }
     if(isFormula){
-      feeding_items.push({name:'Formula',qty:Math.ceil(days/3)});
+      feeding_items.push({name:'Formula',qty:Math.ceil(d/3)});
     }
     feeding_items.push({name:'Eating Bib',qty:1,link:'https://go.shopmy.us/p-66544244'});
   }
@@ -1244,6 +1235,7 @@ function buildSections(t, days, nights, climate, packAll, activities){
   if(ageNum>=2) firstaid.push({name:'Nail Clippers',qty:1});
   if(ageNum<2) firstaid.push({name:'Nail Filer',qty:1});
   if(ageNum<3) firstaid.push({name:'Thermometer',qty:1});
+  // Swim diapers — always use real days (disposable)
   if(isBeach&&ageNum<3&&notPottyTrained) firstaid.push({name:'Swim Diapers',qty:days*2});
   if(isBeach||(isWarm&&!isCold)) firstaid.push({name:'Sunscreen',qty:1});
   if(isBeach&&ageNum<2) firstaid.push({name:'Sunscreen Applicator',qty:1});
@@ -1291,7 +1283,7 @@ function buildSections(t, days, nights, climate, packAll, activities){
   if(ageNum>=14) toiletries.push({name:'Skincare',qty:1});
   if(ageNum>=10) toiletries.push({name:'Deodorant',qty:1});
   if(ageNum>=12) toiletries.push({name:'Razor',qty:1});
-  if(isFemale) toiletries.push({name:'Feminine Products',qty:Math.min(days*5,25)});
+  if(isFemale) toiletries.push({name:'Feminine Products',qty:Math.min(d*5,25)});
   if(ageNum>=12) toiletries.push({name:'Perfume / Cologne',qty:1});
 
   // ── WORK ──
