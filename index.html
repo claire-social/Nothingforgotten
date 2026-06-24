@@ -784,7 +784,7 @@ function switchDashTab(n, el) {
 async function loadDashProfiles() {
   if (!sb) return;
   try {
-    const { data } = await sb.from('traveler_profiles').select('*').order('name');
+    const { data } = await sb.from('traveler_profiles').select('*').eq('user_email', currentUserEmail).order('name');
     const el = document.getElementById('dash-profiles-list');
     if (!data || !data.length) { el.innerHTML = '<div class="empty-state">No saved travelers yet. Generate a list and save profiles to see them here.</div>'; return; }
     el.innerHTML = data.map(p => {
@@ -985,7 +985,7 @@ let savedProfiles = [];
 async function loadSavedProfiles() {
   if (!sb || !currentUserEmail) return;
   try {
-    const { data } = await sb.from('traveler_profiles').select('*').order('name');
+    const { data } = await sb.from('traveler_profiles').select('*').eq('user_email', currentUserEmail).order('name');
     if (data && data.length > 0) {
       savedProfiles = data;
       const wrap = document.getElementById('saved-profiles-wrap');
