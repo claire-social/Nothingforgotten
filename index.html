@@ -187,19 +187,18 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
 .pack-section-head { font-size: 14px; font-weight: 700; padding: 10px 0 6px; border-bottom: 2px solid var(--border-med); margin-bottom: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--text); }
 .pack-subsection-head { font-size: 11px; font-weight: 600; padding: 8px 0 4px; border-bottom: 1px solid var(--border); margin-bottom: 2px; color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: .05em; }
 /* 2-column grid for pack items */
-.pack-items-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
-.pack-item-cell { border-bottom: 1px solid var(--border); padding: 6px 0; font-size: 13px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-.pack-item-cell:last-child { border-bottom: none; }
+.pack-items-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.pack-item-cell { border-bottom: 1px solid var(--border); padding: 7px 4px 4px 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .pack-item-cell.full-width { grid-column: 1 / -1; }
 .pack-item-top { display: flex; align-items: center; gap: 5px; }
-.pack-item-top input[type="checkbox"] { width: 14px; height: 14px; flex-shrink: 0; }
-.pack-item-name { flex: 1; color: var(--text); font-size: 12px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pack-item-top input[type="checkbox"] { width: 13px; height: 13px; flex-shrink: 0; }
+.pack-item-name { flex: 1; color: var(--text); font-size: 12px; line-height: 1.3; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 .pack-item-link { font-size: 10px; color: var(--yellow-dark); text-decoration: none; white-space: nowrap; flex-shrink: 0; }
 .pack-item-link:hover { text-decoration: underline; }
-/* UNIFORM qty input — narrow, just enough for 2 digits */
-.pack-qty { width: 36px; height: 24px; text-align: center; font-size: 12px; border: 1px solid var(--border); border-radius: 4px; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; flex-shrink: 0; min-width: 36px; max-width: 36px; }
-.pack-item-bottom { margin-top: 2px; margin-left: 19px; }
-.expand-btn { padding: 2px 6px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); font-size: 10px; cursor: pointer; color: var(--text-muted); white-space: nowrap; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+/* UNIFORM qty — narrow box, just fits 2 digits */
+.pack-qty { width: 34px; height: 24px; text-align: center; font-size: 12px; color: var(--text); border: 1px solid var(--border-med); border-radius: 4px; padding: 0 2px; background: var(--bg); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; flex-shrink: 0; }
+.pack-item-bottom { margin-top: 3px; padding-left: 18px; }
+.expand-btn { padding: 1px 6px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); font-size: 10px; cursor: pointer; color: var(--text-muted); white-space: nowrap; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .expand-btn:hover, .expand-btn.open { border-color: var(--border-med); color: var(--text); }
 .sub-items { margin-left: 22px; padding: 4px 0; }
 .sub-item-row { display: flex; align-items: center; gap: 7px; padding: 4px 0; font-size: 13px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
