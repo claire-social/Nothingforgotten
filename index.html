@@ -8,36 +8,22 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --yellow: #F5C842;
-  --yellow-light: #FDF6D8;
-  --yellow-dark: #B8912A;
-  --text: #1a1a1a;
-  --text-muted: #666;
-  --text-hint: #999;
-  --border: rgba(0,0,0,0.1);
-  --border-med: rgba(0,0,0,0.18);
-  --bg: #ffffff;
-  --bg-soft: #fafaf8;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --success: #2d7a4f;
-  --success-bg: #e8f5ee;
-  --danger: #c0392b;
+  --yellow: #F5C842; --yellow-light: #FDF6D8; --yellow-dark: #B8912A;
+  --text: #1a1a1a; --text-muted: #666; --text-hint: #999;
+  --border: rgba(0,0,0,0.1); --border-med: rgba(0,0,0,0.18);
+  --bg: #ffffff; --bg-soft: #fafaf8;
+  --radius-sm: 6px; --radius-md: 10px; --radius-lg: 14px;
+  --success: #2d7a4f; --success-bg: #e8f5ee; --danger: #c0392b;
 }
-
 body { font-family: Georgia, 'Times New Roman', serif; color: var(--text); background: var(--bg); font-size: 16px; line-height: 1.6; }
-input, select, button, label, .ui, p.ui { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+input, select, button, label, p.ui, .ui { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .container { max-width: 680px; margin: 0 auto; padding: 0 20px; }
-.page { display: none; }
-.page.active { display: block; }
+.page { display: none; } .page.active { display: block; }
+h1 { font-size: clamp(28px,5vw,42px); font-weight: 400; line-height: 1.15; }
+h2 { font-size: clamp(20px,3.5vw,26px); font-weight: 400; line-height: 1.3; }
 
-h1 { font-size: clamp(28px, 5vw, 42px); font-weight: 400; line-height: 1.15; }
-h2 { font-size: clamp(20px, 3.5vw, 26px); font-weight: 400; line-height: 1.3; }
-h3 { font-size: 18px; font-weight: 400; }
-
+/* BUTTONS */
 .btn-primary { display: inline-block; background: var(--text); color: #fff; padding: 13px 28px; border-radius: var(--radius-md); border: none; font-size: 15px; font-weight: 500; cursor: pointer; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; text-decoration: none; transition: opacity .15s; }
 .btn-primary:hover { opacity: .85; }
 .btn-primary.full { display: block; width: 100%; text-align: center; padding: 14px; }
@@ -46,28 +32,28 @@ h3 { font-size: 18px; font-weight: 400; }
 .btn-outline { display: inline-block; background: transparent; color: var(--text); padding: 10px 20px; border-radius: var(--radius-md); border: 1px solid var(--border-med); font-size: 14px; cursor: pointer; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; transition: background .15s; }
 .btn-outline:hover { background: var(--bg-soft); }
 
+/* HEADER */
 .site-header { border-bottom: 1px solid var(--border); padding: 16px 0; position: sticky; top: 0; background: rgba(255,255,255,.97); backdrop-filter: blur(8px); z-index: 100; }
 .site-header .container { display: flex; align-items: center; justify-content: space-between; }
 .site-logo { font-size: 17px; font-weight: 400; text-decoration: none; color: var(--text); cursor: pointer; }
 .site-logo span { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--yellow); margin-right: 6px; vertical-align: middle; }
 
-/* ── LANDING ── */
+/* LANDING */
 .hero { padding: 64px 0 48px; text-align: center; border-bottom: 1px solid var(--border); }
 .hero-eyebrow { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 20px; }
-.hero h1 { margin-bottom: 16px; }
-.hero h1 em { font-style: italic; }
+.hero h1 { margin-bottom: 16px; } .hero h1 em { font-style: italic; }
 .hero-sub { font-size: 17px; color: var(--text-muted); max-width: 460px; margin: 0 auto 28px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; }
 .hero-price-row { display: flex; align-items: baseline; justify-content: center; gap: 8px; margin-bottom: 24px; }
 .hero-price { font-size: 30px; font-weight: 400; }
 .hero-price-desc { font-size: 14px; color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .hero-cta-sub { font-size: 12px; color: var(--text-hint); margin-top: 10px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-
 .proof-bar { display: flex; justify-content: center; padding: 20px 0; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
 .proof-item { text-align: center; padding: 8px 24px; border-right: 1px solid var(--border); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .proof-item:last-child { border-right: none; }
 .proof-num { font-size: 18px; font-weight: 600; display: block; }
 .proof-lbl { font-size: 11px; color: var(--text-muted); }
 
+/* DEMO */
 .demo-section { padding: 48px 0; }
 .section-eyebrow { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); text-align: center; margin-bottom: 12px; }
 .demo-section h2 { text-align: center; margin-bottom: 32px; }
@@ -76,48 +62,40 @@ h3 { font-size: 18px; font-weight: 400; }
 .b-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border-med); }
 .b-url { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 12px; color: var(--text-muted); margin-left: 8px; }
 .browser-inner { padding: 28px 24px; background: var(--bg); }
-
 .q-progress { display: flex; gap: 4px; margin-bottom: 24px; }
 .q-dot { height: 3px; flex: 1; border-radius: 2px; background: var(--border); transition: background .3s; }
 .q-dot.done { background: var(--text); }
-.q-screen { display: none; }
-.q-screen.active { display: block; }
-
+.q-screen { display: none; } .q-screen.active { display: block; }
 .field-label { display: block; font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 5px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
 .field-group { margin-bottom: 14px; }
 select, input[type="number"], input[type="text"], input[type="email"], input[type="password"] { width: 100%; height: 36px; padding: 0 10px; border: 1px solid var(--border-med); border-radius: var(--radius-sm); font-size: 13px; background: var(--bg); color: var(--text); appearance: none; -webkit-appearance: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; }
 input:focus, select:focus { outline: none; border-color: var(--text); }
-
 .activity-check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px; }
 .activity-check-grid label { display: flex; align-items: center; gap: 7px; font-size: 13px; cursor: pointer; color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .activity-check-grid input[type="checkbox"] { width: 15px; height: 15px; flex-shrink: 0; }
 .traveler-card { background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 10px; }
 .traveler-card h4 { font-size: 13px; font-weight: 600; margin-bottom: 10px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-
 .q-btn-row { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
 .q-next { padding: 8px 20px; border-radius: var(--radius-sm); border: 1.5px solid var(--text); background: var(--bg); color: var(--text); font-size: 13px; font-weight: 500; cursor: pointer; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .q-next:hover { background: var(--bg-soft); }
 .q-back { border-width: 1px; font-weight: 400; color: var(--text-muted); }
-
 .list-cat-head { font-size: 13px; font-weight: 600; padding: 6px 0; border-bottom: 1px solid var(--border); margin-bottom: 2px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .preview-row { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 13px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .preview-row:last-child { border-bottom: none; }
 .pcheck { width: 14px; height: 14px; border: 1px solid var(--border-med); border-radius: 3px; flex-shrink: 0; }
-.pname { flex: 1; }
-.pqty { font-size: 12px; color: var(--text-muted); }
+.pname { flex: 1; } .pqty { font-size: 12px; color: var(--text-muted); }
 .blurred { filter: blur(6px); pointer-events: none; user-select: none; }
-
 .paywall-card { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; text-align: center; background: var(--bg); margin-top: 16px; }
 .paywall-card h3 { margin-bottom: 8px; font-size: 18px; }
 .paywall-card p { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .paywall-price { display: flex; align-items: baseline; justify-content: center; gap: 6px; margin-bottom: 16px; }
-.paywall-price .big { font-size: 32px; }
-.paywall-price .sm { font-size: 13px; color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.paywall-price .big { font-size: 32px; } .paywall-price .sm { font-size: 13px; color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .paywall-perks { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 12px; font-size: 12px; color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .paywall-perks span { display: flex; align-items: center; gap: 4px; }
 
+/* FEATURES */
 .features-section { padding: 48px 0; border-top: 1px solid var(--border); }
 .features-section h2 { text-align: center; margin-bottom: 32px; }
 .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
@@ -126,23 +104,32 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
 .feat-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .feat-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 
+/* REVIEWS */
+.reviews-section { padding: 48px 0; border-top: 1px solid var(--border); }
+.reviews-section h2 { text-align: center; margin-bottom: 8px; }
+.reviews-sub { text-align: center; font-size: 14px; color: var(--text-muted); margin-bottom: 32px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.reviews-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.review-card { background: var(--bg-soft); border-radius: var(--radius-lg); padding: 20px; }
+.review-stars { color: var(--yellow-dark); font-size: 14px; margin-bottom: 8px; }
+.review-card blockquote { font-size: 14px; line-height: 1.65; color: var(--text); margin-bottom: 10px; font-style: italic; }
+.review-name { font-size: 12px; color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.reviews-empty { text-align: center; padding: 40px 20px; background: var(--bg-soft); border-radius: var(--radius-lg); }
+.reviews-empty p { font-size: 14px; color: var(--text-muted); margin-bottom: 16px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 
-
+/* FAQ */
 .faq-section { padding: 48px 0; border-top: 1px solid var(--border); }
 .faq-section h2 { text-align: center; margin-bottom: 32px; }
 .faq-item { border-bottom: 1px solid var(--border); }
 .faq-q { width: 100%; text-align: left; padding: 16px 0; background: none; border: none; font-size: 15px; font-weight: 500; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .faq-chevron { font-size: 18px; transition: transform .2s; }
 .faq-a { font-size: 14px; color: var(--text-muted); line-height: 1.65; padding-bottom: 16px; display: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-.faq-a.open { display: block; }
-.faq-chevron.open { transform: rotate(180deg); }
-
+.faq-a.open { display: block; } .faq-chevron.open { transform: rotate(180deg); }
 .footer-cta { padding: 64px 0; text-align: center; border-top: 1px solid var(--border); }
 .footer-cta h2 { margin-bottom: 10px; }
 .footer-cta p { font-size: 15px; color: var(--text-muted); margin-bottom: 28px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .site-footer { border-top: 1px solid var(--border); padding: 20px 0; text-align: center; font-size: 12px; color: var(--text-hint); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 
-/* ── AUTH PAGES (unlock / login / signup) ── */
+/* AUTH */
 .auth-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
 .auth-card { max-width: 420px; width: 100%; }
 .auth-icon { width: 56px; height: 56px; border-radius: 50%; background: var(--yellow-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 26px; }
@@ -166,19 +153,18 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
 .auth-step-num.done { background: var(--success); color: #fff; border-color: var(--success); }
 .auth-step-lbl { font-size: 10px; color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 
-/* ── FULL TOOL ── */
+/* TOOL */
 #page-tool { min-height: 100vh; padding-bottom: 60px; }
 .tool-wrap { padding: 32px 0; }
 .tool-progress { display: flex; gap: 4px; margin-bottom: 24px; }
 .tool-dot { height: 3px; flex: 1; border-radius: 2px; background: var(--border); transition: background .3s; }
 .tool-dot.done { background: var(--text); }
-.tool-step { display: none; }
-.tool-step.active { display: block; }
+.tool-step { display: none; } .tool-step.active { display: block; }
 .step-heading { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .person-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
 .person-tab { padding: 6px 16px; border-radius: 100px; font-size: 13px; cursor: pointer; border: 1px solid var(--border-med); background: var(--bg); color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; transition: all .15s; }
 .person-tab.active { background: var(--text); color: #fff; border-color: var(--text); }
-.person-name-row { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.person-name-row { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
 .person-name-input { font-size: 16px; font-weight: 500; height: 38px; max-width: 220px; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0 10px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .person-pill { font-size: 11px; padding: 3px 10px; border-radius: 100px; background: var(--bg-soft); border: 1px solid var(--border); color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .pack-section { margin-bottom: 20px; }
@@ -188,6 +174,8 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
 .pack-item-row:last-child { border-bottom: none; }
 .pack-item-row input[type="checkbox"] { width: 15px; height: 15px; flex-shrink: 0; }
 .pack-item-name { flex: 1; color: var(--text); }
+.pack-item-link { font-size: 11px; color: var(--yellow-dark); text-decoration: none; white-space: nowrap; }
+.pack-item-link:hover { text-decoration: underline; }
 .pack-qty { width: 50px; height: 28px; text-align: center; font-size: 13px; border: 1px solid var(--border); border-radius: 4px; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .expand-btn { padding: 3px 9px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); font-size: 12px; cursor: pointer; color: var(--text-muted); white-space: nowrap; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .expand-btn:hover, .expand-btn.open { border-color: var(--border-med); color: var(--text); }
@@ -199,21 +187,44 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
 .add-sub-btn { background: none; border: none; font-size: 13px; color: var(--text-muted); cursor: pointer; padding: 4px 0 4px 22px; display: flex; align-items: center; gap: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .add-sub-btn:hover { color: var(--text); }
 .tool-top-bar { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
-.tool-actions { display: flex; gap: 8px; align-items: center; }
+.tool-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .unlocked-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; padding: 3px 10px; border-radius: 100px; background: var(--success-bg); color: var(--success); border: 1px solid rgba(45,122,79,.2); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin-left: 8px; }
 .user-badge { font-size: 12px; color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.save-profile-btn { padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); background: var(--yellow-light); font-size: 11px; cursor: pointer; color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin-left: 6px; }
+.save-profile-btn:hover { background: var(--yellow); }
+.saved-profiles-wrap { margin-bottom: 16px; padding: 12px 14px; background: var(--yellow-light); border-radius: var(--radius-md); border: 1px solid rgba(245,200,66,.4); display: none; }
+.saved-profiles-wrap h4 { font-size: 12px; font-weight: 600; margin-bottom: 8px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.saved-profile-chip { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 100px; background: #fff; border: 1px solid var(--border-med); font-size: 12px; cursor: pointer; margin: 3px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.saved-profile-chip:hover { border-color: var(--text); }
+
+/* REVIEW MODAL */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.modal-overlay.hidden { display: none; }
+.modal-card { background: var(--bg); border-radius: var(--radius-lg); padding: 32px 28px; max-width: 440px; width: 100%; position: relative; }
+.modal-close { position: absolute; top: 14px; right: 16px; background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-muted); line-height: 1; }
+.modal-close:hover { color: var(--text); }
+.modal-card h3 { font-size: 18px; margin-bottom: 6px; }
+.modal-card p { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.star-row { display: flex; gap: 6px; margin-bottom: 16px; justify-content: center; }
+.star-btn { font-size: 28px; cursor: pointer; background: none; border: none; line-height: 1; color: var(--border-med); transition: color .1s; }
+.star-btn.active, .star-btn:hover { color: var(--yellow-dark); }
+textarea.review-text { width: 100%; height: 90px; border: 1px solid var(--border-med); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 13px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; resize: vertical; margin-bottom: 14px; background: var(--bg); color: var(--text); }
+textarea.review-text:focus { outline: none; border-color: var(--text); }
+.review-name-input { width: 100%; height: 36px; padding: 0 10px; border: 1px solid var(--border-med); border-radius: var(--radius-sm); font-size: 13px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin-bottom: 14px; background: var(--bg); color: var(--text); }
 
 .loading-spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid var(--border); border-top-color: var(--text); border-radius: 50%; animation: spin .6s linear infinite; vertical-align: middle; margin-right: 6px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
+.follow-up-block { padding-top: 10px; border-top: 1px solid var(--border); margin-top: 4px; }
+
 @media print {
-  .site-header, .tool-top-bar .tool-actions, .person-tabs, .expand-btn, .add-sub-btn, .remove-sub, .btn-outline, .btn-primary { display: none !important; }
+  .site-header, .tool-top-bar .tool-actions, .person-tabs, .expand-btn, .add-sub-btn, .remove-sub, .btn-outline, .btn-primary, .save-profile-btn, .saved-profiles-wrap { display: none !important; }
   body { font-size: 12px; }
   .pack-section { page-break-inside: avoid; }
 }
 @media (max-width: 520px) {
   .field-row { grid-template-columns: 1fr; }
-  .testi-grid { grid-template-columns: 1fr; }
+  .reviews-grid { grid-template-columns: 1fr; }
   .proof-item { padding: 8px 14px; }
   .hero { padding: 40px 0 32px; }
   .auth-steps { display: none; }
@@ -229,10 +240,29 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
   </div>
 </header>
 
+<!-- REVIEW MODAL -->
+<div class="modal-overlay hidden" id="review-modal">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeReviewModal()">×</button>
+    <h3>How did we do? 🧳</h3>
+    <p>Your list is ready! We'd love to know what you think — takes 30 seconds.</p>
+    <div class="star-row" id="star-row">
+      <button class="star-btn" onclick="setRating(1)">★</button>
+      <button class="star-btn" onclick="setRating(2)">★</button>
+      <button class="star-btn" onclick="setRating(3)">★</button>
+      <button class="star-btn" onclick="setRating(4)">★</button>
+      <button class="star-btn" onclick="setRating(5)">★</button>
+    </div>
+    <input class="review-name-input" id="review-name" type="text" placeholder="Your name (e.g. Sarah M.)" />
+    <textarea class="review-text" id="review-text" placeholder="Tell us about your experience (optional)…"></textarea>
+    <div class="auth-error" id="review-err"></div>
+    <div class="auth-success" id="review-success"></div>
+    <button class="btn-primary full yellow" onclick="submitReview()" id="review-submit-btn">Submit review</button>
+    <p style="text-align:center;margin-top:10px;font-size:12px;color:var(--text-hint);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;cursor:pointer" onclick="closeReviewModal()">No thanks, skip</p>
+  </div>
+</div>
 
-<!-- ══════════════════════════════════════
-     LANDING PAGE
-══════════════════════════════════════ -->
+<!-- ══ LANDING ══ -->
 <div id="page-landing" class="page active">
   <section class="hero">
     <div class="container">
@@ -271,6 +301,7 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
             <div class="q-dot" id="qdot2"></div>
           </div>
 
+          <!-- DEMO STEP 0 -->
           <div class="q-screen active" id="dqs0">
             <p class="step-heading">Trip details</p>
             <div class="field-row">
@@ -281,17 +312,13 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
               <div><label class="field-label">Climate</label>
                 <select id="d-climate"><option>Warm / tropical</option><option>Hot / desert</option><option>Mild / spring-fall</option><option>Cold / winter</option><option>Mixed (varies)</option></select>
               </div>
-              <div><label class="field-label">Bag type</label>
-                <select id="d-bag"><option>Checked luggage</option><option>Carry-on only</option><option>Backpack</option></select>
-              </div>
-            </div>
-            <div class="field-row">
               <div><label class="field-label">Accommodation</label>
                 <select id="d-accom"><option>Hotel</option><option>Airbnb / rental</option><option>Camping</option><option>Cruise ship</option></select>
               </div>
-              <div><label class="field-label">Laundry access?</label>
-                <select id="d-laundry"><option value="no">No — pack for all days</option><option value="yes">Yes — can re-wear</option></select>
-              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Laundry access?</label>
+              <select id="d-laundry"><option value="no">No — pack for all days</option><option value="yes">Yes — can re-wear</option></select>
             </div>
             <div class="field-group">
               <label class="field-label">Special activities</label>
@@ -301,12 +328,14 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
                 <label><input type="checkbox" value="hiking"> Hiking / outdoors</label>
                 <label><input type="checkbox" value="gym"> Gym / fitness</label>
                 <label><input type="checkbox" value="business"> Business meetings</label>
+                <label><input type="checkbox" value="ski"> Skiing / snowboarding</label>
                 <label><input type="checkbox" value="nightlife"> Nightlife / bars</label>
               </div>
             </div>
             <div class="q-btn-row"><button class="q-next" onclick="demoStep(1)">Next: travelers →</button></div>
           </div>
 
+          <!-- DEMO STEP 1 -->
           <div class="q-screen" id="dqs1">
             <p class="step-heading">Who's traveling?</p>
             <div class="field-group">
@@ -322,6 +351,7 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
             </div>
           </div>
 
+          <!-- DEMO STEP 2 -->
           <div class="q-screen" id="dqs2">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
               <p style="font-size:15px;font-weight:500;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" id="d-list-title">Your packing list</p>
@@ -359,7 +389,20 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
     </div>
   </section>
 
-
+  <!-- REVIEWS SECTION -->
+  <section class="reviews-section">
+    <div class="container">
+      <p class="section-eyebrow">What travelers say</p>
+      <h2>Real families, real trips</h2>
+      <p class="reviews-sub">Reviews from verified customers</p>
+      <div id="reviews-container">
+        <div class="reviews-empty">
+          <p>No reviews yet — be the first! After generating your packing list, you'll have a chance to share your experience.</p>
+          <button class="btn-primary yellow" onclick="document.getElementById('demo-anchor').scrollIntoView({behavior:'smooth'})">Try it now →</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section class="faq-section">
     <div class="container">
@@ -369,8 +412,8 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I edit the list after it generates? <span class="faq-chevron">›</span></button><div class="faq-a">Yes, completely. Adjust quantities, expand items into sub-items, add your own, and rename each person's list.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What age groups does it cover? <span class="faq-chevron">›</span></button><div class="faq-a">Five age groups: baby (under 1), toddler (1–4), child (5–12), teen (13–17), and adult (18+). Each gets a completely different list.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I print or save my list? <span class="faq-chevron">›</span></button><div class="faq-a">Yes. Print any person's list formatted cleanly for paper, or use it as a digital checklist.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How do I access it after I pay? <span class="faq-chevron">›</span></button><div class="faq-a">After purchase you'll receive an access key by email. Enter it on the site to create your account with an email and password — then log in from any device, forever.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What if I switch devices? <span class="faq-chevron">›</span></button><div class="faq-a">Just log in with your email and password on any device. Your account works everywhere.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How do I access it after I pay? <span class="faq-chevron">›</span></button><div class="faq-a">After purchase you'll receive an access key by email. Enter it on the site to create your account with email and password — then log in from any device, forever.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I save traveler profiles for future trips? <span class="faq-chevron">›</span></button><div class="faq-a">Yes! After generating a list, you can save each traveler's profile (name, age, gender) to your account. Next trip, just tap their name to add them instantly.</div></div>
     </div>
   </section>
 
@@ -386,7 +429,6 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
       </p>
     </div>
   </section>
-
   <footer class="site-footer">
     <div class="container">
       © 2025 Nothing Forgotten ·
@@ -396,37 +438,21 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
   </footer>
 </div>
 
-
-<!-- ══════════════════════════════════════
-     STEP 1: ENTER ACCESS KEY
-══════════════════════════════════════ -->
+<!-- ══ UNLOCK ══ -->
 <div id="page-unlock" class="page">
   <div class="auth-page">
     <div class="auth-card">
       <div class="auth-icon">🔑</div>
-
       <div class="auth-steps">
-        <div class="auth-step-item">
-          <div class="auth-step-num active">1</div>
-          <div class="auth-step-lbl">Enter key</div>
-        </div>
-        <div class="auth-step-item">
-          <div class="auth-step-num">2</div>
-          <div class="auth-step-lbl">Create account</div>
-        </div>
-        <div class="auth-step-item">
-          <div class="auth-step-num">3</div>
-          <div class="auth-step-lbl">Start packing</div>
-        </div>
+        <div class="auth-step-item"><div class="auth-step-num active">1</div><div class="auth-step-lbl">Enter key</div></div>
+        <div class="auth-step-item"><div class="auth-step-num">2</div><div class="auth-step-lbl">Create account</div></div>
+        <div class="auth-step-item"><div class="auth-step-num">3</div><div class="auth-step-lbl">Start packing</div></div>
       </div>
-
       <h2>Enter your access key</h2>
       <p class="auth-sub">Check your Gumroad receipt email for your key. It looks like <code style="font-family:monospace;font-size:13px;background:var(--bg-soft);padding:1px 6px;border-radius:4px;border:1px solid var(--border)">NF-XXXX-XXXX-XXXX</code>.</p>
-
       <input class="auth-input key-style" id="key-field" type="text" placeholder="NF-XXXX-XXXX-XXXX" oninput="this.value=this.value.toUpperCase()" />
-      <div class="auth-error" id="key-err">That key doesn't look right — check your email and try again.</div>
+      <div class="auth-error" id="key-err"></div>
       <button class="btn-primary full yellow" onclick="validateKey()" id="key-btn">Continue →</button>
-
       <div class="auth-divider">or</div>
       <p class="auth-link">Already have an account? <a onclick="showPage('login')">Log in →</a></p>
       <p class="auth-link" style="margin-top:8px"><a href="https://claireoasis.gumroad.com/l/kcdjwp" target="_blank">Don't have a key? Purchase for $9.99 →</a></p>
@@ -435,75 +461,46 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
   </div>
 </div>
 
-
-<!-- ══════════════════════════════════════
-     STEP 2: CREATE ACCOUNT
-══════════════════════════════════════ -->
+<!-- ══ SIGNUP ══ -->
 <div id="page-signup" class="page">
   <div class="auth-page">
     <div class="auth-card">
       <div class="auth-icon">✨</div>
-
       <div class="auth-steps">
-        <div class="auth-step-item">
-          <div class="auth-step-num done">✓</div>
-          <div class="auth-step-lbl">Enter key</div>
-        </div>
-        <div class="auth-step-item">
-          <div class="auth-step-num active">2</div>
-          <div class="auth-step-lbl">Create account</div>
-        </div>
-        <div class="auth-step-item">
-          <div class="auth-step-num">3</div>
-          <div class="auth-step-lbl">Start packing</div>
-        </div>
+        <div class="auth-step-item"><div class="auth-step-num done">✓</div><div class="auth-step-lbl">Enter key</div></div>
+        <div class="auth-step-item"><div class="auth-step-num active">2</div><div class="auth-step-lbl">Create account</div></div>
+        <div class="auth-step-item"><div class="auth-step-num">3</div><div class="auth-step-lbl">Start packing</div></div>
       </div>
-
       <h2>Create your account</h2>
       <p class="auth-sub">Your key is valid! Set up your account so you can log in from any device.</p>
-
-      <div class="auth-success" id="signup-success" style="display:block;margin-bottom:16px">
-        ✓ Access key verified — you're good to go!
-      </div>
-
+      <div class="auth-success" id="signup-success" style="display:block;margin-bottom:16px">✓ Access key verified — you're good to go!</div>
       <label class="field-label" style="margin-bottom:5px">Email address</label>
       <input class="auth-input" id="signup-email" type="email" placeholder="you@email.com" />
-
       <label class="field-label" style="margin-bottom:5px;margin-top:4px">Password</label>
       <input class="auth-input" id="signup-password" type="password" placeholder="At least 8 characters" />
-
       <label class="field-label" style="margin-bottom:5px;margin-top:4px">Confirm password</label>
       <input class="auth-input" id="signup-confirm" type="password" placeholder="Repeat password" />
-
       <div class="auth-error" id="signup-err"></div>
       <button class="btn-primary full yellow" onclick="createAccount()" id="signup-btn" style="margin-top:8px">Create my account →</button>
-
       <p class="auth-link" style="margin-top:12px">Already have an account? <a onclick="showPage('login')">Log in →</a></p>
     </div>
   </div>
 </div>
 
-
-<!-- ══════════════════════════════════════
-     LOGIN PAGE
-══════════════════════════════════════ -->
+<!-- ══ LOGIN ══ -->
 <div id="page-login" class="page">
   <div class="auth-page">
     <div class="auth-card">
       <div class="auth-icon">👋</div>
       <h2>Welcome back</h2>
       <p class="auth-sub">Log in to access your packing list generator.</p>
-
       <label class="field-label" style="margin-bottom:5px">Email address</label>
       <input class="auth-input" id="login-email" type="email" placeholder="you@email.com" />
-
       <label class="field-label" style="margin-bottom:5px;margin-top:4px">Password</label>
       <input class="auth-input" id="login-password" type="password" placeholder="Your password" />
-
       <div class="auth-error" id="login-err"></div>
       <div class="auth-success" id="login-success"></div>
       <button class="btn-primary full yellow" onclick="loginUser()" id="login-btn" style="margin-top:8px">Log in →</button>
-
       <p style="font-size:13px;color:var(--text-muted);text-align:center;margin-top:10px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
         <a onclick="resetPassword()" style="color:var(--text);cursor:pointer">Forgot password?</a>
       </p>
@@ -514,10 +511,7 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
   </div>
 </div>
 
-
-<!-- ══════════════════════════════════════
-     FULL TOOL PAGE
-══════════════════════════════════════ -->
+<!-- ══ FULL TOOL ══ -->
 <div id="page-tool" class="page">
   <div class="container tool-wrap">
     <div class="tool-progress">
@@ -526,6 +520,7 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
       <div class="tool-dot" id="tdot2"></div>
     </div>
 
+    <!-- STEP 0: Trip details -->
     <div class="tool-step active" id="ts0">
       <p class="step-heading">Trip details</p>
       <div class="field-row">
@@ -548,11 +543,6 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
           <select id="t-laundry"><option value="no">No — packing for all days</option><option value="yes">Yes — can re-wear</option></select>
         </div>
       </div>
-      <div class="field-row">
-        <div><label class="field-label">Bag type</label>
-          <select id="t-bag"><option>Checked luggage — no size limit</option><option>Carry-on only</option><option>Backpack</option></select>
-        </div>
-      </div>
       <div class="field-group">
         <label class="field-label">Special activities (select all that apply)</label>
         <div class="activity-check-grid">
@@ -561,14 +551,20 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
           <label><input type="checkbox" value="hiking"> Hiking / outdoors</label>
           <label><input type="checkbox" value="gym"> Gym / fitness</label>
           <label><input type="checkbox" value="business"> Business meetings</label>
+          <label><input type="checkbox" value="ski"> Skiing / snowboarding</label>
           <label><input type="checkbox" value="nightlife"> Nightlife / bars</label>
         </div>
       </div>
       <div class="q-btn-row"><button class="q-next" onclick="toolStep(1)">Next: travelers →</button></div>
     </div>
 
+    <!-- STEP 1: Travelers -->
     <div class="tool-step" id="ts1">
       <p class="step-heading">Who's traveling?</p>
+      <div id="saved-profiles-wrap" class="saved-profiles-wrap">
+        <h4>⚡ Saved travelers — tap to add</h4>
+        <div id="saved-profiles-chips"></div>
+      </div>
       <div class="field-group">
         <label class="field-label">Number of travelers</label>
         <select id="t-num" onchange="buildToolTravelers()" style="max-width:120px">
@@ -582,6 +578,7 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
       </div>
     </div>
 
+    <!-- STEP 2: Lists -->
     <div class="tool-step" id="ts2">
       <div class="tool-top-bar">
         <div>
@@ -601,38 +598,23 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
   </div>
 </div>
 
-
-<!-- ══════════════════════════════════════
-     JAVASCRIPT
-══════════════════════════════════════ -->
 <script>
-// =====================================================
-// SUPABASE CONFIGURATION
-// Replace these two values with your own from
-// supabase.com → your project → Settings → API
-// SUPABASE_URL:  looks like https://xxxx.supabase.co
-// SUPABASE_KEY:  your "anon public" key
-// =====================================================
+// ═══════════════════════════════════════════
+// SUPABASE CONFIG
+// ═══════════════════════════════════════════
 const SUPABASE_URL = 'https://dmgslmqcoyqqlihqjslm.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRtZ3NsbXFjb3lxcWxpaHFqc2xtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNjc5NTMsImV4cCI6MjA5Nzc0Mzk1M30.CF33F8Dkxkgzc-fIkJEbJLjrmGm8ppN5KPwdNJClZRE';
 let sb;
-try {
-  sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-} catch(e) {
-  console.warn('Supabase init failed:', e);
-  supabase = null;
-}
+try { sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY); } catch(e) { console.warn('Supabase init failed:', e); sb = null; }
 
-// =====================================================
-// ACCESS KEY SYSTEM
-// Keys follow format: NF-XXXX-XXXX-XXXX
-// Valid keys are stored in your Supabase "access_keys"
-// table. See setup instructions in key-generator.html.
-// =====================================================
 const KEY_PATTERN = /^NF-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/;
 let validatedKey = '';
+let currentUserEmail = '';
+let reviewRating = 0;
 
-// ── PAGE ROUTING ──────────────────────────────
+// ═══════════════════════════════════════════
+// PAGE ROUTING
+// ═══════════════════════════════════════════
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
@@ -654,9 +636,9 @@ function updateHeader(page) {
   }
 }
 
-// On load: check if user is already logged in
 window.addEventListener('load', async () => {
   updateHeader('landing');
+  loadLandingReviews();
   try {
     if (sb) {
       const { data: { session } } = await sb.auth.getSession();
@@ -667,25 +649,25 @@ window.addEventListener('load', async () => {
   if (params.get('page') === 'unlock') showPage('unlock');
 });
 
-// ── AUTH: VALIDATE KEY ──────────────────────────────
+// ═══════════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════════
 async function validateKey() {
   const val = document.getElementById('key-field').value.trim().toUpperCase();
   const errEl = document.getElementById('key-err');
   errEl.style.display = 'none';
   if (!KEY_PATTERN.test(val)) { errEl.textContent = 'That key doesn\'t look right — check your email and try again.'; errEl.style.display = 'block'; return; }
   const btn = document.getElementById('key-btn');
-  btn.innerHTML = '<span class="loading-spinner"></span>Checking key…';
-  btn.disabled = true;
+  btn.innerHTML = '<span class="loading-spinner"></span>Checking key…'; btn.disabled = true;
   if (!sb) { errEl.textContent = 'Connection error — please refresh and try again.'; errEl.style.display = 'block'; btn.innerHTML = 'Continue →'; btn.disabled = false; return; }
   try {
     const { data, error } = await sb.from('access_keys').select('*').eq('key', val).eq('used', false).single();
-    if (error || !data) { errEl.textContent = 'This key has already been used or is invalid. If you think this is a mistake, reply to your receipt email.'; errEl.style.display = 'block'; btn.innerHTML = 'Continue →'; btn.disabled = false; return; }
+    if (error || !data) { errEl.textContent = 'This key has already been used or is invalid. Reply to your receipt email if you need help.'; errEl.style.display = 'block'; btn.innerHTML = 'Continue →'; btn.disabled = false; return; }
     validatedKey = val;
     showPage('signup');
   } catch(e) { errEl.textContent = 'Something went wrong — please try again.'; errEl.style.display = 'block'; btn.innerHTML = 'Continue →'; btn.disabled = false; }
 }
 
-// ── AUTH: CREATE ACCOUNT ──────────────────────────────
 async function createAccount() {
   const email = document.getElementById('signup-email').value.trim();
   const password = document.getElementById('signup-password').value;
@@ -695,10 +677,9 @@ async function createAccount() {
   if (!email || !password) { errEl.textContent = 'Please fill in all fields.'; errEl.style.display = 'block'; return; }
   if (password.length < 8) { errEl.textContent = 'Password must be at least 8 characters.'; errEl.style.display = 'block'; return; }
   if (password !== confirm) { errEl.textContent = 'Passwords don\'t match.'; errEl.style.display = 'block'; return; }
-  if (!sb) { errEl.textContent = 'Connection error — please refresh and try again.'; errEl.style.display = 'block'; return; }
+  if (!sb) { errEl.textContent = 'Connection error — please refresh.'; errEl.style.display = 'block'; return; }
   const btn = document.getElementById('signup-btn');
-  btn.innerHTML = '<span class="loading-spinner"></span>Creating account…';
-  btn.disabled = true;
+  btn.innerHTML = '<span class="loading-spinner"></span>Creating account…'; btn.disabled = true;
   try {
     const { data, error } = await sb.auth.signUp({ email, password });
     if (error) { errEl.textContent = error.message; errEl.style.display = 'block'; btn.innerHTML = 'Create my account →'; btn.disabled = false; return; }
@@ -707,7 +688,6 @@ async function createAccount() {
   } catch(e) { errEl.textContent = 'Something went wrong — please try again.'; errEl.style.display = 'block'; btn.innerHTML = 'Create my account →'; btn.disabled = false; }
 }
 
-// ── AUTH: LOGIN ──────────────────────────────
 async function loginUser() {
   const email = document.getElementById('login-email').value.trim();
   const password = document.getElementById('login-password').value;
@@ -715,18 +695,16 @@ async function loginUser() {
   const succEl = document.getElementById('login-success');
   errEl.style.display = 'none'; succEl.style.display = 'none';
   if (!email || !password) { errEl.textContent = 'Please enter your email and password.'; errEl.style.display = 'block'; return; }
-  if (!sb) { errEl.textContent = 'Connection error — please refresh and try again.'; errEl.style.display = 'block'; return; }
+  if (!sb) { errEl.textContent = 'Connection error — please refresh.'; errEl.style.display = 'block'; return; }
   const btn = document.getElementById('login-btn');
-  btn.innerHTML = '<span class="loading-spinner"></span>Logging in…';
-  btn.disabled = true;
+  btn.innerHTML = '<span class="loading-spinner"></span>Logging in…'; btn.disabled = true;
   try {
     const { data, error } = await sb.auth.signInWithPassword({ email, password });
-    if (error) { errEl.textContent = 'Incorrect email or password. Try again, or reset your password below.'; errEl.style.display = 'block'; btn.innerHTML = 'Log in →'; btn.disabled = false; return; }
+    if (error) { errEl.textContent = 'Incorrect email or password. Try again, or reset your password.'; errEl.style.display = 'block'; btn.innerHTML = 'Log in →'; btn.disabled = false; return; }
     loadTool(email);
   } catch(e) { errEl.textContent = 'Something went wrong — please try again.'; errEl.style.display = 'block'; btn.innerHTML = 'Log in →'; btn.disabled = false; }
 }
 
-// ── AUTH: RESET PASSWORD ──────────────────────────────
 async function resetPassword() {
   const email = document.getElementById('login-email').value.trim();
   const errEl = document.getElementById('login-err');
@@ -734,25 +712,142 @@ async function resetPassword() {
   if (!email) { errEl.textContent = 'Enter your email address above first.'; errEl.style.display = 'block'; return; }
   errEl.style.display = 'none';
   if (sb) await sb.auth.resetPasswordForEmail(email, { redirectTo: 'https://nothingforgotten.co' });
-  succEl.textContent = '✓ Password reset email sent — check your inbox.';
-  succEl.style.display = 'block';
+  succEl.textContent = '✓ Password reset email sent — check your inbox.'; succEl.style.display = 'block';
 }
 
-// ── AUTH: LOGOUT ──────────────────────────────
 async function logoutUser() {
   try { if (sb) await sb.auth.signOut(); } catch(e) {}
   showPage('landing');
 }
 
-// ── LOAD TOOL ──────────────────────────────
-function loadTool(email) {
+async function loadTool(email) {
+  currentUserEmail = email;
   document.getElementById('tool-user-badge').textContent = email;
+  await loadSavedProfiles();
   buildToolTravelers();
   showPage('tool');
   toolStep(0);
 }
 
-// ── DEMO QUESTIONNAIRE ──────────────────────────────
+// ═══════════════════════════════════════════
+// SAVED TRAVELER PROFILES
+// ═══════════════════════════════════════════
+let savedProfiles = [];
+
+async function loadSavedProfiles() {
+  if (!sb) return;
+  try {
+    const { data } = await sb.from('traveler_profiles').select('*').order('name');
+    if (data && data.length > 0) {
+      savedProfiles = data;
+      const wrap = document.getElementById('saved-profiles-wrap');
+      const chips = document.getElementById('saved-profiles-chips');
+      wrap.style.display = 'block';
+      chips.innerHTML = savedProfiles.map((p, i) =>
+        `<span class="saved-profile-chip" onclick="addSavedProfile(${i})">
+          + ${p.name} <span style="color:var(--text-muted);font-size:11px">(${p.age}, ${p.gender.charAt(0)})</span>
+        </span>`
+      ).join('');
+    }
+  } catch(e) { console.warn('Failed to load profiles:', e); }
+}
+
+function addSavedProfile(idx) {
+  const p = savedProfiles[idx];
+  if (!p) return;
+  const n = parseInt(document.getElementById('t-num').value);
+  // Find first empty traveler slot or add a new one
+  for (let i = 0; i < n; i++) {
+    const nameEl = document.getElementById('tn-name' + i);
+    if (nameEl && !nameEl.value.trim()) {
+      nameEl.value = p.name;
+      document.getElementById('tn-age' + i).value = p.age;
+      document.getElementById('tn-g' + i).value = p.gender;
+      tUpdateRole(i);
+      return;
+    }
+  }
+  // No empty slot — increase count
+  if (n < 6) {
+    document.getElementById('t-num').value = n + 1;
+    buildToolTravelers();
+    setTimeout(() => {
+      const nameEl = document.getElementById('tn-name' + n);
+      if (nameEl) { nameEl.value = p.name; document.getElementById('tn-age' + n).value = p.age; document.getElementById('tn-g' + n).value = p.gender; tUpdateRole(n); }
+    }, 50);
+  }
+}
+
+async function saveProfile(name, age, gender, role) {
+  if (!sb || !name) return;
+  try {
+    await sb.from('traveler_profiles').upsert({ name, age, gender, role, user_email: currentUserEmail }, { onConflict: 'user_email,name' });
+  } catch(e) { console.warn('Save profile failed:', e); }
+}
+
+// ═══════════════════════════════════════════
+// REVIEW SYSTEM
+// ═══════════════════════════════════════════
+function showReviewModal() {
+  reviewRating = 0;
+  document.getElementById('review-text').value = '';
+  document.getElementById('review-name').value = '';
+  document.getElementById('review-err').style.display = 'none';
+  document.getElementById('review-success').style.display = 'none';
+  document.getElementById('review-submit-btn').innerHTML = 'Submit review';
+  document.getElementById('review-submit-btn').disabled = false;
+  updateStars(0);
+  document.getElementById('review-modal').classList.remove('hidden');
+}
+
+function closeReviewModal() {
+  document.getElementById('review-modal').classList.add('hidden');
+}
+
+function setRating(n) { reviewRating = n; updateStars(n); }
+
+function updateStars(n) {
+  document.querySelectorAll('.star-btn').forEach((btn, i) => btn.classList.toggle('active', i < n));
+}
+
+async function submitReview() {
+  const text = document.getElementById('review-text').value.trim();
+  const name = document.getElementById('review-name').value.trim() || 'Anonymous';
+  const errEl = document.getElementById('review-err');
+  const succEl = document.getElementById('review-success');
+  errEl.style.display = 'none';
+  if (reviewRating === 0) { errEl.textContent = 'Please select a star rating.'; errEl.style.display = 'block'; return; }
+  const btn = document.getElementById('review-submit-btn');
+  btn.innerHTML = '<span class="loading-spinner"></span>Submitting…'; btn.disabled = true;
+  try {
+    if (sb) {
+      await sb.from('reviews').insert({ rating: reviewRating, comment: text, reviewer_name: name, user_email: currentUserEmail });
+    }
+    succEl.textContent = '✓ Thank you! Your review has been submitted.'; succEl.style.display = 'block';
+    btn.innerHTML = 'Submitted ✓';
+    setTimeout(() => closeReviewModal(), 2000);
+  } catch(e) { errEl.textContent = 'Something went wrong — please try again.'; errEl.style.display = 'block'; btn.innerHTML = 'Submit review'; btn.disabled = false; }
+}
+
+async function loadLandingReviews() {
+  if (!sb) return;
+  try {
+    const { data } = await sb.from('reviews').select('*').gte('rating', 4).order('created_at', { ascending: false }).limit(4);
+    const container = document.getElementById('reviews-container');
+    if (!data || data.length === 0) return; // keep empty state
+    const stars = n => '★'.repeat(n) + '☆'.repeat(5 - n);
+    container.innerHTML = `<div class="reviews-grid">${data.map(r => `
+      <div class="review-card">
+        <div class="review-stars">${stars(r.rating)}</div>
+        <blockquote>"${r.comment || 'Great tool!'}"</blockquote>
+        <p class="review-name">— ${r.reviewer_name}</p>
+      </div>`).join('')}</div>`;
+  } catch(e) { console.warn('Failed to load reviews:', e); }
+}
+
+// ═══════════════════════════════════════════
+// DEMO QUESTIONNAIRE
+// ═══════════════════════════════════════════
 function dSyncN() { const d=parseInt(document.getElementById('d-days').value)||1; document.getElementById('d-nights').value=Math.max(0,d-1); }
 function dSyncD() { const n=parseInt(document.getElementById('d-nights').value)||0; document.getElementById('d-days').value=n+1; }
 
@@ -774,57 +869,20 @@ function buildDemoTravelers() {
   c.innerHTML='';
   for(let i=0;i<n;i++){
     const d=defaults[i]||{name:`Traveler ${i+1}`,age:30,g:'Female',role:'adult'};
-    const isBaby=d.role==='baby';
-    const isToddler=d.role==='toddler';
+    const isBaby=d.role==='baby'; const isToddler=d.role==='toddler';
     c.innerHTML+=`<div class="traveler-card"><h4>${d.name}</h4>
       <div class="field-row">
-        <div><label class="field-label">Age</label><input type="number" id="dt-age${i}" value="${d.age}" min="0" max="100" oninput="dUpdateFollowUp(${i})"></div>
+        <div><label class="field-label">Age</label><input type="number" id="dt-age${i}" value="${d.age}" min="0" max="100"></div>
         <div><label class="field-label">Gender</label><select id="dt-g${i}"><option ${d.g==='Female'?'selected':''}>Female</option><option ${d.g==='Male'?'selected':''}>Male</option><option>Non-binary</option></select></div>
       </div>
-      ${isBaby?`<div style="padding-top:10px;border-top:1px solid var(--border);margin-top:4px">
-        <label class="field-label">How is ${d.name} fed?</label>
-        <select id="dt-feeding${i}">
-          <option value="nursing">Breastfed — nursing directly</option>
-          <option value="bottle">Breastfed — pumped via bottle</option>
-          <option value="formula">Formula fed</option>
-        </select>
-      </div>`:''}
-      ${isToddler?`<div style="padding-top:10px;border-top:1px solid var(--border);margin-top:4px">
-        <label class="field-label">Is ${d.name} potty trained?</label>
-        <select id="dt-potty${i}">
-          <option value="no">Not yet — still in diapers / pull-ups</option>
-          <option value="partial">Partially — in training</option>
-          <option value="yes">Yes — fully potty trained</option>
-        </select>
-      </div>`:''}
-      <div id="dt-followup${i}"></div>
+      ${isBaby?`<div class="follow-up-block"><label class="field-label">How is ${d.name} fed?</label>
+        <select id="dt-feeding${i}"><option value="nursing">Breastfed — nursing directly</option><option value="bottle">Breastfed — pumped via bottle</option><option value="formula">Formula fed</option></select></div>`:''}
+      ${isToddler?`<div class="follow-up-block"><label class="field-label">Is ${d.name} potty trained?</label>
+        <select id="dt-potty${i}"><option value="no">Not yet — still in diapers / pull-ups</option><option value="partial">Partially — in training</option><option value="yes">Yes — fully potty trained</option></select></div>`:''}
     </div>`;
   }
 }
 buildDemoTravelers();
-
-function dUpdateFollowUp(i){
-  const age=parseInt(document.getElementById('dt-age'+i).value)||0;
-  const role=roleFromAge(age);
-  const el=document.getElementById('dt-followup'+i);
-  if(role==='baby'){
-    el.innerHTML=`<div style="padding-top:10px;border-top:1px solid var(--border);margin-top:4px">
-      <label class="field-label">How is this baby fed?</label>
-      <select id="dt-feeding${i}">
-        <option value="nursing">Breastfed — nursing directly</option>
-        <option value="bottle">Breastfed — pumped via bottle</option>
-        <option value="formula">Formula fed</option>
-      </select></div>`;
-  } else if(role==='toddler' && age>=2 && age<=3){
-    el.innerHTML=`<div style="padding-top:10px;border-top:1px solid var(--border);margin-top:4px">
-      <label class="field-label">Is this toddler potty trained?</label>
-      <select id="dt-potty${i}">
-        <option value="no">Not yet — still in diapers / pull-ups</option>
-        <option value="partial">Partially — in training</option>
-        <option value="yes">Yes — fully potty trained</option>
-      </select></div>`;
-  } else { el.innerHTML=''; }
-}
 
 function runDemo() {
   const days=parseInt(document.getElementById('d-days').value)||7;
@@ -833,13 +891,7 @@ function runDemo() {
   const packAll=document.getElementById('d-laundry').value==='no';
   const activities=[...document.querySelectorAll('#dqs0 .activity-check-grid input:checked')].map(e=>e.value);
   const n=parseInt(document.getElementById('d-num').value);
-  const defaults=[
-    {name:'Baby Emma',age:0,g:'Female',role:'baby'},
-    {name:'Liam',age:3,g:'Male',role:'toddler'},
-    {name:'Sophie',age:7,g:'Female',role:'child'},
-    {name:'Dad',age:38,g:'Male',role:'adult'},
-  ];
-
+  const defaults=[{name:'Baby Emma'},{name:'Liam'},{name:'Sophie'},{name:'Dad'}];
   let html='';
   for(let i=0;i<Math.min(n,3);i++){
     const age=parseInt(document.getElementById('dt-age'+i).value)||0;
@@ -850,24 +902,23 @@ function runDemo() {
     const pottyEl=document.getElementById('dt-potty'+i);
     const feeding=feedingEl?feedingEl.value:null;
     const potty=pottyEl?pottyEl.value:null;
-    const items=buildSections({role,gender:g,feeding,potty},days,nights,climate,packAll,activities).flatMap(s=>s.items);
-    const showFull=items.slice(0,4);
-    const showBlur=items.slice(4,7);
-    html+=`<div style="margin-bottom:16px">
-      <div class="list-cat-head">${d.name} <span style="font-size:11px;font-weight:400;color:var(--text-muted)">${roleLabel(role)}</span></div>`;
+    const items=buildSections({role,gender:g,feeding,potty,age},days,nights,climate,packAll,activities).flatMap(s=>s.items);
+    const showFull=items.slice(0,4); const showBlur=items.slice(4,7);
+    html+=`<div style="margin-bottom:16px"><div class="list-cat-head">${d.name} <span style="font-size:11px;font-weight:400;color:var(--text-muted)">${roleLabel(role)}</span></div>`;
     showFull.forEach(item=>{html+=`<div class="preview-row"><div class="pcheck"></div><span class="pname">${item.name}</span><span class="pqty">× ${item.qty}</span></div>`;});
     html+=`<div class="blurred">`;
     showBlur.forEach(item=>{html+=`<div class="preview-row"><div class="pcheck"></div><span class="pname">${item.name}</span><span class="pqty">× ${item.qty}</span></div>`;});
     html+=`</div></div>`;
   }
-
   document.getElementById('demo-list-output').innerHTML=html;
   document.getElementById('d-list-meta').textContent=`${n} traveler${n>1?'s':''} · ${days} days / ${nights} nights · ${climate}`;
   demoStep(2);
 }
 function resetDemo(){buildDemoTravelers();document.getElementById('demo-list-output').innerHTML='';}
 
-// ── FULL TOOL ──────────────────────────────
+// ═══════════════════════════════════════════
+// FULL TOOL
+// ═══════════════════════════════════════════
 function tSyncN(){const d=parseInt(document.getElementById('t-days').value)||1;document.getElementById('t-nights').value=Math.max(0,d-1);}
 function tSyncD(){const n=parseInt(document.getElementById('t-nights').value)||0;document.getElementById('t-days').value=n+1;}
 
@@ -884,7 +935,7 @@ function buildToolTravelers(){
   c.innerHTML='';
   for(let i=0;i<n;i++){
     const da=i===0?35:i===1?8:i===2?0:38;
-    c.innerHTML+=`<div class="traveler-card"><h4>Traveler ${i+1}</h4>
+    c.innerHTML+=`<div class="traveler-card" id="tcard${i}"><h4>Traveler ${i+1}</h4>
       <div class="field-row">
         <div><label class="field-label">Name / nickname</label><input type="text" id="tn-name${i}" placeholder="e.g. Mom, Jake…"></div>
         <div><label class="field-label">Age</label><input type="number" id="tn-age${i}" min="0" max="100" value="${da}" oninput="tUpdateRole(${i})"></div>
@@ -899,44 +950,39 @@ function buildToolTravelers(){
           </select>
         </div>
       </div>
-      <div id="tn-followup${i}" style="display:none"></div>
+      <div id="tn-followup${i}"></div>
     </div>`;
   }
   for(let i=0;i<n;i++) tUpdateRole(i);
 }
 buildToolTravelers();
 
+function tUpdateRole(i){
+  const a=parseInt(document.getElementById('tn-age'+i).value)||0;
+  document.getElementById('tn-role'+i).value=roleFromAge(a);
+  tShowFollowUp(i);
+}
+
 function tShowFollowUp(i){
   const role=document.getElementById('tn-role'+i).value;
   const age=parseInt(document.getElementById('tn-age'+i).value)||0;
   const el=document.getElementById('tn-followup'+i);
   if(role==='baby'){
-    el.style.display='block';
-    el.innerHTML=`<div class="field-group" style="margin-top:4px;padding-top:12px;border-top:1px solid var(--border)">
-      <label class="field-label">How is this baby fed?</label>
+    el.innerHTML=`<div class="follow-up-block"><label class="field-label">How is this baby fed?</label>
       <select id="tn-feeding${i}">
         <option value="nursing">Breastfed — nursing directly</option>
         <option value="bottle">Breastfed — pumped via bottle</option>
         <option value="formula">Formula fed</option>
-      </select>
-    </div>`;
+      </select></div>`;
   } else if(role==='toddler' && age>=2 && age<=3){
-    el.style.display='block';
-    el.innerHTML=`<div class="field-group" style="margin-top:4px;padding-top:12px;border-top:1px solid var(--border)">
-      <label class="field-label">Is this toddler potty trained?</label>
+    el.innerHTML=`<div class="follow-up-block"><label class="field-label">Is this toddler potty trained?</label>
       <select id="tn-potty${i}">
         <option value="no">Not yet — still in diapers / pull-ups</option>
         <option value="partial">Partially — in training</option>
         <option value="yes">Yes — fully potty trained</option>
-      </select>
-    </div>`;
-  } else {
-    el.style.display='none';
-    el.innerHTML='';
-  }
+      </select></div>`;
+  } else { el.innerHTML=''; }
 }
-
-function tUpdateRole(i){const a=parseInt(document.getElementById('tn-age'+i).value)||0;document.getElementById('tn-role'+i).value=roleFromAge(a);tShowFollowUp(i);}
 
 let toolTravelers=[],toolLists={},toolExpanded={};
 
@@ -950,42 +996,43 @@ function generateToolLists(){
   toolTravelers=[];
   for(let i=0;i<n;i++){
     const role=document.getElementById('tn-role'+i).value;
+    const age=parseInt(document.getElementById('tn-age'+i).value)||0;
     const feedingEl=document.getElementById('tn-feeding'+i);
     const pottyEl=document.getElementById('tn-potty'+i);
-    toolTravelers.push({
-      name:document.getElementById('tn-name'+i).value||`Traveler ${i+1}`,
-      age:parseInt(document.getElementById('tn-age'+i).value)||0,
-      gender:document.getElementById('tn-g'+i).value,
-      role,
-      feeding:feedingEl?feedingEl.value:null,
-      potty:pottyEl?pottyEl.value:null,
-    });
+    const name=document.getElementById('tn-name'+i).value||`Traveler ${i+1}`;
+    const gender=document.getElementById('tn-g'+i).value;
+    toolTravelers.push({ name, age, gender, role, feeding:feedingEl?feedingEl.value:null, potty:pottyEl?pottyEl.value:null });
+    // Auto-save profile
+    saveProfile(name, age, gender, role);
   }
-  toolLists={};toolExpanded={};
-  toolTravelers.forEach(t=>{toolLists[t.name]=buildSections(t,days,nights,climate,packAll,activities);});
+  toolLists={}; toolExpanded={};
+  toolTravelers.forEach(t=>{ toolLists[t.name]=buildSections(t,days,nights,climate,packAll,activities); });
   document.getElementById('t-list-meta').textContent=`${toolTravelers.length} traveler${toolTravelers.length>1?'s':''} · ${days} days / ${nights} nights · ${climate}`;
   document.getElementById('tool-person-tabs').innerHTML=toolTravelers.map((t,i)=>`<button class="person-tab ${i===0?'active':''}" onclick="selectToolTab(${i})">${t.name}</button>`).join('');
-  toolStep(2);selectToolTab(0);
+  toolStep(2);
+  selectToolTab(0);
+  // Show review modal after a short delay
+  setTimeout(() => showReviewModal(), 3000);
 }
 
 function selectToolTab(idx){
   document.querySelectorAll('.person-tab').forEach((el,j)=>el.classList.toggle('active',j===idx));
   const t=toolTravelers[idx];
   const sections=toolLists[t.name];
-  const nights=parseInt(document.getElementById('t-nights').value)||7;
-  const days=parseInt(document.getElementById('t-days').value)||8;
   const out=document.getElementById('tool-list-output');
   let html=`<div class="person-name-row">
-    <input type="text" class="person-name-input" value="${t.name}" onchange="toolTravelers[${idx}].name=this.value;document.querySelectorAll('.person-tab')[${idx}].textContent=this.value;toolLists[this.value]=toolLists['${t.name}'];delete toolLists['${t.name}']" />
+    <input type="text" class="person-name-input" value="${t.name}" onchange="toolTravelers[${idx}].name=this.value;document.querySelectorAll('.person-tab')[${idx}].textContent=this.value" />
     <span class="person-pill">${roleLabel(t.role)} · ${t.gender}</span>
+    <button class="save-profile-btn" onclick="saveProfile('${t.name}',${t.age},'${t.gender}','${t.role}').then(()=>{this.textContent='✓ Saved';setTimeout(()=>this.textContent='Save profile',2000)})">Save profile</button>
   </div>`;
   sections.forEach((sec,si)=>{
     html+=`<div class="pack-section"><div class="pack-section-head">${sec.cat} <span>(${sec.items.length} items)</span></div>`;
     sec.items.forEach((item,ii)=>{
-      const key=`${idx}-${si}-${ii}`;const expanded=toolExpanded[key];
+      const key=`${idx}-${si}-${ii}`; const expanded=toolExpanded[key];
       html+=`<div class="pack-item-row">
         <input type="checkbox" aria-label="${item.name}">
         <span class="pack-item-name">${item.name}</span>
+        ${item.link?`<a href="${item.link}" target="_blank" class="pack-item-link">Shop →</a>`:''}
         <input type="number" class="pack-qty" value="${item.qty}" min="0" onchange="toolLists['${t.name}'][${si}].items[${ii}].qty=parseInt(this.value)">
         <button class="expand-btn ${expanded?'open':''}" onclick="toggleToolExpand('${key}',${idx},${si},${ii},'${t.name}')">${expanded?'− collapse':'+ expand'}</button>
       </div>`;
@@ -1009,118 +1056,275 @@ function addToolSub(key,ti){if(!toolExpanded[key])return;toolExpanded[key].subs.
 function removeToolSub(key,si,ti){toolExpanded[key].subs.splice(si,1);selectToolTab(ti);}
 function resetTool(){toolTravelers=[];toolLists={};toolExpanded={};buildToolTravelers();}
 
-// ── PACKING LOGIC ──────────────────────────────
+// ═══════════════════════════════════════════
+// PACKING LOGIC — based on your spreadsheet
+// ═══════════════════════════════════════════
 function roleFromAge(a){if(a<1)return'baby';if(a<=4)return'toddler';if(a<=12)return'child';if(a<=17)return'teen';return'adult';}
 function roleLabel(r){return{baby:'Baby (under 1)',toddler:'Toddler (1–4)',child:'Child (5–12)',teen:'Teen (13–17)',adult:'Adult (18+)'}[r]||r;}
 
-function buildSections(t,days,nights,climate,packAll,activities){
-  const{role,gender,feeding,potty}=t;
-  const isCold=climate.includes('Cold')||climate.includes('Mixed');
-  const isWarm=climate.includes('Warm')||climate.includes('Hot');
-  const isFemale=gender==='Female';const isMale=gender==='Male';
-  const outfits=packAll?days:Math.min(days,4);
-  let s=[];
+// Check if ANY traveler is being breastfed (for nursing-mom items)
+function anyBreastfeeding(){return toolTravelers.some(t=>t.feeding==='nursing'||t.feeding==='bottle');}
 
-  if(role==='baby'){
-    s.push({cat:'Clothing',items:[{name:'Onesies / bodysuits',qty:days*3},{name:'Pajamas / sleepsacks',qty:Math.ceil(nights/2)+1},{name:'Pants / leggings',qty:Math.ceil(days*1.5)},...(isCold?[{name:'Warm jacket / bunting',qty:1},{name:'Knit hat',qty:2}]:[]),{name:'Socks',qty:days*2},{name:'Shoes / booties',qty:2}]});
+function buildSections(t, days, nights, climate, packAll, activities){
+  const{role,gender,feeding,potty,age}=t;
+  const isCold=climate==='Cold / winter';
+  const isMixed=climate==='Mixed (varies)';
+  const isMild=climate==='Mild / spring-fall';
+  const isWarm=climate==='Warm / tropical'||climate==='Hot / desert';
+  const isHot=climate==='Hot / desert';
+  const isFemale=gender==='Female';
+  const isMale=gender==='Male';
+  const isBeach=activities.includes('beach');
+  const isSki=activities.includes('ski');
+  const isGym=activities.includes('gym');
+  const isBusiness=activities.includes('business');
+  const isFormal=activities.includes('formal');
+  const notPottyTrained=potty==='no'||potty==='partial'||!potty;
+  const fullyTrained=potty==='yes';
+  const ageNum=age||0;
+  const isNursing=feeding==='nursing';
+  const isBottle=feeding==='bottle';
+  const isFormula=feeding==='formula'||(!feeding&&role==='baby');
 
-    // Feeding items vary by feeding type
-    const isNursing=feeding==='nursing';
-    const isBottle=feeding==='bottle';
-    const isFormula=feeding==='formula'||!feeding;
-    let feedItems=[{name:'Bibs',qty:days*4},{name:'Burp cloths',qty:days*3}];
-    if(isNursing){
-      feedItems=[
-        {name:'Nursing cover / privacy blanket',qty:1},
-        {name:'Nursing pads (disposable)',qty:days*4},
-        {name:'Nipple cream (Lanolin)',qty:1},
-        {name:'Reusable milk storage bags',qty:10},
-        ...feedItems,
-      ];
-    } else if(isBottle){
-      feedItems=[
-        {name:'Baby bottles',qty:6},
-        {name:'Breast milk storage bags',qty:days*4},
-        {name:'Portable breast pump + charger',qty:1},
-        {name:'Cooler bag + ice packs (for milk)',qty:1},
-        {name:'Bottle brush & soap',qty:1},
-        ...feedItems,
-      ];
-    } else {
-      feedItems=[
-        {name:'Baby bottles',qty:4},
-        {name:'Formula (pre-measured containers)',qty:days*6},
-        {name:'Bottle brush & soap',qty:1},
-        {name:'Formula dispenser / organizer',qty:1},
-        ...feedItems,
-      ];
-    }
-    s.push({cat:'Feeding',items:feedItems});
+  // Quantity helpers from spreadsheet
+  const qShortSleeve = ()=>{
+    if(!isWarm&&!isMixed) return 0;
+    const base=ageNum>=5?Math.ceil(days*1.25):Math.ceil(days*1.5);
+    if(isMixed) return Math.ceil(base/2);
+    return base;
+  };
+  const qLongSleeve = ()=>{
+    if(isWarm) return 0;
+    const base=ageNum>=5?Math.ceil(days*1.25):Math.ceil(days*1.5);
+    if(isCold) return base;
+    return Math.ceil(base/2); // mild/mixed
+  };
+  const qSweater = ()=>{
+    if(!isCold) return 0;
+    return ageNum>=5?Math.ceil(days*1.15):Math.ceil(days*1.25);
+  };
+  const qSocks = ()=>{
+    let base=isCold?days:Math.ceil(days/2);
+    if(ageNum<=4) base+=Math.ceil(days/3);
+    return base;
+  };
+  const qBathing = ()=>isBeach&&(isWarm||isHot)?Math.ceil(days/3):0;
 
-    s.push({cat:'Diapering',items:[{name:'Diapers',qty:days*8},{name:'Baby wipes (packs)',qty:Math.ceil(days/3)+1},{name:'Diaper rash cream',qty:1},{name:'Changing pad',qty:1},{name:'Trash bags / wet bags',qty:days*2}]});
-    s.push({cat:'Sleep',items:[{name:'Portable crib / travel bassinet',qty:1},{name:'Fitted sheet (travel size)',qty:2},{name:'Sound machine / white noise app',qty:1},{name:'Pacifiers',qty:3},{name:'Baby monitor',qty:1}]});
-    s.push({cat:'Health & safety',items:[{name:'Baby Tylenol / fever reducer',qty:1},{name:'Nasal aspirator',qty:1},{name:'Baby sunscreen (SPF 50)',qty:1},{name:'Baby carrier / wrap',qty:1},{name:'Thermometer',qty:1}]});
-  } else if(role==='toddler'){
-    s.push({cat:'Clothing',items:[{name:'T-shirts / tops',qty:outfits+1},{name:'Pants / shorts',qty:outfits},{name:'Pajamas',qty:Math.ceil(nights/2)+1},{name:'Underwear / pull-ups',qty:days*2},{name:'Socks',qty:days+2},{name:'Shoes',qty:2},...(isCold?[{name:'Jacket / coat',qty:1},{name:'Gloves & hat',qty:1}]:[])]});
+  let clothing=[], entertainment=[], feeding_items=[], firstaid=[], sleep=[], travelgear=[], toiletries=[], work=[];
 
-    // Potty training affects diapering section
-    const fullyTrained=potty==='yes';
-    const inTraining=potty==='partial';
-    const notTrained=potty==='no'||!potty;
-    let pottyItems=[];
-    if(fullyTrained){
-      pottyItems=[
-        {name:'Extra underwear (accidents happen)',qty:days+4},
-        {name:'Portable travel potty seat',qty:1},
-        {name:'Wipes (packs)',qty:Math.ceil(days/4)+1},
-        {name:'Waterproof mattress pad / liner',qty:1},
-        {name:'Change of clothes (easy access)',qty:3},
-      ];
-    } else if(inTraining){
-      pottyItems=[
-        {name:'Pull-ups',qty:days*4},
-        {name:'Training underwear (backup)',qty:days+2},
-        {name:'Portable travel potty seat',qty:1},
-        {name:'Wipes (packs)',qty:Math.ceil(days/4)+1},
-        {name:'Changing pad',qty:1},
-        {name:'Change of clothes (easy access)',qty:3},
-      ];
-    } else {
-      pottyItems=[
-        {name:'Diapers / pull-ups',qty:days*5},
-        {name:'Wipes (packs)',qty:Math.ceil(days/4)+1},
-        {name:'Portable potty seat',qty:1},
-        {name:'Changing pad',qty:1},
-      ];
-    }
-    s.push({cat:'Diapering / potty',items:pottyItems});
-    s.push({cat:'Food & snacks',items:[{name:'Snack pouches',qty:days*3},{name:'Favorite snacks (packs)',qty:days*2},{name:'Sippy cup / water bottle',qty:2},{name:'Bib',qty:3},{name:'Utensils set',qty:1}]});
-    s.push({cat:'Sleep',items:[{name:'Travel sound machine',qty:1},{name:'Favorite stuffed animal / comfort item',qty:1},{name:'Portable travel crib (if needed)',qty:1},{name:'Nightlight (portable)',qty:1}]});
-    s.push({cat:'Entertainment',items:[{name:'Tablet / kids device + charger',qty:1},{name:'Toddler headphones',qty:1},{name:'Small activity books / stickers',qty:2},{name:'Crayons & coloring pages',qty:1}]});
-    s.push({cat:'Health & safety',items:[{name:"Children's Tylenol / fever reducer",qty:1},{name:'Sunscreen (SPF 50)',qty:1},{name:'Bug spray (kid-safe)',qty:1},{name:'First aid kit',qty:1}]});
-  } else if(role==='child'){
-    s.push({cat:'Clothing',items:[{name:'T-shirts / tops',qty:outfits},{name:'Pants / shorts',qty:outfits},{name:'Pajamas',qty:Math.ceil(nights/3)+1},{name:'Underwear',qty:days+2},{name:'Socks',qty:days+2},{name:'Sneakers',qty:1},{name:'Sandals / water shoes',qty:1},...(isCold?[{name:'Jacket / fleece',qty:1},{name:'Gloves & hat',qty:1}]:[]),...(activities.includes('formal')?[{name:'Dress-up outfit',qty:1}]:[])]});
-    s.push({cat:'Hygiene',items:[{name:'Toothbrush & toothpaste',qty:1},{name:'Shampoo / conditioner (travel)',qty:1},{name:'Sunscreen (SPF 50)',qty:1},{name:'Bug spray',qty:1},{name:'Hairbrush / comb',qty:1},...(isFemale?[{name:'Hair ties & clips',qty:5}]:[])]});
-    s.push({cat:'Entertainment',items:[{name:'Tablet / device + charger',qty:1},{name:'Headphones',qty:1},{name:'Books / activity books',qty:2},{name:'Small backpack / day bag',qty:1},{name:'Card or travel games',qty:1}]});
-    s.push({cat:'Health & safety',items:[{name:"Children's pain reliever",qty:1},{name:'Motion sickness remedy (if needed)',qty:1},{name:'First aid kit',qty:1}]});
-    if(activities.includes('beach'))s.push({cat:'Beach / pool',items:[{name:'Swimsuit',qty:2},{name:'Swim goggles',qty:1},{name:'Rash guard',qty:1},{name:'Beach towel',qty:1},{name:'Flip flops',qty:1},{name:'Sand toys',qty:1}]});
-  } else if(role==='teen'){
-    s.push({cat:'Clothing',items:[{name:'Tops / shirts',qty:outfits},{name:'Bottoms (pants/shorts)',qty:Math.ceil(outfits*0.75)},{name:'Dress / going-out outfit',qty:isFemale?2:1},{name:'Pajamas',qty:Math.ceil(nights/4)+1},{name:'Underwear',qty:days+2},{name:'Socks',qty:days+2},{name:'Sneakers',qty:1},{name:'Sandals',qty:1},...(isCold?[{name:'Jacket / coat',qty:1},{name:'Sweater / hoodie',qty:2}]:[])]});
-    s.push({cat:'Hygiene & beauty',items:[{name:'Toothbrush & toothpaste',qty:1},{name:'Deodorant',qty:1},{name:'Shampoo & conditioner (travel)',qty:1},{name:'Face wash & moisturizer',qty:1},...(isFemale?[{name:'Tampons / pads',qty:Math.ceil(nights/3)*4},{name:'Makeup bag',qty:1},{name:'Hair styling tools',qty:1},{name:'Hair ties & clips',qty:5}]:[{name:'Razors',qty:2},{name:'Shave gel (travel)',qty:1}])]});
-    s.push({cat:'Electronics',items:[{name:'Phone + charger',qty:1},{name:'Earbuds / headphones',qty:1},{name:'Portable battery bank',qty:1}]});
-  } else {
-    s.push({cat:'Clothing',items:[{name:'Tops / shirts',qty:outfits},{name:'Bottoms (pants/shorts)',qty:Math.ceil(outfits*0.6)},...(isFemale?[{name:'Dresses',qty:Math.ceil(outfits*0.4)}]:[]),{name:'Underwear',qty:days+2},{name:'Socks',qty:days+2},{name:'Pajamas / loungewear',qty:Math.ceil(nights/4)+1},{name:'Sneakers',qty:1},{name:'Sandals / casual shoes',qty:1},...(isCold?[{name:'Jacket / coat',qty:1},{name:'Sweater / hoodie',qty:2},{name:'Scarf & gloves',qty:1}]:[]),...(activities.includes('formal')?[{name:'Formal outfit / dress',qty:1},{name:'Dress shoes / heels',qty:1}]:[]),...((activities.includes('gym')||activities.includes('hiking'))?[{name:'Athletic / hiking outfit',qty:2},{name:'Athletic shoes',qty:1}]:[])]});
-    s.push({cat:'Toiletries',items:[{name:'Toothbrush & toothpaste',qty:1},{name:'Deodorant',qty:1},{name:'Shampoo & conditioner',qty:1},{name:'Body wash / soap',qty:1},{name:'Razors',qty:isMale?2:3},{name:'Sunscreen (SPF 50)',qty:isWarm?2:1},...(isFemale?[{name:'Feminine hygiene products',qty:Math.ceil(nights/3)*4},{name:'Makeup bag',qty:1},{name:'Hair styling tools',qty:1},{name:'Hair ties & accessories',qty:5},{name:'Skincare routine',qty:1}]:[{name:'Shave cream / gel',qty:1},{name:'Aftershave',qty:1}]),{name:'Medications (prescription)',qty:nights+1},{name:'First aid kit / pain relievers',qty:1}]});
-    s.push({cat:'Electronics & travel docs',items:[{name:'Phone + charger',qty:1},{name:'Earbuds / headphones',qty:1},{name:'Portable battery bank',qty:1},{name:'Power adapter (if international)',qty:1},{name:'Camera + memory card',qty:1},{name:'Passport / ID + copies',qty:1},{name:'Travel insurance docs',qty:1},{name:'Wallet / card holder',qty:1}]});
-    if(activities.includes('beach'))s.push({cat:'Beach / pool',items:[{name:'Swimsuit',qty:2},{name:'Cover-up / sarong',qty:1},{name:'Waterproof sandals / flip flops',qty:1},{name:'Beach bag',qty:1},{name:'Waterproof phone case',qty:1}]});
-    if(activities.includes('hiking'))s.push({cat:'Outdoor / hiking',items:[{name:'Day pack / hydration pack',qty:1},{name:'Trekking poles',qty:2},{name:'Headlamp + batteries',qty:1},{name:'Bug spray',qty:1},{name:'Blister pads',qty:1}]});
-    if(activities.includes('business'))s.push({cat:'Business travel',items:[{name:'Business outfits',qty:Math.min(days,5)},{name:'Laptop + charger',qty:1},{name:'Business cards',qty:1},{name:'Notebook & pen',qty:1}]});
+  // ── CLOTHING ──
+  // Short sleeve tops
+  const ss=qShortSleeve(); if(ss>0) clothing.push({name:'Short Sleeve Tops',qty:ss});
+  // Long sleeve tops
+  const ls=qLongSleeve(); if(ls>0) clothing.push({name:'Long Sleeve Tops',qty:ls});
+  // Sweaters (cold only)
+  const sw=qSweater(); if(sw>0) clothing.push({name:'Sweaters',qty:sw});
+  // Sweatshirts
+  if(!isWarm) clothing.push({name:'Sweatshirts',qty:days>5?2:1});
+  // Light sweater/jacket (mild/mixed only)
+  if(isMild||isMixed) clothing.push({name:'Light Sweater / Jacket',qty:days>5?2:1});
+  // Dinner outfits
+  clothing.push({name:'Dinner Outfits',qty:Math.ceil(nights/2)});
+  // Socks
+  clothing.push({name:'Socks',qty:qSocks()});
+  // Sleeping underwear (age 2+, unless not potty trained)
+  if(ageNum>=2&&(ageNum>3||fullyTrained)) clothing.push({name:'Sleeping Underwear',qty:nights});
+  // Diapers
+  if(role==='baby') clothing.push({name:'Diapers',qty:Math.min(ageNum<1?days*10:days*6,50)});
+  if((role==='toddler')&&notPottyTrained){
+    const diaperQty=ageNum<=2?Math.min(days*6,50):Math.min(days*5,50);
+    clothing.push({name:'Diapers / Pull-ups',qty:diaperQty});
   }
-  return s;
+  // Wipes (under 4)
+  if(ageNum<4) clothing.push({name:'Wipes',qty:Math.ceil(days/5)});
+  // Winter items (cold only)
+  if(isCold){
+    clothing.push({name:'Winter Hat',qty:1});
+    clothing.push({name:'Winter Gloves',qty:1});
+    clothing.push({name:'Winter Coat',qty:1});
+  }
+  // Ski gear (cold + ski activity, age 4+)
+  if(isSki&&isCold&&ageNum>=4){
+    clothing.push({name:'Ski / Snowboard Jacket',qty:1});
+    clothing.push({name:'Snow Pants',qty:1});
+    clothing.push({name:'Ski Helmet',qty:1});
+    clothing.push({name:'Ski Goggles',qty:1});
+    clothing.push({name:'Mittens / Snow Gloves',qty:1});
+    clothing.push({name:'Base Layer Top',qty:days});
+    clothing.push({name:'Base Layer Bottom',qty:days});
+    clothing.push({name:'Ski/Snowboard Boot Socks',qty:days});
+    clothing.push({name:'Ski / Snowboard Boots',qty:1});
+  }
+  // Bras (female, age 12+)
+  if(isFemale&&ageNum>=12) clothing.push({name:'Regular Bra',qty:Math.ceil(days/3)});
+  if(isFemale&&ageNum>=14) clothing.push({name:'Strapless Bra',qty:1});
+  if(isFemale&&ageNum>=14&&isGym) clothing.push({name:'Sports Bra',qty:Math.ceil(days/2)});
+  // Purse (female 14+)
+  if(isFemale&&ageNum>=14) clothing.push({name:'Purse',qty:1});
+  // Sandals (warm/hot/mixed)
+  if(isWarm||isMixed) clothing.push({name:'Sandals',qty:Math.ceil(days*2/3)});
+  // Athleisure (gym, age 10+)
+  if(isGym&&ageNum>=10){
+    clothing.push({name:'Athleisure Tops',qty:Math.ceil(days/2)});
+    clothing.push({name:'Athleisure Bottoms',qty:Math.ceil(days/2)});
+  }
+  // Swimsuit
+  if(qBathing()>0) clothing.push({name:'Swimsuit',qty:qBathing()});
+  if(isBeach&&isWarm) clothing.push({name:'Sun Hat',qty:1});
+  if(isBeach) clothing.push({name:'Sunglasses',qty:1});
+  if(isBeach&&isWarm&&isFemale) clothing.push({name:'Swimsuit Cover-up',qty:Math.ceil(days/3)});
+  // Sleeping bra (breastfeeding moms, 25+)
+  if(isFemale&&ageNum>=25&&anyBreastfeeding()) clothing.push({name:'Sleeping Bra (nursing)',qty:Math.ceil(nights/2)});
+  // Baby camping chair
+  if(ageNum<=2) travelgear.push({name:'Baby Camping Chair',qty:1});
+
+  // ── ENTERTAINMENT ──
+  entertainment.push({name:'iPad / Tablet',qty:1});
+  entertainment.push({name:'Headphones',qty:1});
+  if(ageNum<4) entertainment.push({name:'Small Toys',qty:4});
+  if(ageNum<=3) entertainment.push({name:'Small Baby Blanket',qty:1});
+  if(ageNum>=10) entertainment.push({name:'Phone Charger',qty:1});
+  if(ageNum>=12) entertainment.push({name:'Books / Kindle',qty:1});
+  if(ageNum>=12) entertainment.push({name:'Camera + Charger',qty:1});
+  // Travel day snacks
+  entertainment.push({name:'Travel Day Snacks',qty:days<5?0:1,note:days<5?'Unlimited':'See qty suggestions'});
+
+  // ── FEEDING ──
+  if(ageNum>=1) feeding_items.push({name:'Water Bottle',qty:1});
+  if(ageNum<4) feeding_items.push({name:'Milk Cup',qty:1,link:'https://go.shopmy.us/p-66543766'});
+  if(ageNum<3) feeding_items.push({name:'Toddler Spoon & Fork',qty:1});
+  if(ageNum<3) feeding_items.push({name:'Toddler Plate',qty:1});
+  if(ageNum<2) feeding_items.push({name:'Portable High Chair',qty:1,link:'https://go.shopmy.us/p-66543766'});
+  if(ageNum<5) feeding_items.push({name:'Lunch Containers',qty:1,link:'https://go.shopmy.us/p-66544009'});
+  if(ageNum<4) feeding_items.push({name:'Snack Cups',qty:1,link:'https://go.shopmy.us/p-66543949'});
+  if(ageNum<5) feeding_items.push({name:'Snack Boxes',qty:1,link:'https://go.shopmy.us/p-66543877'});
+  if(ageNum>=2) feeding_items.push({name:'Electrolytes',qty:1,link:'https://go.shopmy.us/p-66544089'});
+  if(ageNum<3) feeding_items.push({name:'Ice Packs',qty:2});
+  if(ageNum<5) feeding_items.push({name:'Lunch Box',qty:1});
+  // Baby-specific feeding
+  if(role==='baby'){
+    feeding_items.push({name:'Baby Bottles',qty:4});
+    feeding_items.push({name:'Bibs',qty:Math.min(days*4,20)});
+    feeding_items.push({name:'Burp Cloths',qty:Math.min(days*3,15)});
+    feeding_items.push({name:'Portable Drying Rack',qty:1,link:'https://go.shopmy.us/p-66544192'});
+    feeding_items.push({name:'Vitamin D Drops',qty:1});
+    if(isNursing||isBottle){
+      feeding_items.push({name:'Multi Bottle Cooler Bag',qty:1,link:'https://go.shopmy.us/p-66544416'});
+      feeding_items.push({name:'Milk Storage Bags',qty:nights*3});
+      feeding_items.push({name:'Ceres Chill',qty:1,link:'https://go.shopmy.us/p-66544127'});
+    }
+    if(isNursing){
+      feeding_items.push({name:'Nursing Cover',qty:1,link:'https://go.shopmy.us/p-66544159'});
+      feeding_items.push({name:'Milk Pitcher',qty:1,link:'https://go.shopmy.us/p-66763194'});
+    }
+    if(isBottle||isNursing){
+      feeding_items.push({name:'Regular Pump',qty:1});
+      feeding_items.push({name:'Wearable Pump',qty:1,link:'https://go.shopmy.us/p-66763423'});
+      feeding_items.push({name:'Pump Parts',qty:2});
+      feeding_items.push({name:'Pumping Bra',qty:1,link:'https://go.shopmy.us/p-66544211'});
+      feeding_items.push({name:'Pump Chargers',qty:1});
+      feeding_items.push({name:'Container for Parts',qty:1});
+      feeding_items.push({name:'Pump Wipes',qty:1,link:'https://go.shopmy.us/p-66762919'});
+      feeding_items.push({name:'Single Bottle Cooler Bag',qty:1,link:'https://go.shopmy.us/p-66544290'});
+    }
+    if(isFormula){
+      feeding_items.push({name:'Formula',qty:Math.ceil(days/3)});
+    }
+    feeding_items.push({name:'Eating Bib',qty:1,link:'https://go.shopmy.us/p-66544244'});
+  }
+
+  // ── FIRST AID ──
+  if(ageNum>=6) firstaid.push({name:'Tylenol',qty:1});
+  if(ageNum>=6) firstaid.push({name:'Ibuprofen',qty:1});
+  if(ageNum<=5) firstaid.push({name:"Children's Ibuprofen",qty:1});
+  if(ageNum<=5) firstaid.push({name:"Children's Tylenol",qty:1});
+  if(ageNum<=2) firstaid.push({name:'Saline Spray',qty:1});
+  firstaid.push({name:'Travel First Aid Kit',qty:1});
+  if(ageNum<=2) firstaid.push({name:'Snot Sucker',qty:1});
+  if(ageNum>=2) firstaid.push({name:'Nail Clippers',qty:1});
+  if(ageNum<2) firstaid.push({name:'Nail Filer',qty:1});
+  if(ageNum<3) firstaid.push({name:'Thermometer',qty:1});
+  if(isBeach&&ageNum<3&&notPottyTrained) firstaid.push({name:'Swim Diapers',qty:days*2});
+  if(isBeach||(isWarm&&!isCold)) firstaid.push({name:'Sunscreen',qty:1});
+  if(isBeach&&ageNum<2) firstaid.push({name:'Sunscreen Applicator',qty:1});
+  if(ageNum<3) firstaid.push({name:'Dog Poop Bags (diaper disposal)',qty:1});
+  if(ageNum<4&&(isWarm||isMixed)) firstaid.push({name:'Baby Powder',qty:1});
+  if(isWarm||isMixed) firstaid.push({name:'Mosquito Repellent',qty:1});
+  if(ageNum>=18) firstaid.push({name:'Antacids',qty:1});
+
+  // ── SLEEP ──
+  if(ageNum<3) sleep.push({name:'Pack & Play',qty:1});
+  sleep.push({name:'Portable Sound Machine + Charger',qty:1,link:'https://go.shopmy.us/p-66544621'});
+  if(ageNum<2) sleep.push({name:'Slumberpod + Fan',qty:1,link:'https://go.shopmy.us/p-66544590'});
+  if(ageNum<3) sleep.push({name:'Crib Sheets',qty:2});
+  if(ageNum<4) sleep.push({name:'Baby Monitor',qty:1});
+  if(ageNum<3) sleep.push({name:'Sleep Sacks',qty:2});
+  if(ageNum<3) sleep.push({name:'Pacifiers / Binkies',qty:3});
+  if(ageNum<3) sleep.push({name:'Lovey / Comfort Item',qty:1});
+
+  // ── TRAVEL GEAR ──
+  if(ageNum<=6) travelgear.push({name:'Car Seat',qty:1});
+  if(ageNum<=6) travelgear.push({name:'Car Seat Bag',qty:1,link:'https://go.shopmy.us/p-66544720'});
+  if(ageNum<=4) travelgear.push({name:'Stroller',qty:1});
+  if(ageNum<=4) travelgear.push({name:'Stroller Bag',qty:1});
+  if(ageNum<=4&&(isWarm||isMixed)) travelgear.push({name:'Stroller Fan',qty:1,link:'https://go.shopmy.us/p-66544755'});
+  if(ageNum<=2) travelgear.push({name:'Baby Carrier',qty:1,link:'https://go.shopmy.us/p-66544664'});
+  if(ageNum<=4) travelgear.push({name:'Diaper Bag',qty:1});
+
+  // ── TOILETRIES ──
+  toiletries.push({name:'Shampoo',qty:1});
+  toiletries.push({name:'Conditioner',qty:1});
+  toiletries.push({name:'Body Wash',qty:1});
+  if(isFemale) toiletries.push({name:'Detangler',qty:1});
+  toiletries.push({name:'Lotion',qty:1});
+  toiletries.push({name:'Face Wash',qty:1});
+  toiletries.push({name:'Toothbrush',qty:1});
+  toiletries.push({name:'Toothpaste',qty:1});
+  toiletries.push({name:'Hair Brush',qty:1});
+  if(isFemale) toiletries.push({name:'Hair Ties',qty:1});
+  if(isFemale) toiletries.push({name:'Water Spray Bottle',qty:1});
+  if(isFemale) toiletries.push({name:'Curl Cream',qty:1});
+  toiletries.push({name:'Q-Tips',qty:1});
+  if(ageNum>=14&&isFemale) toiletries.push({name:'Hair Tools (Straightener/Curling Iron)',qty:1});
+  if(ageNum>=14&&isFemale) toiletries.push({name:'Make Up',qty:1});
+  if(ageNum>=14&&isFemale) toiletries.push({name:'Make Up Remover',qty:1});
+  if(ageNum>=14) toiletries.push({name:'Skincare',qty:1});
+  if(ageNum>=10) toiletries.push({name:'Deodorant',qty:1});
+  if(ageNum>=12) toiletries.push({name:'Razor',qty:1});
+  if(isFemale) toiletries.push({name:'Feminine Products',qty:Math.min(days*5,25)});
+  if(ageNum>=12) toiletries.push({name:'Perfume / Cologne',qty:1});
+
+  // ── WORK ──
+  if(isBusiness&&ageNum>=18){
+    work.push({name:'Work Laptop',qty:1});
+    work.push({name:'Work Laptop Charger',qty:1});
+    work.push({name:'Work Bag',qty:1});
+    work.push({name:'Work Notebook',qty:1});
+    work.push({name:'Pen',qty:1});
+  }
+
+  // Build sections — only include non-empty
+  const sections=[];
+  if(clothing.length)    sections.push({cat:'Clothing',items:clothing});
+  if(feeding_items.length) sections.push({cat:'Feeding',items:feeding_items});
+  if(entertainment.length) sections.push({cat:'Entertainment',items:entertainment});
+  if(toiletries.length)  sections.push({cat:'Toiletries',items:toiletries});
+  if(firstaid.length)    sections.push({cat:'First Aid',items:firstaid});
+  if(sleep.length)       sections.push({cat:'Sleep',items:sleep});
+  if(travelgear.length)  sections.push({cat:'Travel Gear',items:travelgear});
+  if(work.length)        sections.push({cat:'Work',items:work});
+  return sections;
 }
 
 function getExpandDefaults(name){
-  const map={'Makeup bag':['Foundation / tinted moisturizer','Mascara','Eyeliner','Blush / bronzer','Lipstick / gloss','Setting spray','Makeup remover wipes'],'Hair styling tools':['Hair dryer','Flat iron / curling iron','Diffuser attachment','Heat protectant spray'],'Skincare routine':['Cleanser','Toner','Vitamin C serum','Moisturizer (AM)','Moisturizer (PM)','SPF face sunscreen','Eye cream'],'Baby bottles':['4oz bottles','8oz bottles','Extra nipples','Bottle caps'],'Favorite snacks (packs)':['Goldfish crackers','Fruit pouches','Granola bars','Raisins / dried fruit'],'Sand toys':['Bucket & shovel','Sand molds','Watering can'],'First aid kit / pain relievers':['Band-aids (assorted)','Ibuprofen / Tylenol','Antacids','Antihistamine (Benadryl)','Neosporin'],'Feminine hygiene products':['Tampons (regular)','Tampons (super)','Pads','Liners','Pain reliever (Midol)']};
+  const map={
+    'Make Up':['Foundation / tinted moisturizer','Mascara','Eyeliner','Blush / bronzer','Lipstick / gloss','Setting spray','Makeup remover wipes'],
+    'Hair Tools (Straightener/Curling Iron)':['Hair dryer','Flat iron / curling iron','Diffuser attachment','Heat protectant spray'],
+    'Skincare':['Cleanser','Toner','Vitamin C serum','Moisturizer (AM)','Moisturizer (PM)','SPF face sunscreen','Eye cream'],
+    'Baby Bottles':['4oz bottles','8oz bottles','Extra nipples','Bottle caps'],
+    'Travel First Aid Kit':['Band-aids (assorted)','Neosporin','Antiseptic wipes','Medical tape','Tweezers'],
+    'Feminine Products':['Tampons (regular)','Tampons (super)','Pads','Liners','Pain reliever (Midol)'],
+  };
   return map[name]||[`${name} — item 1`,`${name} — item 2`,`${name} — item 3`];
 }
 
