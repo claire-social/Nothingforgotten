@@ -605,16 +605,64 @@ textarea.review-text:focus { outline: none; border-color: var(--text); }
     <!-- STEP 2: Lists -->
     <div class="tool-step" id="ts2">
       <div class="tool-top-bar">
-        <div>
-          <h2 style="font-family:Georgia,serif;font-weight:400">Your packing lists <span class="unlocked-badge">✓ Unlocked</span></h2>
-          <p id="t-list-meta" style="font-size:13px;color:var(--text-muted);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin-top:2px"></p>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px">
+            <input type="text" id="trip-title-input" value="My packing list"
+              style="font-family:Georgia,serif;font-weight:400;font-size:clamp(18px,3vw,26px);border:none;border-bottom:2px solid transparent;outline:none;background:transparent;color:var(--text);padding:0;width:auto;min-width:120px;max-width:320px"
+              onfocus="this.style.borderBottomColor='var(--border-med)'"
+              onblur="this.style.borderBottomColor='transparent'"
+            />
+            <span class="unlocked-badge">✓ Unlocked</span>
+            <button onclick="saveTripTitle()" class="mini-btn" style="font-size:11px">Save name</button>
+          </div>
+          <p id="t-list-meta" style="font-size:13px;color:var(--text-muted);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"></p>
         </div>
         <div class="tool-actions">
+          <button class="btn-outline" onclick="toggleEditConditions()" style="font-size:13px" id="edit-conditions-btn">✏️ Edit conditions</button>
           <button class="btn-outline" onclick="window.print()" style="font-size:13px">🖨 Print</button>
           <button class="btn-outline" onclick="toolStep(0);resetTool()" style="font-size:13px">← New list</button>
           <button class="btn-outline" onclick="showPage('dashboard');loadDashboard()" style="font-size:13px">My account</button>
         </div>
       </div>
+
+      <!-- Edit conditions panel -->
+      <div id="edit-conditions-panel" style="display:none;background:var(--bg-soft);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;margin-bottom:20px">
+        <p style="font-size:13px;font-weight:600;margin-bottom:14px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">Edit trip conditions — list will update instantly</p>
+        <div class="field-row">
+          <div><label class="field-label">Days</label><input type="number" id="ec-days" min="1" max="61" onchange="ecSyncN()"></div>
+          <div><label class="field-label">Nights</label><input type="number" id="ec-nights" min="0" max="60" onchange="ecSyncD()"></div>
+        </div>
+        <div class="field-row">
+          <div><label class="field-label">Climate</label>
+            <select id="ec-climate"><option>Warm / tropical</option><option>Hot / desert</option><option>Mild / spring-fall</option><option>Cold / winter</option><option>Mixed (varies)</option></select>
+          </div>
+          <div><label class="field-label">Travel method</label>
+            <select id="ec-travel"><option value="flying">Flying</option><option value="driving">Driving</option><option value="train">Train</option></select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div><label class="field-label">Laundry access?</label>
+            <select id="ec-laundry"><option value="no">No — packing for all days</option><option value="yes">Yes — can re-wear</option></select>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Special activities</label>
+          <div class="activity-check-grid" id="ec-activities">
+            <label><input type="checkbox" value="beach"> Beach / swimming</label>
+            <label><input type="checkbox" value="formal"> Formal dinner / event</label>
+            <label><input type="checkbox" value="hiking"> Hiking / outdoors</label>
+            <label><input type="checkbox" value="gym"> Gym / fitness</label>
+            <label><input type="checkbox" value="business"> Business meetings</label>
+            <label><input type="checkbox" value="ski"> Skiing / snowboarding</label>
+            <label><input type="checkbox" value="nightlife"> Nightlife / bars</label>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:4px">
+          <button class="btn-primary yellow" onclick="applyEditConditions()">Update my lists →</button>
+          <button class="btn-outline" onclick="toggleEditConditions()">Cancel</button>
+        </div>
+      </div>
+
       <div class="person-tabs" id="tool-person-tabs"></div>
       <div id="tool-list-output"></div>
     </div>
@@ -961,11 +1009,11 @@ async function deleteTrip(id) {
 
 // Save trip after generating
 async function saveTripRecord(days, nights, climate, travelMethod, travelers) {
-  if (!sb || !currentUserEmail) return;
+  if (!sb || !currentUserEmail) return null;
   const name = `${climate} trip · ${travelers.map(t=>t.name).join(', ')}`;
   const travelerStr = travelers.map(t=>`${t.name} (${roleLabel(t.role)})`).join(', ');
   try {
-    await sb.from('trip_history').insert({
+    const { data } = await sb.from('trip_history').insert({
       user_email: currentUserEmail,
       name,
       days,
@@ -973,8 +1021,9 @@ async function saveTripRecord(days, nights, climate, travelMethod, travelers) {
       climate,
       travel_method: travelMethod,
       travelers: travelerStr,
-    });
-  } catch(e) { console.warn('Save trip failed:', e); }
+    }).select('id').single();
+    return data?.id || null;
+  } catch(e) { console.warn('Save trip failed:', e); return null; }
 }
 
 // ═══════════════════════════════════════════
@@ -1246,7 +1295,10 @@ function generateToolLists(){
   toolTravelers.forEach(t=>{toolLists[t.name]=buildSections(t,days,nights,climate,packAll,activities,travelMethod);});
   document.getElementById('t-list-meta').textContent=`${toolTravelers.length} traveler${toolTravelers.length>1?'s':''} · ${days} days / ${nights} nights · ${climate}`;
   document.getElementById('tool-person-tabs').innerHTML=toolTravelers.map((t,i)=>`<button class="person-tab ${i===0?'active':''}" onclick="selectToolTab(${i})">${t.name}</button>`).join('');
-  saveTripRecord(days,nights,climate,travelMethod,toolTravelers);
+  saveTripRecord(days,nights,climate,travelMethod,toolTravelers).then(id => { currentTripId = id; });
+  // Set default trip title
+  const defaultTitle = `${climate} · ${toolTravelers.map(t=>t.name).join(', ')}`;
+  document.getElementById('trip-title-input').value = defaultTitle;
   toolStep(2); selectToolTab(0);
   setTimeout(()=>showReviewModal(),3000);
 }
@@ -1307,6 +1359,75 @@ function toggleToolExpand(key,ti,si,ii,tname){if(toolExpanded[key]){delete toolE
 function addToolSub(key,ti){if(!toolExpanded[key])return;toolExpanded[key].subs.push('New item');selectToolTab(ti);}
 function removeToolSub(key,si,ti){toolExpanded[key].subs.splice(si,1);selectToolTab(ti);}
 function resetTool(){toolTravelers=[];toolLists={};toolExpanded={};buildToolTravelers();}
+
+// ── TRIP TITLE ──
+let currentTripId = null;
+async function saveTripTitle() {
+  const title = document.getElementById('trip-title-input').value.trim();
+  if (!title || !sb || !currentTripId) return;
+  await sb.from('trip_history').update({ name: title }).eq('id', currentTripId);
+  const btn = event.target;
+  btn.textContent = '✓ Saved';
+  setTimeout(() => btn.textContent = 'Save name', 2000);
+}
+
+// ── EDIT CONDITIONS ──
+function toggleEditConditions() {
+  const panel = document.getElementById('edit-conditions-panel');
+  const btn = document.getElementById('edit-conditions-btn');
+  const isOpen = panel.style.display !== 'none';
+  if (!isOpen) {
+    // Pre-fill with current values
+    document.getElementById('ec-days').value = document.getElementById('t-days').value;
+    document.getElementById('ec-nights').value = document.getElementById('t-nights').value;
+    document.getElementById('ec-climate').value = document.getElementById('t-climate').value;
+    document.getElementById('ec-travel').value = document.getElementById('t-travel').value;
+    document.getElementById('ec-laundry').value = document.getElementById('t-laundry').value;
+    // Copy activity checkboxes
+    const srcChecked = [...document.querySelectorAll('#ts0 .activity-check-grid input:checked')].map(e=>e.value);
+    document.querySelectorAll('#ec-activities input[type="checkbox"]').forEach(cb => {
+      cb.checked = srcChecked.includes(cb.value);
+    });
+    btn.textContent = '✕ Cancel editing';
+  } else {
+    btn.textContent = '✏️ Edit conditions';
+  }
+  panel.style.display = isOpen ? 'none' : 'block';
+}
+
+function ecSyncN() { const d=parseInt(document.getElementById('ec-days').value)||1; document.getElementById('ec-nights').value=Math.max(0,d-1); }
+function ecSyncD() { const n=parseInt(document.getElementById('ec-nights').value)||0; document.getElementById('ec-days').value=n+1; }
+
+function applyEditConditions() {
+  // Update the main tool values
+  document.getElementById('t-days').value = document.getElementById('ec-days').value;
+  document.getElementById('t-nights').value = document.getElementById('ec-nights').value;
+  document.getElementById('t-climate').value = document.getElementById('ec-climate').value;
+  document.getElementById('t-travel').value = document.getElementById('ec-travel').value;
+  document.getElementById('t-laundry').value = document.getElementById('ec-laundry').value;
+  // Update activity checkboxes in main tool
+  const ecChecked = [...document.querySelectorAll('#ec-activities input:checked')].map(e=>e.value);
+  document.querySelectorAll('#ts0 .activity-check-grid input[type="checkbox"]').forEach(cb => {
+    cb.checked = ecChecked.includes(cb.value);
+  });
+  // Regenerate lists with new conditions
+  const days = parseInt(document.getElementById('t-days').value)||8;
+  const nights = parseInt(document.getElementById('t-nights').value)||7;
+  const climate = document.getElementById('t-climate').value;
+  const packAll = document.getElementById('t-laundry').value === 'no';
+  const travelMethod = document.getElementById('t-travel').value;
+  const activities = ecChecked;
+  toolLists = {};
+  toolExpanded = {};
+  toolTravelers.forEach(t => { toolLists[t.name] = buildSections(t, days, nights, climate, packAll, activities, travelMethod); });
+  document.getElementById('t-list-meta').textContent = `${toolTravelers.length} traveler${toolTravelers.length>1?'s':''} · ${days} days / ${nights} nights · ${climate}`;
+  // Close panel
+  document.getElementById('edit-conditions-panel').style.display = 'none';
+  document.getElementById('edit-conditions-btn').textContent = '✏️ Edit conditions';
+  // Re-render current tab
+  const activeIdx = [...document.querySelectorAll('.person-tab')].findIndex(t=>t.classList.contains('active'));
+  selectToolTab(activeIdx >= 0 ? activeIdx : 0);
+}
 
 // ═══════════════════════════════════════════
 // PACKING LOGIC — ordered by spreadsheet priority
