@@ -982,21 +982,22 @@ async function saveTripName(id) {
   loadDashTrips();
 }
 
+let isReopenedTrip = false;
+
 function reopenTrip(idx) {
   const t = tripHistory[idx];
   if (!t) return;
-  // Pre-fill tool with this trip's settings and go to step 0
+  isReopenedTrip = true;
+  currentTripId = t.id;
   showPage('tool');
   toolStep(0);
   setTimeout(() => {
-    const daysEl = document.getElementById('t-days');
-    const nightsEl = document.getElementById('t-nights');
-    const climateEl = document.getElementById('t-climate');
-    const travelEl = document.getElementById('t-travel');
-    if (daysEl && t.days) daysEl.value = t.days;
-    if (nightsEl && t.nights) nightsEl.value = t.nights;
-    if (climateEl && t.climate) climateEl.value = t.climate;
-    if (travelEl && t.travel_method) travelEl.value = t.travel_method;
+    if (t.days) document.getElementById('t-days').value = t.days;
+    if (t.nights) document.getElementById('t-nights').value = t.nights;
+    if (t.climate) document.getElementById('t-climate').value = t.climate;
+    if (t.travel_method) document.getElementById('t-travel').value = t.travel_method;
+    // Set the title input to the saved trip name
+    document.getElementById('trip-title-input').value = t.name || 'My packing list';
   }, 50);
 }
 
@@ -1236,7 +1237,11 @@ function buildToolTravelers(){
   const c=document.getElementById('tool-traveler-forms'); c.innerHTML='';
   for(let i=0;i<n;i++){
     const da=i===0?35:i===1?8:i===2?0:38;
-    c.innerHTML+=`<div class="traveler-card" id="tcard${i}"><h4>Traveler ${i+1}</h4>
+    c.innerHTML+=`<div class="traveler-card" id="tcard${i}">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <h4 style="margin:0">Traveler ${i+1}</h4>
+        ${n>1?`<button class="mini-btn danger" style="font-size:11px" onclick="removeTravelerCard(${i})">✕ Remove</button>`:''}
+      </div>
       <div class="field-row">
         <div><label class="field-label">Name / nickname</label><input type="text" id="tn-name${i}" placeholder="e.g. Mom, Jake…"></div>
         <div><label class="field-label">Age</label><input type="number" id="tn-age${i}" min="0" max="100" value="${da}" oninput="tUpdateRole(${i})"></div>
@@ -1258,6 +1263,46 @@ function buildToolTravelers(){
 }
 buildToolTravelers();
 function tUpdateRole(i){const a=parseInt(document.getElementById('tn-age'+i).value)||0;document.getElementById('tn-role'+i).value=roleFromAge(a);tShowFollowUp(i);}
+  const n = parseInt(document.getElementById('t-num').value);
+  if (n <= 1) return; // must keep at least 1
+
+  // Collect all current traveler data except the removed one
+  const travelers = [];
+  for (let i = 0; i < n; i++) {
+    if (i === idx) continue;
+    travelers.push({
+      name: document.getElementById('tn-name'+i)?.value || '',
+      age: document.getElementById('tn-age'+i)?.value || 30,
+      gender: document.getElementById('tn-g'+i)?.value || 'Female',
+      role: document.getElementById('tn-role'+i)?.value || 'adult',
+      feeding: document.getElementById('tn-feeding'+i)?.value || null,
+      potty: document.getElementById('tn-potty'+i)?.value || null,
+    });
+  }
+
+  // Update count and rebuild
+  document.getElementById('t-num').value = n - 1;
+  buildToolTravelers();
+
+  // Re-populate with saved data
+  setTimeout(() => {
+    travelers.forEach((t, i) => {
+      const nameEl = document.getElementById('tn-name'+i);
+      const ageEl = document.getElementById('tn-age'+i);
+      const gEl = document.getElementById('tn-g'+i);
+      if (nameEl) nameEl.value = t.name;
+      if (ageEl) ageEl.value = t.age;
+      if (gEl) gEl.value = t.gender;
+      tUpdateRole(i);
+      setTimeout(() => {
+        const feedingEl = document.getElementById('tn-feeding'+i);
+        const pottyEl = document.getElementById('tn-potty'+i);
+        if (feedingEl && t.feeding) feedingEl.value = t.feeding;
+        if (pottyEl && t.potty) pottyEl.value = t.potty;
+      }, 60);
+    });
+  }, 50);
+}
 function tShowFollowUp(i){
   const role=document.getElementById('tn-role'+i).value;
   const age=parseInt(document.getElementById('tn-age'+i).value)||0;
@@ -1295,10 +1340,14 @@ function generateToolLists(){
   toolTravelers.forEach(t=>{toolLists[t.name]=buildSections(t,days,nights,climate,packAll,activities,travelMethod);});
   document.getElementById('t-list-meta').textContent=`${toolTravelers.length} traveler${toolTravelers.length>1?'s':''} · ${days} days / ${nights} nights · ${climate}`;
   document.getElementById('tool-person-tabs').innerHTML=toolTravelers.map((t,i)=>`<button class="person-tab ${i===0?'active':''}" onclick="selectToolTab(${i})">${t.name}</button>`).join('');
-  saveTripRecord(days,nights,climate,travelMethod,toolTravelers).then(id => { currentTripId = id; });
-  // Set default trip title
-  const defaultTitle = `${climate} · ${toolTravelers.map(t=>t.name).join(', ')}`;
-  document.getElementById('trip-title-input').value = defaultTitle;
+  // Only create a new trip record if this is a fresh list, not a reopened one
+  if (isReopenedTrip) {
+    isReopenedTrip = false; // reset so next new list creates a record
+  } else {
+    saveTripRecord(days,nights,climate,travelMethod,toolTravelers).then(id => { currentTripId = id; });
+    const defaultTitle = `${climate} · ${toolTravelers.map(t=>t.name).join(', ')}`;
+    document.getElementById('trip-title-input').value = defaultTitle;
+  }
   toolStep(2); selectToolTab(0);
   setTimeout(()=>showReviewModal(),3000);
 }
@@ -1358,7 +1407,7 @@ function selectToolTab(idx){
 function toggleToolExpand(key,ti,si,ii,tname){if(toolExpanded[key]){delete toolExpanded[key];}else{toolExpanded[key]={subs:getExpandDefaults(toolLists[tname][si].items[ii].name)};}selectToolTab(ti);}
 function addToolSub(key,ti){if(!toolExpanded[key])return;toolExpanded[key].subs.push('New item');selectToolTab(ti);}
 function removeToolSub(key,si,ti){toolExpanded[key].subs.splice(si,1);selectToolTab(ti);}
-function resetTool(){toolTravelers=[];toolLists={};toolExpanded={};buildToolTravelers();}
+function resetTool(){toolTravelers=[];toolLists={};toolExpanded={};isReopenedTrip=false;currentTripId=null;buildToolTravelers();}
 
 // ── TRIP TITLE ──
 let currentTripId = null;
