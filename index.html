@@ -429,13 +429,13 @@ textarea.review-text:focus { outline: none; border-color: var(--text); }
       <a href="https://claireoasis.gumroad.com/l/kcdjwp" target="_blank" class="btn-primary yellow" style="font-size:16px;padding:14px 32px">Get instant access — $9.99</a>
       <p style="margin-top:12px;font-size:12px;color:var(--text-hint);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">No subscription · Unlimited trips · Works on any device</p>
       <p style="margin-top:16px;font-size:13px;color:var(--text-muted);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
-        Already purchased? <a onclick="showPage('unlock')" style="color:var(--text);cursor:pointer;text-decoration:underline">Enter your access key →</a>
-        &nbsp;·&nbsp; <a onclick="showPage('login')" style="color:var(--text);cursor:pointer;text-decoration:underline">Log in →</a>
+        Already purchased? <button onclick="showPage('unlock')" style="background:none;border:none;cursor:pointer;font-size:13px;color:var(--text);text-decoration:underline;font-family:inherit;padding:0">Enter your access key →</button>
+        &nbsp;·&nbsp; <button onclick="showPage('login')" style="background:none;border:none;cursor:pointer;font-size:13px;color:var(--text);text-decoration:underline;font-family:inherit;padding:0">Log in →</button>
       </p>
     </div>
   </section>
   <footer class="site-footer">
-    <div class="container">© 2025 Nothing Forgotten · <a onclick="showPage('unlock')" style="color:inherit;cursor:pointer">Unlock access</a> · <a onclick="showPage('login')" style="color:inherit;cursor:pointer">Log in</a></div>
+    <div class="container">© 2025 Nothing Forgotten · <button onclick="showPage('unlock')" style="background:none;border:none;cursor:pointer;font-size:12px;color:inherit;font-family:inherit;padding:0">Unlock access</button> · <button onclick="showPage('login')" style="background:none;border:none;cursor:pointer;font-size:12px;color:inherit;font-family:inherit;padding:0">Log in</button></div>
   </footer>
 </div>
 
@@ -700,6 +700,7 @@ function goHome() {
     loadDashboard();
   } else {
     showPage('landing');
+    updateHeader('landing');
   }
 }
 
@@ -711,10 +712,17 @@ function updateHeader(page) {
       <button class="btn-primary yellow" onclick="showPage('tool');toolStep(0)" style="font-size:13px;padding:8px 16px">+ New list</button>
     </div>`;
   } else if (page === 'landing') {
-    el.innerHTML = `<div style="display:flex;gap:8px;align-items:center">
-      <button onclick="showPage('login')" class="btn-outline" style="font-size:13px">Log in</button>
-      <a href="https://claireoasis.gumroad.com/l/kcdjwp" target="_blank" class="btn-primary yellow" style="font-size:13px;padding:8px 16px">Get access — $9.99</a>
-    </div>`;
+    if (currentUserEmail) {
+      el.innerHTML = `<div style="display:flex;gap:8px;align-items:center">
+        <button onclick="showPage('dashboard');loadDashboard()" class="btn-outline" style="font-size:13px">My account</button>
+        <button class="btn-primary yellow" onclick="showPage('tool');toolStep(0)" style="font-size:13px;padding:8px 16px">+ New list</button>
+      </div>`;
+    } else {
+      el.innerHTML = `<div style="display:flex;gap:8px;align-items:center">
+        <button onclick="showPage('login')" class="btn-outline" style="font-size:13px">Log in</button>
+        <a href="https://claireoasis.gumroad.com/l/kcdjwp" target="_blank" class="btn-primary yellow" style="font-size:13px;padding:8px 16px">Get access — $9.99</a>
+      </div>`;
+    }
   } else {
     el.innerHTML = `<button onclick="goHome()" class="btn-outline" style="font-size:13px">← Home</button>`;
   }
@@ -726,7 +734,11 @@ window.addEventListener('load', async () => {
   try {
     if (sb) {
       const { data: { session } } = await sb.auth.getSession();
-      if (session) { await loadTool(session.user.email); }
+      if (session) {
+        currentUserEmail = session.user.email;
+        updateHeader('landing'); // re-render header now that we know user is logged in
+        await loadTool(session.user.email);
+      }
     }
   } catch(e) { console.warn('Session check failed:', e); }
   const params = new URLSearchParams(window.location.search);
