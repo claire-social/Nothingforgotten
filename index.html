@@ -17,13 +17,12 @@
   --success: #2d7a4f; --success-bg: #e8f5ee; --danger: #c0392b;
 }
 body { font-family: Georgia, 'Times New Roman', serif; color: var(--text); background: var(--bg); font-size: 16px; line-height: 1.6; }
-input, select, button, label, p.ui, .ui { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+input, select, button, label, p.ui, .ui, span.ui { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .container { max-width: 680px; margin: 0 auto; padding: 0 20px; }
 .page { display: none; } .page.active { display: block; }
 h1 { font-size: clamp(28px,5vw,42px); font-weight: 400; line-height: 1.15; }
 h2 { font-size: clamp(20px,3.5vw,26px); font-weight: 400; line-height: 1.3; }
 
-/* BUTTONS */
 .btn-primary { display: inline-block; background: var(--text); color: #fff; padding: 13px 28px; border-radius: var(--radius-md); border: none; font-size: 15px; font-weight: 500; cursor: pointer; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; text-decoration: none; transition: opacity .15s; }
 .btn-primary:hover { opacity: .85; }
 .btn-primary.full { display: block; width: 100%; text-align: center; padding: 14px; }
@@ -32,13 +31,11 @@ h2 { font-size: clamp(20px,3.5vw,26px); font-weight: 400; line-height: 1.3; }
 .btn-outline { display: inline-block; background: transparent; color: var(--text); padding: 10px 20px; border-radius: var(--radius-md); border: 1px solid var(--border-med); font-size: 14px; cursor: pointer; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; transition: background .15s; }
 .btn-outline:hover { background: var(--bg-soft); }
 
-/* HEADER */
 .site-header { border-bottom: 1px solid var(--border); padding: 16px 0; position: sticky; top: 0; background: rgba(255,255,255,.97); backdrop-filter: blur(8px); z-index: 100; }
 .site-header .container { display: flex; align-items: center; justify-content: space-between; }
 .site-logo { font-size: 17px; font-weight: 400; text-decoration: none; color: var(--text); cursor: pointer; }
 .site-logo span { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--yellow); margin-right: 6px; vertical-align: middle; }
 
-/* LANDING */
 .hero { padding: 64px 0 48px; text-align: center; border-bottom: 1px solid var(--border); }
 .hero-eyebrow { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 20px; }
 .hero h1 { margin-bottom: 16px; } .hero h1 em { font-style: italic; }
@@ -53,7 +50,6 @@ h2 { font-size: clamp(20px,3.5vw,26px); font-weight: 400; line-height: 1.3; }
 .proof-num { font-size: 18px; font-weight: 600; display: block; }
 .proof-lbl { font-size: 11px; color: var(--text-muted); }
 
-/* DEMO */
 .demo-section { padding: 48px 0; }
 .section-eyebrow { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); text-align: center; margin-bottom: 12px; }
 .demo-section h2 { text-align: center; margin-bottom: 32px; }
@@ -95,7 +91,6 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
 .paywall-perks { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 12px; font-size: 12px; color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .paywall-perks span { display: flex; align-items: center; gap: 4px; }
 
-/* FEATURES */
 .features-section { padding: 48px 0; border-top: 1px solid var(--border); }
 .features-section h2 { text-align: center; margin-bottom: 32px; }
 .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
@@ -104,7 +99,6 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
 .feat-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .feat-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 
-/* REVIEWS */
 .reviews-section { padding: 48px 0; border-top: 1px solid var(--border); }
 .reviews-section h2 { text-align: center; margin-bottom: 8px; }
 .reviews-sub { text-align: center; font-size: 14px; color: var(--text-muted); margin-bottom: 32px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
@@ -116,7 +110,6 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
 .reviews-empty { text-align: center; padding: 40px 20px; background: var(--bg-soft); border-radius: var(--radius-lg); }
 .reviews-empty p { font-size: 14px; color: var(--text-muted); margin-bottom: 16px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 
-/* FAQ */
 .faq-section { padding: 48px 0; border-top: 1px solid var(--border); }
 .faq-section h2 { text-align: center; margin-bottom: 32px; }
 .faq-item { border-bottom: 1px solid var(--border); }
@@ -153,6 +146,29 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
 .auth-step-num.done { background: var(--success); color: #fff; border-color: var(--success); }
 .auth-step-lbl { font-size: 10px; color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 
+/* DASHBOARD */
+#page-dashboard { min-height: 100vh; padding-bottom: 60px; }
+.dashboard-wrap { padding: 32px 0; }
+.dashboard-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 28px; }
+.dashboard-tab { padding: 10px 20px; font-size: 14px; cursor: pointer; color: var(--text-muted); border-bottom: 2px solid transparent; margin-bottom: -1px; background: none; border-top: none; border-left: none; border-right: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-weight: 500; }
+.dashboard-tab.active { color: var(--text); border-bottom-color: var(--text); }
+.dashboard-panel { display: none; } .dashboard-panel.active { display: block; }
+.profile-card { background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.profile-card-info { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.profile-card-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+.profile-card-meta { font-size: 12px; color: var(--text-muted); }
+.profile-card-actions { display: flex; gap: 6px; }
+.mini-btn { padding: 5px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-med); background: var(--bg); font-size: 12px; cursor: pointer; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--text); }
+.mini-btn:hover { background: var(--bg-soft); }
+.mini-btn.danger { color: var(--danger); border-color: rgba(192,57,43,.3); }
+.mini-btn.danger:hover { background: #fdf0ee; }
+.trip-card { background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.trip-card-info { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; flex: 1; }
+.trip-card-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+.trip-card-meta { font-size: 12px; color: var(--text-muted); }
+.edit-name-input { font-size: 14px; font-weight: 600; height: 30px; border: 1px solid var(--border-med); border-radius: 4px; padding: 0 8px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); }
+.empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; }
+
 /* TOOL */
 #page-tool { min-height: 100vh; padding-bottom: 60px; }
 .tool-wrap { padding: 32px 0; }
@@ -174,10 +190,11 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
 .pack-item-row:last-child { border-bottom: none; }
 .pack-item-row input[type="checkbox"] { width: 15px; height: 15px; flex-shrink: 0; }
 .pack-item-name { flex: 1; color: var(--text); }
-.pack-item-link { font-size: 11px; color: var(--yellow-dark); text-decoration: none; white-space: nowrap; }
+.pack-item-link { font-size: 11px; color: var(--yellow-dark); text-decoration: none; white-space: nowrap; flex-shrink: 0; }
 .pack-item-link:hover { text-decoration: underline; }
-.pack-qty { width: 50px; height: 28px; text-align: center; font-size: 13px; border: 1px solid var(--border); border-radius: 4px; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-.expand-btn { padding: 3px 9px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); font-size: 12px; cursor: pointer; color: var(--text-muted); white-space: nowrap; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+/* UNIFORM qty input — fixed width, consistent size across all rows */
+.pack-qty { width: 44px; height: 28px; text-align: center; font-size: 13px; border: 1px solid var(--border); border-radius: 4px; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; flex-shrink: 0; }
+.expand-btn { padding: 3px 9px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); font-size: 12px; cursor: pointer; color: var(--text-muted); white-space: nowrap; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; flex-shrink: 0; }
 .expand-btn:hover, .expand-btn.open { border-color: var(--border-med); color: var(--text); }
 .sub-items { margin-left: 22px; padding: 4px 0; }
 .sub-item-row { display: flex; align-items: center; gap: 7px; padding: 4px 0; font-size: 13px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
@@ -189,20 +206,19 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
 .tool-top-bar { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
 .tool-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .unlocked-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; padding: 3px 10px; border-radius: 100px; background: var(--success-bg); color: var(--success); border: 1px solid rgba(45,122,79,.2); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin-left: 8px; }
-.user-badge { font-size: 12px; color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-.save-profile-btn { padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); background: var(--yellow-light); font-size: 11px; cursor: pointer; color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin-left: 6px; }
+.save-profile-btn { padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); background: var(--yellow-light); font-size: 11px; cursor: pointer; color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .save-profile-btn:hover { background: var(--yellow); }
 .saved-profiles-wrap { margin-bottom: 16px; padding: 12px 14px; background: var(--yellow-light); border-radius: var(--radius-md); border: 1px solid rgba(245,200,66,.4); display: none; }
 .saved-profiles-wrap h4 { font-size: 12px; font-weight: 600; margin-bottom: 8px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .saved-profile-chip { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 100px; background: #fff; border: 1px solid var(--border-med); font-size: 12px; cursor: pointer; margin: 3px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .saved-profile-chip:hover { border-color: var(--text); }
+.follow-up-block { padding-top: 10px; border-top: 1px solid var(--border); margin-top: 4px; }
 
 /* REVIEW MODAL */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; }
 .modal-overlay.hidden { display: none; }
 .modal-card { background: var(--bg); border-radius: var(--radius-lg); padding: 32px 28px; max-width: 440px; width: 100%; position: relative; }
 .modal-close { position: absolute; top: 14px; right: 16px; background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-muted); line-height: 1; }
-.modal-close:hover { color: var(--text); }
 .modal-card h3 { font-size: 18px; margin-bottom: 6px; }
 .modal-card p { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .star-row { display: flex; gap: 6px; margin-bottom: 16px; justify-content: center; }
@@ -211,11 +227,8 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
 textarea.review-text { width: 100%; height: 90px; border: 1px solid var(--border-med); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 13px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; resize: vertical; margin-bottom: 14px; background: var(--bg); color: var(--text); }
 textarea.review-text:focus { outline: none; border-color: var(--text); }
 .review-name-input { width: 100%; height: 36px; padding: 0 10px; border: 1px solid var(--border-med); border-radius: var(--radius-sm); font-size: 13px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin-bottom: 14px; background: var(--bg); color: var(--text); }
-
 .loading-spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid var(--border); border-top-color: var(--text); border-radius: 50%; animation: spin .6s linear infinite; vertical-align: middle; margin-right: 6px; }
 @keyframes spin { to { transform: rotate(360deg); } }
-
-.follow-up-block { padding-top: 10px; border-top: 1px solid var(--border); margin-top: 4px; }
 
 @media print {
   .site-header, .tool-top-bar .tool-actions, .person-tabs, .expand-btn, .add-sub-btn, .remove-sub, .btn-outline, .btn-primary, .save-profile-btn, .saved-profiles-wrap { display: none !important; }
@@ -235,7 +248,7 @@ textarea.review-text:focus { outline: none; border-color: var(--text); }
 
 <header class="site-header" id="site-header">
   <div class="container">
-    <a class="site-logo" onclick="showPage('landing')"><span></span>Nothing Forgotten</a>
+    <a class="site-logo" onclick="goHome()"><span></span>Nothing Forgotten</a>
     <div id="header-actions"></div>
   </div>
 </header>
@@ -277,31 +290,24 @@ textarea.review-text:focus { outline: none; border-color: var(--text); }
       <p class="hero-cta-sub">No subscription. No renewal. Pay once, use forever.</p>
     </div>
   </section>
-
   <div class="proof-bar">
     <div class="proof-item"><span class="proof-num">2 min</span><span class="proof-lbl">avg. to your list</span></div>
     <div class="proof-item"><span class="proof-num">5 age groups</span><span class="proof-lbl">baby through adult</span></div>
     <div class="proof-item"><span class="proof-num">Unlimited</span><span class="proof-lbl">trips, one price</span></div>
     <div class="proof-item"><span class="proof-num">100%</span><span class="proof-lbl">editable & printable</span></div>
   </div>
-
   <section class="demo-section" id="demo-anchor">
     <div class="container">
       <p class="section-eyebrow">Try it live</p>
       <h2>See your list generate in real time</h2>
       <div class="browser-frame">
-        <div class="browser-bar">
-          <div class="b-dot"></div><div class="b-dot"></div><div class="b-dot"></div>
-          <span class="b-url">nothingforgotten.co</span>
-        </div>
+        <div class="browser-bar"><div class="b-dot"></div><div class="b-dot"></div><div class="b-dot"></div><span class="b-url">nothingforgotten.co</span></div>
         <div class="browser-inner">
           <div class="q-progress">
             <div class="q-dot done" id="qdot0"></div>
             <div class="q-dot" id="qdot1"></div>
             <div class="q-dot" id="qdot2"></div>
           </div>
-
-          <!-- DEMO STEP 0 -->
           <div class="q-screen active" id="dqs0">
             <p class="step-heading">Trip details</p>
             <div class="field-row">
@@ -312,8 +318,8 @@ textarea.review-text:focus { outline: none; border-color: var(--text); }
               <div><label class="field-label">Climate</label>
                 <select id="d-climate"><option>Warm / tropical</option><option>Hot / desert</option><option>Mild / spring-fall</option><option>Cold / winter</option><option>Mixed (varies)</option></select>
               </div>
-              <div><label class="field-label">Accommodation</label>
-                <select id="d-accom"><option>Hotel</option><option>Airbnb / rental</option><option>Camping</option><option>Cruise ship</option></select>
+              <div><label class="field-label">Travel method</label>
+                <select id="d-travel"><option value="flying">Flying</option><option value="driving">Driving</option><option value="train">Train</option></select>
               </div>
             </div>
             <div class="field-group">
@@ -334,8 +340,6 @@ textarea.review-text:focus { outline: none; border-color: var(--text); }
             </div>
             <div class="q-btn-row"><button class="q-next" onclick="demoStep(1)">Next: travelers →</button></div>
           </div>
-
-          <!-- DEMO STEP 1 -->
           <div class="q-screen" id="dqs1">
             <p class="step-heading">Who's traveling?</p>
             <div class="field-group">
@@ -350,11 +354,9 @@ textarea.review-text:focus { outline: none; border-color: var(--text); }
               <button class="q-next" onclick="runDemo()">Generate my list →</button>
             </div>
           </div>
-
-          <!-- DEMO STEP 2 -->
           <div class="q-screen" id="dqs2">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-              <p style="font-size:15px;font-weight:500;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" id="d-list-title">Your packing list</p>
+              <p style="font-size:15px;font-weight:500;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">Your packing list</p>
               <button class="q-next q-back" style="font-size:12px;padding:5px 12px" onclick="demoStep(0);resetDemo()">← Start over</button>
             </div>
             <p style="font-size:12px;color:var(--text-muted);margin-bottom:16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" id="d-list-meta"></p>
@@ -364,16 +366,13 @@ textarea.review-text:focus { outline: none; border-color: var(--text); }
               <p>Get your full editable packing list for every traveler. Adjust quantities, expand items, check things off, and print by person. Use it for every trip, forever.</p>
               <div class="paywall-price"><span class="big">$9.99</span><span class="sm">· one-time · unlimited trips</span></div>
               <a href="https://claireoasis.gumroad.com/l/kcdjwp" target="_blank" class="btn-primary full yellow">🔒 Unlock my full packing list</a>
-              <div class="paywall-perks">
-                <span>✓ No subscription</span><span>✓ Instant access</span><span>✓ Unlimited trips</span><span>✓ Printable</span>
-              </div>
+              <div class="paywall-perks"><span>✓ No subscription</span><span>✓ Instant access</span><span>✓ Unlimited trips</span><span>✓ Printable</span></div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </section>
-
   <section class="features-section">
     <div class="container">
       <p class="section-eyebrow">What's included</p>
@@ -388,8 +387,6 @@ textarea.review-text:focus { outline: none; border-color: var(--text); }
       </div>
     </div>
   </section>
-
-  <!-- REVIEWS SECTION -->
   <section class="reviews-section">
     <div class="container">
       <p class="section-eyebrow">What travelers say</p>
@@ -403,7 +400,6 @@ textarea.review-text:focus { outline: none; border-color: var(--text); }
       </div>
     </div>
   </section>
-
   <section class="faq-section">
     <div class="container">
       <p class="section-eyebrow">Questions</p>
@@ -412,11 +408,10 @@ textarea.review-text:focus { outline: none; border-color: var(--text); }
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I edit the list after it generates? <span class="faq-chevron">›</span></button><div class="faq-a">Yes, completely. Adjust quantities, expand items into sub-items, add your own, and rename each person's list.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What age groups does it cover? <span class="faq-chevron">›</span></button><div class="faq-a">Five age groups: baby (under 1), toddler (1–4), child (5–12), teen (13–17), and adult (18+). Each gets a completely different list.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I print or save my list? <span class="faq-chevron">›</span></button><div class="faq-a">Yes. Print any person's list formatted cleanly for paper, or use it as a digital checklist.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How do I access it after I pay? <span class="faq-chevron">›</span></button><div class="faq-a">After purchase you'll receive an access key by email. Enter it on the site to create your account with email and password — then log in from any device, forever.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I save traveler profiles for future trips? <span class="faq-chevron">›</span></button><div class="faq-a">Yes! After generating a list, you can save each traveler's profile (name, age, gender) to your account. Next trip, just tap their name to add them instantly.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How do I access it after I pay? <span class="faq-chevron">›</span></button><div class="faq-a">After purchase you'll receive an access key by email. Enter it on the site to create your account — then log in from any device, forever.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I save traveler profiles? <span class="faq-chevron">›</span></button><div class="faq-a">Yes! After generating a list, save each traveler's profile to your account. Next trip, tap their name to add them instantly.</div></div>
     </div>
   </section>
-
   <section class="footer-cta">
     <div class="container">
       <h2>Ready to pack smarter?</h2>
@@ -430,11 +425,7 @@ textarea.review-text:focus { outline: none; border-color: var(--text); }
     </div>
   </section>
   <footer class="site-footer">
-    <div class="container">
-      © 2025 Nothing Forgotten ·
-      <a onclick="showPage('unlock')" style="color:inherit;cursor:pointer">Unlock access</a> ·
-      <a onclick="showPage('login')" style="color:inherit;cursor:pointer">Log in</a>
-    </div>
+    <div class="container">© 2025 Nothing Forgotten · <a onclick="showPage('unlock')" style="color:inherit;cursor:pointer">Unlock access</a> · <a onclick="showPage('login')" style="color:inherit;cursor:pointer">Log in</a></div>
   </footer>
 </div>
 
@@ -449,7 +440,7 @@ textarea.review-text:focus { outline: none; border-color: var(--text); }
         <div class="auth-step-item"><div class="auth-step-num">3</div><div class="auth-step-lbl">Start packing</div></div>
       </div>
       <h2>Enter your access key</h2>
-      <p class="auth-sub">Check your Gumroad receipt email for your key. It looks like <code style="font-family:monospace;font-size:13px;background:var(--bg-soft);padding:1px 6px;border-radius:4px;border:1px solid var(--border)">NF-XXXX-XXXX-XXXX</code>.</p>
+      <p class="auth-sub">Check your receipt email for your key. It looks like <code style="font-family:monospace;font-size:13px;background:var(--bg-soft);padding:1px 6px;border-radius:4px;border:1px solid var(--border)">NF-XXXX-XXXX-XXXX</code>.</p>
       <input class="auth-input key-style" id="key-field" type="text" placeholder="NF-XXXX-XXXX-XXXX" oninput="this.value=this.value.toUpperCase()" />
       <div class="auth-error" id="key-err"></div>
       <button class="btn-primary full yellow" onclick="validateKey()" id="key-btn">Continue →</button>
@@ -511,6 +502,32 @@ textarea.review-text:focus { outline: none; border-color: var(--text); }
   </div>
 </div>
 
+<!-- ══ DASHBOARD ══ -->
+<div id="page-dashboard" class="page">
+  <div class="container dashboard-wrap">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:10px">
+      <div>
+        <h2 style="font-family:Georgia,serif;font-weight:400">My account</h2>
+        <p id="dash-user-email" style="font-size:13px;color:var(--text-muted);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin-top:2px"></p>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn-primary yellow" onclick="showPage('tool');toolStep(0)">+ New packing list</button>
+        <button class="btn-outline" onclick="logoutUser()" style="font-size:13px">Log out</button>
+      </div>
+    </div>
+    <div class="dashboard-tabs">
+      <button class="dashboard-tab active" onclick="switchDashTab(0,this)">Saved Travelers</button>
+      <button class="dashboard-tab" onclick="switchDashTab(1,this)">Past Trips</button>
+    </div>
+    <div class="dashboard-panel active" id="dash-panel-0">
+      <div id="dash-profiles-list"><div class="empty-state">No saved travelers yet. Generate a list and save profiles to see them here.</div></div>
+    </div>
+    <div class="dashboard-panel" id="dash-panel-1">
+      <div id="dash-trips-list"><div class="empty-state">No past trips yet. Generate your first packing list to see it here.</div></div>
+    </div>
+  </div>
+</div>
+
 <!-- ══ FULL TOOL ══ -->
 <div id="page-tool" class="page">
   <div class="container tool-wrap">
@@ -519,7 +536,6 @@ textarea.review-text:focus { outline: none; border-color: var(--text); }
       <div class="tool-dot" id="tdot1"></div>
       <div class="tool-dot" id="tdot2"></div>
     </div>
-
     <!-- STEP 0: Trip details -->
     <div class="tool-step active" id="ts0">
       <p class="step-heading">Trip details</p>
@@ -531,16 +547,16 @@ textarea.review-text:focus { outline: none; border-color: var(--text); }
         <div><label class="field-label">Climate</label>
           <select id="t-climate"><option>Warm / tropical</option><option>Hot / desert</option><option>Mild / spring-fall</option><option>Cold / winter</option><option>Mixed (varies)</option></select>
         </div>
-        <div><label class="field-label">Trip type</label>
-          <select id="t-triptype"><option>Leisure / beach</option><option>City sightseeing</option><option>Outdoors / hiking</option><option>Business travel</option><option>Family road trip</option></select>
+        <div><label class="field-label">Travel method</label>
+          <select id="t-travel"><option value="flying">Flying</option><option value="driving">Driving</option><option value="train">Train</option></select>
         </div>
       </div>
       <div class="field-row">
-        <div><label class="field-label">Accommodation</label>
-          <select id="t-accom"><option>Hotel</option><option>Airbnb / rental</option><option>Camping</option><option>Cruise ship</option></select>
-        </div>
         <div><label class="field-label">Laundry access?</label>
           <select id="t-laundry"><option value="no">No — packing for all days</option><option value="yes">Yes — can re-wear</option></select>
+        </div>
+        <div><label class="field-label">Trip type</label>
+          <select id="t-triptype"><option>Leisure / beach</option><option>City sightseeing</option><option>Outdoors / hiking</option><option>Business travel</option><option>Family road trip</option></select>
         </div>
       </div>
       <div class="field-group">
@@ -557,7 +573,6 @@ textarea.review-text:focus { outline: none; border-color: var(--text); }
       </div>
       <div class="q-btn-row"><button class="q-next" onclick="toolStep(1)">Next: travelers →</button></div>
     </div>
-
     <!-- STEP 1: Travelers -->
     <div class="tool-step" id="ts1">
       <p class="step-heading">Who's traveling?</p>
@@ -577,7 +592,6 @@ textarea.review-text:focus { outline: none; border-color: var(--text); }
         <button class="q-next" onclick="generateToolLists()">Generate my lists →</button>
       </div>
     </div>
-
     <!-- STEP 2: Lists -->
     <div class="tool-step" id="ts2">
       <div class="tool-top-bar">
@@ -586,10 +600,9 @@ textarea.review-text:focus { outline: none; border-color: var(--text); }
           <p id="t-list-meta" style="font-size:13px;color:var(--text-muted);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin-top:2px"></p>
         </div>
         <div class="tool-actions">
-          <span class="user-badge" id="tool-user-badge"></span>
           <button class="btn-outline" onclick="window.print()" style="font-size:13px">🖨 Print</button>
           <button class="btn-outline" onclick="toolStep(0);resetTool()" style="font-size:13px">← New list</button>
-          <button class="btn-outline" onclick="logoutUser()" style="font-size:13px">Log out</button>
+          <button class="btn-outline" onclick="showPage('dashboard');loadDashboard()" style="font-size:13px">My account</button>
         </div>
       </div>
       <div class="person-tabs" id="tool-person-tabs"></div>
@@ -600,7 +613,7 @@ textarea.review-text:focus { outline: none; border-color: var(--text); }
 
 <script>
 // ═══════════════════════════════════════════
-// SUPABASE CONFIG
+// SUPABASE
 // ═══════════════════════════════════════════
 const SUPABASE_URL = 'https://dmgslmqcoyqqlihqjslm.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRtZ3NsbXFjb3lxcWxpaHFqc2xtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNjc5NTMsImV4cCI6MjA5Nzc0Mzk1M30.CF33F8Dkxkgzc-fIkJEbJLjrmGm8ppN5KPwdNJClZRE';
@@ -613,7 +626,7 @@ let currentUserEmail = '';
 let reviewRating = 0;
 
 // ═══════════════════════════════════════════
-// PAGE ROUTING
+// ROUTING — stay logged in when going home
 // ═══════════════════════════════════════════
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -622,17 +635,30 @@ function showPage(name) {
   window.scrollTo(0, 0);
 }
 
+// goHome: if logged in, go to dashboard; else go to landing
+function goHome() {
+  if (currentUserEmail) {
+    showPage('dashboard');
+    loadDashboard();
+  } else {
+    showPage('landing');
+  }
+}
+
 function updateHeader(page) {
   const el = document.getElementById('header-actions');
-  if (page === 'tool') {
-    el.innerHTML = `<button class="btn-outline" style="font-size:13px" onclick="logoutUser()">Log out</button>`;
+  if (page === 'tool' || page === 'dashboard') {
+    el.innerHTML = `<div style="display:flex;gap:8px;align-items:center">
+      <button onclick="showPage('dashboard');loadDashboard()" class="btn-outline" style="font-size:13px">My account</button>
+      <button class="btn-primary yellow" onclick="showPage('tool');toolStep(0)" style="font-size:13px;padding:8px 16px">+ New list</button>
+    </div>`;
   } else if (page === 'landing') {
     el.innerHTML = `<div style="display:flex;gap:8px;align-items:center">
       <button onclick="showPage('login')" class="btn-outline" style="font-size:13px">Log in</button>
       <a href="https://claireoasis.gumroad.com/l/kcdjwp" target="_blank" class="btn-primary yellow" style="font-size:13px;padding:8px 16px">Get access — $9.99</a>
     </div>`;
   } else {
-    el.innerHTML = `<button onclick="showPage('landing')" class="btn-outline" style="font-size:13px">← Home</button>`;
+    el.innerHTML = `<button onclick="goHome()" class="btn-outline" style="font-size:13px">← Home</button>`;
   }
 }
 
@@ -642,7 +668,7 @@ window.addEventListener('load', async () => {
   try {
     if (sb) {
       const { data: { session } } = await sb.auth.getSession();
-      if (session) { loadTool(session.user.email); }
+      if (session) { await loadTool(session.user.email); }
     }
   } catch(e) { console.warn('Session check failed:', e); }
   const params = new URLSearchParams(window.location.search);
@@ -659,12 +685,11 @@ async function validateKey() {
   if (!KEY_PATTERN.test(val)) { errEl.textContent = 'That key doesn\'t look right — check your email and try again.'; errEl.style.display = 'block'; return; }
   const btn = document.getElementById('key-btn');
   btn.innerHTML = '<span class="loading-spinner"></span>Checking key…'; btn.disabled = true;
-  if (!sb) { errEl.textContent = 'Connection error — please refresh and try again.'; errEl.style.display = 'block'; btn.innerHTML = 'Continue →'; btn.disabled = false; return; }
+  if (!sb) { errEl.textContent = 'Connection error — please refresh.'; errEl.style.display = 'block'; btn.innerHTML = 'Continue →'; btn.disabled = false; return; }
   try {
     const { data, error } = await sb.from('access_keys').select('*').eq('key', val).eq('used', false).single();
     if (error || !data) { errEl.textContent = 'This key has already been used or is invalid. Reply to your receipt email if you need help.'; errEl.style.display = 'block'; btn.innerHTML = 'Continue →'; btn.disabled = false; return; }
-    validatedKey = val;
-    showPage('signup');
+    validatedKey = val; showPage('signup');
   } catch(e) { errEl.textContent = 'Something went wrong — please try again.'; errEl.style.display = 'block'; btn.innerHTML = 'Continue →'; btn.disabled = false; }
 }
 
@@ -684,7 +709,7 @@ async function createAccount() {
     const { data, error } = await sb.auth.signUp({ email, password });
     if (error) { errEl.textContent = error.message; errEl.style.display = 'block'; btn.innerHTML = 'Create my account →'; btn.disabled = false; return; }
     await sb.from('access_keys').update({ used: true, used_by: email, used_at: new Date().toISOString() }).eq('key', validatedKey);
-    loadTool(email);
+    await loadTool(email);
   } catch(e) { errEl.textContent = 'Something went wrong — please try again.'; errEl.style.display = 'block'; btn.innerHTML = 'Create my account →'; btn.disabled = false; }
 }
 
@@ -700,9 +725,9 @@ async function loginUser() {
   btn.innerHTML = '<span class="loading-spinner"></span>Logging in…'; btn.disabled = true;
   try {
     const { data, error } = await sb.auth.signInWithPassword({ email, password });
-    if (error) { errEl.textContent = 'Incorrect email or password. Try again, or reset your password.'; errEl.style.display = 'block'; btn.innerHTML = 'Log in →'; btn.disabled = false; return; }
-    loadTool(email);
-  } catch(e) { errEl.textContent = 'Something went wrong — please try again.'; errEl.style.display = 'block'; btn.innerHTML = 'Log in →'; btn.disabled = false; }
+    if (error) { errEl.textContent = 'Incorrect email or password.'; errEl.style.display = 'block'; btn.innerHTML = 'Log in →'; btn.disabled = false; return; }
+    await loadTool(email);
+  } catch(e) { errEl.textContent = 'Something went wrong.'; errEl.style.display = 'block'; btn.innerHTML = 'Log in →'; btn.disabled = false; }
 }
 
 async function resetPassword() {
@@ -717,57 +742,189 @@ async function resetPassword() {
 
 async function logoutUser() {
   try { if (sb) await sb.auth.signOut(); } catch(e) {}
+  currentUserEmail = '';
   showPage('landing');
 }
 
 async function loadTool(email) {
   currentUserEmail = email;
-  document.getElementById('tool-user-badge').textContent = email;
   await loadSavedProfiles();
   buildToolTravelers();
-  showPage('tool');
-  toolStep(0);
+  showPage('dashboard');
+  loadDashboard();
 }
 
 // ═══════════════════════════════════════════
-// SAVED TRAVELER PROFILES
+// DASHBOARD
+// ═══════════════════════════════════════════
+async function loadDashboard() {
+  document.getElementById('dash-user-email').textContent = currentUserEmail;
+  updateHeader('dashboard');
+  await loadDashProfiles();
+  await loadDashTrips();
+}
+
+function switchDashTab(n, el) {
+  document.querySelectorAll('.dashboard-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.dashboard-panel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('dash-panel-' + n).classList.add('active');
+}
+
+async function loadDashProfiles() {
+  if (!sb) return;
+  try {
+    const { data } = await sb.from('traveler_profiles').select('*').order('name');
+    const el = document.getElementById('dash-profiles-list');
+    if (!data || !data.length) { el.innerHTML = '<div class="empty-state">No saved travelers yet. Generate a list and save profiles to see them here.</div>'; return; }
+    el.innerHTML = data.map(p => `
+      <div class="profile-card" id="pcard-${p.id}">
+        <div class="profile-card-info">
+          <div class="profile-card-name" id="pname-${p.id}">${p.name}</div>
+          <div class="profile-card-meta">${roleLabel(p.role||roleFromAge(p.age||0))} · ${p.gender} · Age ${p.age||'?'}</div>
+        </div>
+        <div class="profile-card-actions">
+          <button class="mini-btn" onclick="editProfile('${p.id}','${p.name}',${p.age||0},'${p.gender}','${p.role||'adult'}')">Edit</button>
+          <button class="mini-btn danger" onclick="deleteProfile('${p.id}')">Delete</button>
+        </div>
+      </div>`).join('');
+  } catch(e) { console.warn('Load profiles failed:', e); }
+}
+
+function editProfile(id, name, age, gender, role) {
+  const card = document.getElementById('pcard-' + id);
+  card.innerHTML = `
+    <div style="flex:1;display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+      <input type="text" id="edit-name-${id}" value="${name}" class="edit-name-input" placeholder="Name" />
+      <input type="number" id="edit-age-${id}" value="${age}" style="width:60px;height:30px;border:1px solid var(--border-med);border-radius:4px;padding:0 6px;font-size:13px" />
+      <select id="edit-g-${id}" style="width:120px;height:30px;font-size:13px;border:1px solid var(--border-med);border-radius:4px">
+        <option ${gender==='Female'?'selected':''}>Female</option>
+        <option ${gender==='Male'?'selected':''}>Male</option>
+        <option ${gender==='Non-binary / prefer not to say'?'selected':''}>Non-binary / prefer not to say</option>
+      </select>
+    </div>
+    <div class="profile-card-actions">
+      <button class="mini-btn" onclick="saveEditProfile('${id}')">Save</button>
+      <button class="mini-btn" onclick="loadDashProfiles()">Cancel</button>
+    </div>`;
+}
+
+async function saveEditProfile(id) {
+  const name = document.getElementById('edit-name-' + id).value.trim();
+  const age = parseInt(document.getElementById('edit-age-' + id).value)||0;
+  const gender = document.getElementById('edit-g-' + id).value;
+  const role = roleFromAge(age);
+  if (!sb || !name) return;
+  await sb.from('traveler_profiles').update({ name, age, gender, role }).eq('id', id);
+  loadDashProfiles();
+}
+
+async function deleteProfile(id) {
+  if (!sb) return;
+  await sb.from('traveler_profiles').delete().eq('id', id);
+  loadDashProfiles();
+  loadSavedProfiles();
+}
+
+// Trip history
+let tripHistory = [];
+
+async function loadDashTrips() {
+  if (!sb) return;
+  try {
+    const { data } = await sb.from('trip_history').select('*').eq('user_email', currentUserEmail).order('created_at', { ascending: false });
+    const el = document.getElementById('dash-trips-list');
+    if (!data || !data.length) { el.innerHTML = '<div class="empty-state">No past trips yet. Generate your first packing list to see it here.</div>'; return; }
+    tripHistory = data;
+    el.innerHTML = data.map((t,i) => `
+      <div class="trip-card">
+        <div class="trip-card-info">
+          <div id="tname-display-${t.id}">
+            <span class="trip-card-name">${t.name||'Untitled trip'}</span>
+            <button class="mini-btn" style="margin-left:8px;font-size:11px" onclick="startRenameTrip('${t.id}','${(t.name||'Untitled trip').replace(/'/g,"\\'")}')">Rename</button>
+          </div>
+          <div id="tname-edit-${t.id}" style="display:none">
+            <input type="text" id="tname-input-${t.id}" value="${t.name||'Untitled trip'}" class="edit-name-input" />
+            <button class="mini-btn" style="margin-left:6px" onclick="saveTripName('${t.id}')">Save</button>
+            <button class="mini-btn" style="margin-left:4px" onclick="cancelRenameTrip('${t.id}')">Cancel</button>
+          </div>
+          <div class="trip-card-meta">${t.days||'?'} days · ${t.climate||''} · ${t.travelers||''} · ${formatDate(t.created_at)}</div>
+        </div>
+      </div>`).join('');
+  } catch(e) { console.warn('Load trips failed:', e); }
+}
+
+function formatDate(d) { try { return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); } catch(e) { return ''; } }
+
+function startRenameTrip(id, current) {
+  document.getElementById('tname-display-' + id).style.display = 'none';
+  document.getElementById('tname-edit-' + id).style.display = 'block';
+  document.getElementById('tname-input-' + id).focus();
+}
+function cancelRenameTrip(id) {
+  document.getElementById('tname-display-' + id).style.display = 'block';
+  document.getElementById('tname-edit-' + id).style.display = 'none';
+}
+async function saveTripName(id) {
+  const name = document.getElementById('tname-input-' + id).value.trim();
+  if (!sb || !name) return;
+  await sb.from('trip_history').update({ name }).eq('id', id);
+  loadDashTrips();
+}
+
+// Save trip after generating
+async function saveTripRecord(days, nights, climate, travelMethod, travelers) {
+  if (!sb || !currentUserEmail) return;
+  const name = `${climate} trip · ${travelers.map(t=>t.name).join(', ')}`;
+  const travelerStr = travelers.map(t=>`${t.name} (${roleLabel(t.role)})`).join(', ');
+  try {
+    await sb.from('trip_history').insert({
+      user_email: currentUserEmail,
+      name,
+      days,
+      nights,
+      climate,
+      travel_method: travelMethod,
+      travelers: travelerStr,
+    });
+  } catch(e) { console.warn('Save trip failed:', e); }
+}
+
+// ═══════════════════════════════════════════
+// SAVED PROFILES (for quick-add in tool)
 // ═══════════════════════════════════════════
 let savedProfiles = [];
 
 async function loadSavedProfiles() {
-  if (!sb) return;
+  if (!sb || !currentUserEmail) return;
   try {
     const { data } = await sb.from('traveler_profiles').select('*').order('name');
     if (data && data.length > 0) {
       savedProfiles = data;
       const wrap = document.getElementById('saved-profiles-wrap');
       const chips = document.getElementById('saved-profiles-chips');
-      wrap.style.display = 'block';
-      chips.innerHTML = savedProfiles.map((p, i) =>
-        `<span class="saved-profile-chip" onclick="addSavedProfile(${i})">
-          + ${p.name} <span style="color:var(--text-muted);font-size:11px">(${p.age}, ${p.gender.charAt(0)})</span>
-        </span>`
-      ).join('');
+      if (wrap && chips) {
+        wrap.style.display = 'block';
+        chips.innerHTML = savedProfiles.map((p,i) =>
+          `<span class="saved-profile-chip" onclick="addSavedProfile(${i})">+ ${p.name} <span style="color:var(--text-muted);font-size:11px">(${p.age}, ${p.gender.charAt(0)})</span></span>`
+        ).join('');
+      }
     }
   } catch(e) { console.warn('Failed to load profiles:', e); }
 }
 
 function addSavedProfile(idx) {
-  const p = savedProfiles[idx];
-  if (!p) return;
+  const p = savedProfiles[idx]; if (!p) return;
   const n = parseInt(document.getElementById('t-num').value);
-  // Find first empty traveler slot or add a new one
   for (let i = 0; i < n; i++) {
     const nameEl = document.getElementById('tn-name' + i);
     if (nameEl && !nameEl.value.trim()) {
       nameEl.value = p.name;
       document.getElementById('tn-age' + i).value = p.age;
       document.getElementById('tn-g' + i).value = p.gender;
-      tUpdateRole(i);
-      return;
+      tUpdateRole(i); return;
     }
   }
-  // No empty slot — increase count
   if (n < 6) {
     document.getElementById('t-num').value = n + 1;
     buildToolTravelers();
@@ -779,14 +936,12 @@ function addSavedProfile(idx) {
 }
 
 async function saveProfile(name, age, gender, role) {
-  if (!sb || !name) return;
-  try {
-    await sb.from('traveler_profiles').upsert({ name, age, gender, role, user_email: currentUserEmail }, { onConflict: 'user_email,name' });
-  } catch(e) { console.warn('Save profile failed:', e); }
+  if (!sb || !name || !currentUserEmail) return;
+  try { await sb.from('traveler_profiles').upsert({ name, age, gender, role, user_email: currentUserEmail }, { onConflict: 'user_email,name' }); } catch(e) {}
 }
 
 // ═══════════════════════════════════════════
-// REVIEW SYSTEM
+// REVIEWS
 // ═══════════════════════════════════════════
 function showReviewModal() {
   reviewRating = 0;
@@ -799,74 +954,54 @@ function showReviewModal() {
   updateStars(0);
   document.getElementById('review-modal').classList.remove('hidden');
 }
-
-function closeReviewModal() {
-  document.getElementById('review-modal').classList.add('hidden');
-}
-
+function closeReviewModal() { document.getElementById('review-modal').classList.add('hidden'); }
 function setRating(n) { reviewRating = n; updateStars(n); }
-
-function updateStars(n) {
-  document.querySelectorAll('.star-btn').forEach((btn, i) => btn.classList.toggle('active', i < n));
-}
-
+function updateStars(n) { document.querySelectorAll('.star-btn').forEach((btn,i) => btn.classList.toggle('active', i < n)); }
 async function submitReview() {
   const text = document.getElementById('review-text').value.trim();
   const name = document.getElementById('review-name').value.trim() || 'Anonymous';
-  const errEl = document.getElementById('review-err');
-  const succEl = document.getElementById('review-success');
+  const errEl = document.getElementById('review-err'); const succEl = document.getElementById('review-success');
   errEl.style.display = 'none';
   if (reviewRating === 0) { errEl.textContent = 'Please select a star rating.'; errEl.style.display = 'block'; return; }
   const btn = document.getElementById('review-submit-btn');
   btn.innerHTML = '<span class="loading-spinner"></span>Submitting…'; btn.disabled = true;
   try {
-    if (sb) {
-      await sb.from('reviews').insert({ rating: reviewRating, comment: text, reviewer_name: name, user_email: currentUserEmail });
-    }
+    if (sb) await sb.from('reviews').insert({ rating: reviewRating, comment: text, reviewer_name: name, user_email: currentUserEmail });
     succEl.textContent = '✓ Thank you! Your review has been submitted.'; succEl.style.display = 'block';
     btn.innerHTML = 'Submitted ✓';
     setTimeout(() => closeReviewModal(), 2000);
   } catch(e) { errEl.textContent = 'Something went wrong — please try again.'; errEl.style.display = 'block'; btn.innerHTML = 'Submit review'; btn.disabled = false; }
 }
-
 async function loadLandingReviews() {
   if (!sb) return;
   try {
     const { data } = await sb.from('reviews').select('*').gte('rating', 4).order('created_at', { ascending: false }).limit(4);
     const container = document.getElementById('reviews-container');
-    if (!data || data.length === 0) return; // keep empty state
-    const stars = n => '★'.repeat(n) + '☆'.repeat(5 - n);
+    if (!data || data.length === 0) return;
+    const stars = n => '★'.repeat(n) + '☆'.repeat(5-n);
     container.innerHTML = `<div class="reviews-grid">${data.map(r => `
       <div class="review-card">
         <div class="review-stars">${stars(r.rating)}</div>
-        <blockquote>"${r.comment || 'Great tool!'}"</blockquote>
+        <blockquote>"${r.comment||'Great tool!'}"</blockquote>
         <p class="review-name">— ${r.reviewer_name}</p>
       </div>`).join('')}</div>`;
-  } catch(e) { console.warn('Failed to load reviews:', e); }
+  } catch(e) {}
 }
 
 // ═══════════════════════════════════════════
-// DEMO QUESTIONNAIRE
+// DEMO
 // ═══════════════════════════════════════════
-function dSyncN() { const d=parseInt(document.getElementById('d-days').value)||1; document.getElementById('d-nights').value=Math.max(0,d-1); }
-function dSyncD() { const n=parseInt(document.getElementById('d-nights').value)||0; document.getElementById('d-days').value=n+1; }
-
-function demoStep(n) {
+function dSyncN(){const d=parseInt(document.getElementById('d-days').value)||1;document.getElementById('d-nights').value=Math.max(0,d-1);}
+function dSyncD(){const n=parseInt(document.getElementById('d-nights').value)||0;document.getElementById('d-days').value=n+1;}
+function demoStep(n){
   document.querySelectorAll('.q-screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('dqs'+n).classList.add('active');
   for(let i=0;i<3;i++) document.getElementById('qdot'+i).classList.toggle('done',i<=n);
 }
-
-function buildDemoTravelers() {
+function buildDemoTravelers(){
   const n=parseInt(document.getElementById('d-num').value);
-  const defaults=[
-    {name:'Baby Emma',age:0,g:'Female',role:'baby'},
-    {name:'Liam',age:3,g:'Male',role:'toddler'},
-    {name:'Sophie',age:7,g:'Female',role:'child'},
-    {name:'Dad',age:38,g:'Male',role:'adult'},
-  ];
-  const c=document.getElementById('demo-traveler-forms');
-  c.innerHTML='';
+  const defaults=[{name:'Baby Emma',age:0,g:'Female',role:'baby'},{name:'Liam',age:3,g:'Male',role:'toddler'},{name:'Sophie',age:7,g:'Female',role:'child'},{name:'Dad',age:38,g:'Male',role:'adult'}];
+  const c=document.getElementById('demo-traveler-forms'); c.innerHTML='';
   for(let i=0;i<n;i++){
     const d=defaults[i]||{name:`Traveler ${i+1}`,age:30,g:'Female',role:'adult'};
     const isBaby=d.role==='baby'; const isToddler=d.role==='toddler';
@@ -883,26 +1018,22 @@ function buildDemoTravelers() {
   }
 }
 buildDemoTravelers();
-
-function runDemo() {
+function runDemo(){
   const days=parseInt(document.getElementById('d-days').value)||7;
   const nights=parseInt(document.getElementById('d-nights').value)||6;
   const climate=document.getElementById('d-climate').value;
   const packAll=document.getElementById('d-laundry').value==='no';
+  const travelMethod=document.getElementById('d-travel').value;
   const activities=[...document.querySelectorAll('#dqs0 .activity-check-grid input:checked')].map(e=>e.value);
   const n=parseInt(document.getElementById('d-num').value);
   const defaults=[{name:'Baby Emma'},{name:'Liam'},{name:'Sophie'},{name:'Dad'}];
   let html='';
   for(let i=0;i<Math.min(n,3);i++){
     const age=parseInt(document.getElementById('dt-age'+i).value)||0;
-    const role=roleFromAge(age);
-    const g=document.getElementById('dt-g'+i).value;
+    const role=roleFromAge(age); const g=document.getElementById('dt-g'+i).value;
     const d=defaults[i]||{name:`Traveler ${i+1}`};
-    const feedingEl=document.getElementById('dt-feeding'+i);
-    const pottyEl=document.getElementById('dt-potty'+i);
-    const feeding=feedingEl?feedingEl.value:null;
-    const potty=pottyEl?pottyEl.value:null;
-    const items=buildSections({role,gender:g,feeding,potty,age},days,nights,climate,packAll,activities).flatMap(s=>s.items);
+    const feedingEl=document.getElementById('dt-feeding'+i); const pottyEl=document.getElementById('dt-potty'+i);
+    const items=buildSections({role,gender:g,feeding:feedingEl?feedingEl.value:null,potty:pottyEl?pottyEl.value:null,age},days,nights,climate,packAll,activities,travelMethod).flatMap(s=>s.items);
     const showFull=items.slice(0,4); const showBlur=items.slice(4,7);
     html+=`<div style="margin-bottom:16px"><div class="list-cat-head">${d.name} <span style="font-size:11px;font-weight:400;color:var(--text-muted)">${roleLabel(role)}</span></div>`;
     showFull.forEach(item=>{html+=`<div class="preview-row"><div class="pcheck"></div><span class="pname">${item.name}</span><span class="pqty">× ${item.qty}</span></div>`;});
@@ -921,18 +1052,15 @@ function resetDemo(){buildDemoTravelers();document.getElementById('demo-list-out
 // ═══════════════════════════════════════════
 function tSyncN(){const d=parseInt(document.getElementById('t-days').value)||1;document.getElementById('t-nights').value=Math.max(0,d-1);}
 function tSyncD(){const n=parseInt(document.getElementById('t-nights').value)||0;document.getElementById('t-days').value=n+1;}
-
 function toolStep(n){
   document.querySelectorAll('.tool-step').forEach(s=>s.classList.remove('active'));
   document.getElementById('ts'+n).classList.add('active');
   for(let i=0;i<3;i++) document.getElementById('tdot'+i).classList.toggle('done',i<=n);
   window.scrollTo(0,0);
 }
-
 function buildToolTravelers(){
   const n=parseInt(document.getElementById('t-num').value);
-  const c=document.getElementById('tool-traveler-forms');
-  c.innerHTML='';
+  const c=document.getElementById('tool-traveler-forms'); c.innerHTML='';
   for(let i=0;i<n;i++){
     const da=i===0?35:i===1?8:i===2?0:38;
     c.innerHTML+=`<div class="traveler-card" id="tcard${i}"><h4>Traveler ${i+1}</h4>
@@ -956,63 +1084,47 @@ function buildToolTravelers(){
   for(let i=0;i<n;i++) tUpdateRole(i);
 }
 buildToolTravelers();
-
-function tUpdateRole(i){
-  const a=parseInt(document.getElementById('tn-age'+i).value)||0;
-  document.getElementById('tn-role'+i).value=roleFromAge(a);
-  tShowFollowUp(i);
-}
-
+function tUpdateRole(i){const a=parseInt(document.getElementById('tn-age'+i).value)||0;document.getElementById('tn-role'+i).value=roleFromAge(a);tShowFollowUp(i);}
 function tShowFollowUp(i){
   const role=document.getElementById('tn-role'+i).value;
   const age=parseInt(document.getElementById('tn-age'+i).value)||0;
   const el=document.getElementById('tn-followup'+i);
   if(role==='baby'){
     el.innerHTML=`<div class="follow-up-block"><label class="field-label">How is this baby fed?</label>
-      <select id="tn-feeding${i}">
-        <option value="nursing">Breastfed — nursing directly</option>
-        <option value="bottle">Breastfed — pumped via bottle</option>
-        <option value="formula">Formula fed</option>
-      </select></div>`;
-  } else if(role==='toddler' && age>=2 && age<=3){
+      <select id="tn-feeding${i}"><option value="nursing">Breastfed — nursing directly</option><option value="bottle">Breastfed — pumped via bottle</option><option value="formula">Formula fed</option></select></div>`;
+  } else if(role==='toddler'&&age>=2&&age<=3){
     el.innerHTML=`<div class="follow-up-block"><label class="field-label">Is this toddler potty trained?</label>
-      <select id="tn-potty${i}">
-        <option value="no">Not yet — still in diapers / pull-ups</option>
-        <option value="partial">Partially — in training</option>
-        <option value="yes">Yes — fully potty trained</option>
-      </select></div>`;
+      <select id="tn-potty${i}"><option value="no">Not yet — still in diapers / pull-ups</option><option value="partial">Partially — in training</option><option value="yes">Yes — fully potty trained</option></select></div>`;
   } else { el.innerHTML=''; }
 }
 
 let toolTravelers=[],toolLists={},toolExpanded={};
-
 function generateToolLists(){
   const nights=parseInt(document.getElementById('t-nights').value)||7;
   const days=parseInt(document.getElementById('t-days').value)||8;
   const climate=document.getElementById('t-climate').value;
   const packAll=document.getElementById('t-laundry').value==='no';
+  const travelMethod=document.getElementById('t-travel').value;
   const activities=[...document.querySelectorAll('#ts0 .activity-check-grid input:checked')].map(e=>e.value);
   const n=parseInt(document.getElementById('t-num').value);
   toolTravelers=[];
   for(let i=0;i<n;i++){
     const role=document.getElementById('tn-role'+i).value;
     const age=parseInt(document.getElementById('tn-age'+i).value)||0;
-    const feedingEl=document.getElementById('tn-feeding'+i);
-    const pottyEl=document.getElementById('tn-potty'+i);
     const name=document.getElementById('tn-name'+i).value||`Traveler ${i+1}`;
     const gender=document.getElementById('tn-g'+i).value;
-    toolTravelers.push({ name, age, gender, role, feeding:feedingEl?feedingEl.value:null, potty:pottyEl?pottyEl.value:null });
-    // Auto-save profile
-    saveProfile(name, age, gender, role);
+    const feedingEl=document.getElementById('tn-feeding'+i);
+    const pottyEl=document.getElementById('tn-potty'+i);
+    toolTravelers.push({name,age,gender,role,feeding:feedingEl?feedingEl.value:null,potty:pottyEl?pottyEl.value:null});
+    saveProfile(name,age,gender,role);
   }
   toolLists={}; toolExpanded={};
-  toolTravelers.forEach(t=>{ toolLists[t.name]=buildSections(t,days,nights,climate,packAll,activities); });
+  toolTravelers.forEach(t=>{toolLists[t.name]=buildSections(t,days,nights,climate,packAll,activities,travelMethod);});
   document.getElementById('t-list-meta').textContent=`${toolTravelers.length} traveler${toolTravelers.length>1?'s':''} · ${days} days / ${nights} nights · ${climate}`;
   document.getElementById('tool-person-tabs').innerHTML=toolTravelers.map((t,i)=>`<button class="person-tab ${i===0?'active':''}" onclick="selectToolTab(${i})">${t.name}</button>`).join('');
-  toolStep(2);
-  selectToolTab(0);
-  // Show review modal after a short delay
-  setTimeout(() => showReviewModal(), 3000);
+  saveTripRecord(days,nights,climate,travelMethod,toolTravelers);
+  toolStep(2); selectToolTab(0);
+  setTimeout(()=>showReviewModal(),3000);
 }
 
 function selectToolTab(idx){
@@ -1046,26 +1158,19 @@ function selectToolTab(idx){
   });
   out.innerHTML=html;
 }
-
-function toggleToolExpand(key,ti,si,ii,tname){
-  if(toolExpanded[key]){delete toolExpanded[key];}
-  else{toolExpanded[key]={subs:getExpandDefaults(toolLists[tname][si].items[ii].name)};}
-  selectToolTab(ti);
-}
+function toggleToolExpand(key,ti,si,ii,tname){if(toolExpanded[key]){delete toolExpanded[key];}else{toolExpanded[key]={subs:getExpandDefaults(toolLists[tname][si].items[ii].name)};}selectToolTab(ti);}
 function addToolSub(key,ti){if(!toolExpanded[key])return;toolExpanded[key].subs.push('New item');selectToolTab(ti);}
 function removeToolSub(key,si,ti){toolExpanded[key].subs.splice(si,1);selectToolTab(ti);}
 function resetTool(){toolTravelers=[];toolLists={};toolExpanded={};buildToolTravelers();}
 
 // ═══════════════════════════════════════════
-// PACKING LOGIC — based on your spreadsheet
+// PACKING LOGIC — ordered by spreadsheet priority
 // ═══════════════════════════════════════════
 function roleFromAge(a){if(a<1)return'baby';if(a<=4)return'toddler';if(a<=12)return'child';if(a<=17)return'teen';return'adult';}
 function roleLabel(r){return{baby:'Baby (under 1)',toddler:'Toddler (1–4)',child:'Child (5–12)',teen:'Teen (13–17)',adult:'Adult (18+)'}[r]||r;}
-
-// Check if ANY traveler is being breastfed (for nursing-mom items)
 function anyBreastfeeding(){return toolTravelers.some(t=>t.feeding==='nursing'||t.feeding==='bottle');}
 
-function buildSections(t, days, nights, climate, packAll, activities){
+function buildSections(t, days, nights, climate, packAll, activities, travelMethod){
   const{role,gender,feeding,potty,age}=t;
   const isCold=climate==='Cold / winter';
   const isMixed=climate==='Mixed (varies)';
@@ -1073,220 +1178,211 @@ function buildSections(t, days, nights, climate, packAll, activities){
   const isWarm=climate==='Warm / tropical'||climate==='Hot / desert';
   const isHot=climate==='Hot / desert';
   const isFemale=gender==='Female';
-  const isMale=gender==='Male';
   const isBeach=activities.includes('beach');
   const isSki=activities.includes('ski');
   const isGym=activities.includes('gym');
   const isBusiness=activities.includes('business');
-  const isFormal=activities.includes('formal');
   const notPottyTrained=potty==='no'||potty==='partial'||!potty;
   const fullyTrained=potty==='yes';
   const ageNum=age||0;
   const isNursing=feeding==='nursing';
   const isBottle=feeding==='bottle';
   const isFormula=feeding==='formula'||(!feeding&&role==='baby');
+  const isFlying=travelMethod==='flying';
 
-  // ── LAUNDRY CAP ──
-  // If user has laundry access (!packAll), cap all day-based quantities
-  // at a 7-day equivalent so lists don't balloon for long trips.
-  const LAUNDRY_CAP = 7;
-  const d = !packAll ? Math.min(days, LAUNDRY_CAP) : days;
-  const n = !packAll ? Math.min(nights, LAUNDRY_CAP) : nights;
+  // Laundry cap: if laundry access, cap day-based qty at 7 days equivalent
+  const LAUNDRY_CAP=7;
+  const d=!packAll?Math.min(days,LAUNDRY_CAP):days;
+  const n=!packAll?Math.min(nights,LAUNDRY_CAP):nights;
 
-  // Quantity helpers from spreadsheet
-  const qShortSleeve = ()=>{
-    if(!isWarm&&!isMixed) return 0;
-    const base=ageNum>=5?Math.ceil(d*1.25):Math.ceil(d*1.5);
-    if(isMixed) return Math.ceil(base/2);
-    return base;
-  };
-  const qLongSleeve = ()=>{
-    if(isWarm) return 0;
-    const base=ageNum>=5?Math.ceil(d*1.25):Math.ceil(d*1.5);
-    if(isCold) return base;
-    return Math.ceil(base/2);
-  };
-  const qSweater = ()=>{
-    if(!isCold) return 0;
-    return ageNum>=5?Math.ceil(d*1.15):Math.ceil(d*1.25);
-  };
-  const qSocks = ()=>{
-    let base=isCold?d:Math.ceil(d/2);
-    if(ageNum<=4) base+=Math.ceil(d/3);
-    return base;
-  };
-  const qBathing = ()=>isBeach&&(isWarm||isHot)?Math.ceil(d/3):0;
+  // Quantity helpers — exact spreadsheet logic
+  const qShortSleeve=()=>{ if(!isWarm&&!isMixed)return 0; const base=ageNum>=5?Math.ceil(d*1.25):Math.ceil(d*1.5); return isMixed?Math.ceil(base/2):base; };
+  const qShorts=()=>{ if(!isWarm&&!isMixed)return 0; const base=ageNum>=5?Math.ceil(d*1.25):Math.ceil(d*1.5); return isMixed?Math.ceil(base/2):base; };
+  const qLongSleeve=()=>{ if(isWarm)return 0; const base=ageNum>=5?Math.ceil(d*1.25):Math.ceil(d*1.5); return isCold?base:Math.ceil(base/2); };
+  const qDayUnderWear=()=>ageNum>=5?Math.ceil(d*1.25):Math.ceil(d*1.5);
+  const qSweater=()=>{ if(!isCold)return 0; return ageNum>=5?Math.ceil(d*1.15):Math.ceil(d*1.25); };
+  const qSocks=()=>{ let base=isCold?d:Math.ceil(d/2); if(ageNum<=4)base+=Math.ceil(d/3); return base; };
+  const qBathing=()=>isBeach&&isWarm?Math.ceil(d/3):0;
+  const qPJs=()=>{ if(ageNum<1)return Math.ceil(d*1.25); if(ageNum<=5)return d; return Math.ceil(d/2); };
 
-  let clothing=[], entertainment=[], feeding_items=[], firstaid=[], sleep=[], travelgear=[], toiletries=[], work=[];
+  let clothing=[],feeding_items=[],entertainment=[],firstaid=[],sleep=[],travelgear=[],toiletries=[],work=[];
 
-  // ── CLOTHING ──
+  // ══ CLOTHING — ordered by spreadsheet priority ══
+
+  // Priority 1: Short Sleeve Tops, Diapers, Sneakers
   const ss=qShortSleeve(); if(ss>0) clothing.push({name:'Short Sleeve Tops',qty:ss});
-  const ls=qLongSleeve(); if(ls>0) clothing.push({name:'Long Sleeve Tops',qty:ls});
-  const sw=qSweater(); if(sw>0) clothing.push({name:'Sweaters',qty:sw});
-  if(!isWarm) clothing.push({name:'Sweatshirts',qty:d>5?2:1});
-  if(isMild||isMixed) clothing.push({name:'Light Sweater / Jacket',qty:d>5?2:1});
-  clothing.push({name:'Dinner Outfits',qty:Math.ceil(n/2)});
-  clothing.push({name:'Socks',qty:qSocks()});
-  if(ageNum>=2&&(ageNum>3||fullyTrained)) clothing.push({name:'Sleeping Underwear',qty:n});
-  // Diapers — always use real days (not capped) since you can't re-use diapers
   if(role==='baby') clothing.push({name:'Diapers',qty:Math.min(ageNum<1?days*10:days*6,50)});
-  if((role==='toddler')&&notPottyTrained){
-    const diaperQty=ageNum<=2?Math.min(days*6,50):Math.min(days*5,50);
-    clothing.push({name:'Diapers / Pull-ups',qty:diaperQty});
-  }
-  // Wipes — always use real days (disposable, not re-usable)
+  if((role==='toddler')&&notPottyTrained){ const dq=ageNum<=2?Math.min(days*6,50):Math.min(days*5,50); clothing.push({name:'Diapers / Pull-ups',qty:dq}); }
+  if(ageNum>1) clothing.push({name:'Sneakers',qty:1});
+
+  // Priority 2: Shorts, Wipes, Sandals
+  const sh=qShorts(); if(sh>0) clothing.push({name:'Shorts',qty:sh});
   if(ageNum<4) clothing.push({name:'Wipes',qty:Math.ceil(days/5)});
-  if(isCold){
-    clothing.push({name:'Winter Hat',qty:1});
-    clothing.push({name:'Winter Gloves',qty:1});
-    clothing.push({name:'Winter Coat',qty:1});
-  }
-  if(isSki&&isCold&&ageNum>=4){
-    clothing.push({name:'Ski / Snowboard Jacket',qty:1});
-    clothing.push({name:'Snow Pants',qty:1});
-    clothing.push({name:'Ski Helmet',qty:1});
-    clothing.push({name:'Ski Goggles',qty:1});
-    clothing.push({name:'Mittens / Snow Gloves',qty:1});
-    clothing.push({name:'Base Layer Top',qty:d});
-    clothing.push({name:'Base Layer Bottom',qty:d});
-    clothing.push({name:'Ski/Snowboard Boot Socks',qty:d});
-    clothing.push({name:'Ski / Snowboard Boots',qty:1});
-  }
-  if(isFemale&&ageNum>=12) clothing.push({name:'Regular Bra',qty:Math.ceil(d/3)});
-  if(isFemale&&ageNum>=14) clothing.push({name:'Strapless Bra',qty:1});
-  if(isFemale&&ageNum>=14&&isGym) clothing.push({name:'Sports Bra',qty:Math.ceil(d/2)});
+  if(isWarm||isMixed) clothing.push({name:'Sandals',qty:3});
+
+  // Priority 3: Long Sleeves, Daytime Underwear, Purse
+  const ls=qLongSleeve(); if(ls>0) clothing.push({name:'Long Sleeve Tops',qty:ls});
+  if(ageNum>=2&&(fullyTrained||ageNum>4)) clothing.push({name:'Daytime Underwear',qty:qDayUnderWear()});
   if(isFemale&&ageNum>=14) clothing.push({name:'Purse',qty:1});
-  if(isWarm||isMixed) clothing.push({name:'Sandals',qty:Math.ceil(d*2/3)});
-  if(isGym&&ageNum>=10){
-    clothing.push({name:'Athleisure Tops',qty:Math.ceil(d/2)});
-    clothing.push({name:'Athleisure Bottoms',qty:Math.ceil(d/2)});
-  }
-  if(qBathing()>0) clothing.push({name:'Swimsuit',qty:qBathing()});
-  if(isBeach&&isWarm) clothing.push({name:'Sun Hat',qty:1});
+
+  // Priority 4: Dinner Outfits, Sleeping Underwear, Sunglasses
+  clothing.push({name:'Dinner Outfits',qty:Math.ceil(n/2)});
+  if(ageNum>=2&&(fullyTrained||ageNum>4)) clothing.push({name:'Sleeping Underwear',qty:n});
   if(isBeach) clothing.push({name:'Sunglasses',qty:1});
-  if(isBeach&&isWarm&&isFemale) clothing.push({name:'Swimsuit Cover-up',qty:Math.ceil(d/3)});
+
+  // Priority 5: Sun Hat, Sweaters, Regular Bra
+  if(isBeach&&isWarm) clothing.push({name:'Sun Hat',qty:1});
+  const sw=qSweater(); if(sw>0) clothing.push({name:'Sweaters',qty:sw});
+  if(isFemale&&ageNum>=12) clothing.push({name:'Regular Bra',qty:Math.ceil(d/3)});
+
+  // Priority 6: Winter Hat, Sweatshirts, Strapless Bra
+  if(isCold) clothing.push({name:'Winter Hat',qty:1});
+  if(!isWarm) clothing.push({name:'Sweatshirts',qty:d>5?2:1});
+  if(isFemale&&ageNum>=14) clothing.push({name:'Strapless Bra',qty:1});
+
+  // Priority 7: Winter Gloves, Light Sweater/Jacket, Sports Bra
+  if(isCold) clothing.push({name:'Winter Gloves',qty:1});
+  if(isMild||isMixed) clothing.push({name:'Light Sweater / Jacket',qty:d>5?2:1});
+  if(isFemale&&ageNum>=14&&isGym) clothing.push({name:'Sports Bra',qty:Math.ceil(d/2)});
+
+  // Priority 8: Winter Coat, Athleisure Tops, Sleeping Bra
+  if(isCold) clothing.push({name:'Winter Coat',qty:1});
+  if(isGym&&ageNum>=10) clothing.push({name:'Athleisure Tops',qty:Math.ceil(d/2)});
   if(isFemale&&ageNum>=25&&anyBreastfeeding()) clothing.push({name:'Sleeping Bra (nursing)',qty:Math.ceil(n/2)});
-  // Baby camping chair
-  if(ageNum<=2) travelgear.push({name:'Baby Camping Chair',qty:1});
 
-  // ── ENTERTAINMENT ──
-  entertainment.push({name:'iPad / Tablet',qty:1});
-  entertainment.push({name:'Headphones',qty:1});
-  if(ageNum<4) entertainment.push({name:'Small Toys',qty:4});
-  if(ageNum<=3) entertainment.push({name:'Small Baby Blanket',qty:1});
-  if(ageNum>=10) entertainment.push({name:'Phone Charger',qty:1});
-  if(ageNum>=12) entertainment.push({name:'Books / Kindle',qty:1});
-  if(ageNum>=12) entertainment.push({name:'Camera + Charger',qty:1});
-  // Travel day snacks
-  entertainment.push({name:'Travel Day Snacks',qty:days<5?0:1,note:days<5?'Unlimited':'See qty suggestions'});
+  // Priority 9: Ski Goggles, Athleisure Bottoms, Socks
+  if(isSki&&isCold&&ageNum>=4) clothing.push({name:'Ski Goggles',qty:1});
+  if(isGym&&ageNum>=10) clothing.push({name:'Athleisure Bottoms',qty:Math.ceil(d/2)});
+  clothing.push({name:'Socks',qty:qSocks()});
 
-  // ── FEEDING ──
-  if(ageNum>=1) feeding_items.push({name:'Water Bottle',qty:1});
-  if(ageNum<4) feeding_items.push({name:'Milk Cup',qty:1,link:'https://go.shopmy.us/p-66543766'});
-  if(ageNum<3) feeding_items.push({name:'Toddler Spoon & Fork',qty:1});
-  if(ageNum<3) feeding_items.push({name:'Toddler Plate',qty:1});
-  if(ageNum<2) feeding_items.push({name:'Portable High Chair',qty:1,link:'https://go.shopmy.us/p-66543766'});
-  if(ageNum<5) feeding_items.push({name:'Lunch Containers',qty:1,link:'https://go.shopmy.us/p-66544009'});
-  if(ageNum<4) feeding_items.push({name:'Snack Cups',qty:1,link:'https://go.shopmy.us/p-66543949'});
-  if(ageNum<5) feeding_items.push({name:'Snack Boxes',qty:1,link:'https://go.shopmy.us/p-66543877'});
-  if(ageNum>=2) feeding_items.push({name:'Electrolytes',qty:1,link:'https://go.shopmy.us/p-66544089'});
-  if(ageNum<3) feeding_items.push({name:'Ice Packs',qty:2});
-  if(ageNum<5) feeding_items.push({name:'Lunch Box',qty:1});
-  // Baby-specific feeding
+  // Priority 10: PJs, Ski Helmet, Ski/Snowboard Boot Socks
+  clothing.push({name:'PJs',qty:qPJs()});
+  if(isSki&&isCold&&ageNum>=4){ clothing.push({name:'Ski Helmet',qty:1}); clothing.push({name:'Ski/Snowboard Boot Socks',qty:d}); }
+
+  // Priority 11: Mittens/Snow Gloves, Swim Suit Coverup, Swim Diapers
+  if(isSki&&isCold&&ageNum>=4) clothing.push({name:'Mittens / Snow Gloves',qty:1});
+  if(isBeach&&isWarm&&isFemale) clothing.push({name:'Swimsuit Coverup',qty:Math.ceil(d/3)});
+  if(isBeach&&ageNum<3&&notPottyTrained) clothing.push({name:'Swim Diapers',qty:days*2});
+
+  // Priority 12: Ski/Snowboard Boots, Bathing Suits
+  if(isSki&&isCold&&ageNum>=4) clothing.push({name:'Ski / Snowboard Boots',qty:1});
+  if(qBathing()>0) clothing.push({name:'Bathing Suit',qty:qBathing()});
+
+  // Priority 13+: Snow Pants, Base Layers, Ski Jacket
+  if(isSki&&isCold&&ageNum>=4){
+    clothing.push({name:'Snow Pants',qty:1});
+    clothing.push({name:'Base Layer Top',qty:d});
+    clothing.push({name:'Ski / Snowboard Jacket',qty:1});
+    clothing.push({name:'Base Layer Bottom',qty:d});
+  }
+
+  // ══ FEEDING — ordered by spreadsheet priority ══
   if(role==='baby'){
     feeding_items.push({name:'Baby Bottles',qty:4});
+    if(isFormula) feeding_items.push({name:'Formula',qty:Math.ceil(d/3)});
     feeding_items.push({name:'Bibs',qty:Math.min(d*4,20)});
     feeding_items.push({name:'Burp Cloths',qty:Math.min(d*3,15)});
-    feeding_items.push({name:'Portable Drying Rack',qty:1,link:'https://go.shopmy.us/p-66544192'});
-    feeding_items.push({name:'Vitamin D Drops',qty:1});
-    if(isNursing||isBottle){
-      feeding_items.push({name:'Multi Bottle Cooler Bag',qty:1,link:'https://go.shopmy.us/p-66544416'});
-      feeding_items.push({name:'Milk Storage Bags',qty:n*3});
-      feeding_items.push({name:'Ceres Chill',qty:1,link:'https://go.shopmy.us/p-66544127'});
-    }
-    if(isNursing){
-      feeding_items.push({name:'Nursing Cover',qty:1,link:'https://go.shopmy.us/p-66544159'});
-      feeding_items.push({name:'Milk Pitcher',qty:1,link:'https://go.shopmy.us/p-66763194'});
-    }
-    if(isBottle||isNursing){
-      feeding_items.push({name:'Regular Pump',qty:1});
-      feeding_items.push({name:'Wearable Pump',qty:1,link:'https://go.shopmy.us/p-66763423'});
-      feeding_items.push({name:'Pump Parts',qty:2});
-      feeding_items.push({name:'Pumping Bra',qty:1,link:'https://go.shopmy.us/p-66544211'});
-      feeding_items.push({name:'Pump Chargers',qty:1});
-      feeding_items.push({name:'Container for Parts',qty:1});
-      feeding_items.push({name:'Pump Wipes',qty:1,link:'https://go.shopmy.us/p-66762919'});
-      feeding_items.push({name:'Single Bottle Cooler Bag',qty:1,link:'https://go.shopmy.us/p-66544290'});
-    }
-    if(isFormula){
-      feeding_items.push({name:'Formula',qty:Math.ceil(d/3)});
-    }
-    feeding_items.push({name:'Eating Bib',qty:1,link:'https://go.shopmy.us/p-66544244'});
+    if(isNursing||isBottle) feeding_items.push({name:'Vitamin D Drops',qty:1});
+    feeding_items.push({name:'Multi Bottle Cooler Bag',qty:1,link:'https://go.shopmy.us/p-66544416'});
+    feeding_items.push({name:'Single Bottle Cooler Bag',qty:1,link:'https://go.shopmy.us/p-66544290'});
+    feeding_items.push({name:'Ice Packs',qty:2});
+  }
+  if(ageNum<4) feeding_items.push({name:'Milk Cup',qty:1});
+  if(role==='baby') feeding_items.push({name:'Portable Drying Rack',qty:1,link:'https://go.shopmy.us/p-66544192'});
+  if(ageNum>=1) feeding_items.push({name:'Water Bottle',qty:1});
+  if(ageNum<2) feeding_items.push({name:'Eating Bib',qty:1,link:'https://go.shopmy.us/p-66544244'});
+  if(ageNum<5) feeding_items.push({name:'Lunch Box',qty:1});
+  if(ageNum<4) feeding_items.push({name:'Snack Cups',qty:1,link:'https://go.shopmy.us/p-66543949'});
+  if(ageNum<5) feeding_items.push({name:'Larger Snack Boxes',qty:1,link:'https://go.shopmy.us/p-66543877'});
+  if(ageNum<5) feeding_items.push({name:'Lunch Containers',qty:1,link:'https://go.shopmy.us/p-66544009'});
+  if(ageNum<3){ feeding_items.push({name:'Toddler Spoon & Fork',qty:1}); feeding_items.push({name:'Toddler Plate',qty:1}); }
+  if(ageNum<2) feeding_items.push({name:'Portable High Chair',qty:1,link:'https://go.shopmy.us/p-66543766'});
+  if(ageNum>=2) feeding_items.push({name:'Electrolytes',qty:1,link:'https://go.shopmy.us/p-66544089'});
+
+  // Pumping items (priority order from spreadsheet)
+  const isBreastfeeding=isNursing||isBottle;
+  if(isBreastfeeding){
+    feeding_items.push({name:'Pump Parts',qty:2});
+    feeding_items.push({name:'Regular Pump',qty:1});
+    feeding_items.push({name:'Wearable Pump',qty:1,link:'https://go.shopmy.us/p-66763423'});
+    feeding_items.push({name:'Pump Chargers',qty:1});
+    feeding_items.push({name:'Pumping Bra',qty:1,link:'https://go.shopmy.us/p-66544211'});
+    feeding_items.push({name:'Nursing Cover',qty:1,link:'https://go.shopmy.us/p-66544159'});
+    feeding_items.push({name:'Container for Parts',qty:1});
+    feeding_items.push({name:'Milk Pitcher',qty:1,link:'https://go.shopmy.us/p-66763194'});
+    feeding_items.push({name:'Ceres Chill',qty:1,link:'https://go.shopmy.us/p-66544127'});
+    feeding_items.push({name:'Pump Wipes',qty:1,link:'https://go.shopmy.us/p-66762919'});
+    feeding_items.push({name:'Milk Storage Bags',qty:n*3});
   }
 
-  // ── FIRST AID ──
-  if(ageNum>=6) firstaid.push({name:'Tylenol',qty:1});
-  if(ageNum>=6) firstaid.push({name:'Ibuprofen',qty:1});
-  if(ageNum<=5) firstaid.push({name:"Children's Ibuprofen",qty:1});
-  if(ageNum<=5) firstaid.push({name:"Children's Tylenol",qty:1});
+  // ══ ENTERTAINMENT — priority order ══
+  if(ageNum>=10) entertainment.push({name:'Phone Charger',qty:1});
+  entertainment.push({name:'Headphones',qty:1});
+  entertainment.push({name:'iPad / Tablet',qty:1});
+  if(ageNum<4) entertainment.push({name:'Small Toys',qty:4});
+  if(ageNum>=12) entertainment.push({name:'Books / Kindle',qty:1});
+  if(ageNum>=12) entertainment.push({name:'Camera + Charger',qty:1});
+  if(ageNum<=3) entertainment.push({name:'Small Baby Blanket',qty:1});
+  entertainment.push({name:'Travel Day Snacks',qty:ageNum<5?0:1});
+
+  // ══ FIRST AID — priority order ══
+  if(ageNum>=6){ firstaid.push({name:'Tylenol',qty:1}); firstaid.push({name:'Ibuprofen',qty:1}); }
+  if(ageNum<=5){ firstaid.push({name:"Child Ibuprofen",qty:1}); firstaid.push({name:"Child Tylenol",qty:1}); }
   if(ageNum<=2) firstaid.push({name:'Saline Spray',qty:1});
-  firstaid.push({name:'Travel First Aid Kit',qty:1});
   if(ageNum<=2) firstaid.push({name:'Snot Sucker',qty:1});
+  firstaid.push({name:'Travel First Aid Kit',qty:1});
   if(ageNum>=2) firstaid.push({name:'Nail Clippers',qty:1});
   if(ageNum<2) firstaid.push({name:'Nail Filer',qty:1});
   if(ageNum<3) firstaid.push({name:'Thermometer',qty:1});
-  // Swim diapers — always use real days (disposable)
-  if(isBeach&&ageNum<3&&notPottyTrained) firstaid.push({name:'Swim Diapers',qty:days*2});
-  if(isBeach||(isWarm&&!isCold)) firstaid.push({name:'Sunscreen',qty:1});
-  if(isBeach&&ageNum<2) firstaid.push({name:'Sunscreen Applicator',qty:1});
-  if(ageNum<3) firstaid.push({name:'Dog Poop Bags (diaper disposal)',qty:1});
+  if(isWarm||isMixed){ firstaid.push({name:'Sunscreen',qty:1}); if(ageNum<2) firstaid.push({name:'Sunscreen Applicator',qty:1}); }
+  if(ageNum<3) firstaid.push({name:'Dog Poop Bags',qty:1});
   if(ageNum<4&&(isWarm||isMixed)) firstaid.push({name:'Baby Powder',qty:1});
   if(isWarm||isMixed) firstaid.push({name:'Mosquito Repellent',qty:1});
   if(ageNum>=18) firstaid.push({name:'Antacids',qty:1});
 
-  // ── SLEEP ──
+  // ══ SLEEP — priority order ══
   if(ageNum<3) sleep.push({name:'Pack & Play',qty:1});
   sleep.push({name:'Portable Sound Machine + Charger',qty:1,link:'https://go.shopmy.us/p-66544621'});
   if(ageNum<2) sleep.push({name:'Slumberpod + Fan',qty:1,link:'https://go.shopmy.us/p-66544590'});
-  if(ageNum<3) sleep.push({name:'Crib Sheets',qty:2});
+  if(ageNum<3){ sleep.push({name:'Crib Sheets',qty:2}); }
   if(ageNum<4) sleep.push({name:'Baby Monitor',qty:1});
-  if(ageNum<3) sleep.push({name:'Sleep Sacks',qty:2});
-  if(ageNum<3) sleep.push({name:'Pacifiers / Binkies',qty:3});
-  if(ageNum<3) sleep.push({name:'Lovey / Comfort Item',qty:1});
+  if(ageNum<3){ sleep.push({name:'Sleep Sacks',qty:2}); sleep.push({name:'Binkies',qty:3}); sleep.push({name:'Lovies',qty:1}); }
 
-  // ── TRAVEL GEAR ──
+  // ══ TRAVEL GEAR — priority order ══
   if(ageNum<=6) travelgear.push({name:'Car Seat',qty:1});
-  if(ageNum<=6) travelgear.push({name:'Car Seat Bag',qty:1,link:'https://go.shopmy.us/p-66544720'});
-  if(ageNum<=4) travelgear.push({name:'Stroller',qty:1});
-  if(ageNum<=4) travelgear.push({name:'Stroller Bag',qty:1});
-  if(ageNum<=4&&(isWarm||isMixed)) travelgear.push({name:'Stroller Fan',qty:1,link:'https://go.shopmy.us/p-66544755'});
-  if(ageNum<=2) travelgear.push({name:'Baby Carrier',qty:1,link:'https://go.shopmy.us/p-66544664'});
   if(ageNum<=4) travelgear.push({name:'Diaper Bag',qty:1});
+  if(ageNum<=4) travelgear.push({name:'Stroller',qty:1});
+  if(ageNum<=2) travelgear.push({name:'Baby Carrier',qty:1,link:'https://go.shopmy.us/p-66544664'});
+  if(ageNum<=4&&(isWarm||isMixed)) travelgear.push({name:'Stroller Fan',qty:1,link:'https://go.shopmy.us/p-66544755'});
+  // Flying-only items
+  if(isFlying&&ageNum<=6) travelgear.push({name:'Car Seat Bag',qty:1,link:'https://go.shopmy.us/p-66544720'});
+  if(isFlying&&ageNum<=4) travelgear.push({name:'Stroller Bag',qty:1});
+  if(ageNum<=2) travelgear.push({name:'Baby Camping Chair',qty:1});
 
-  // ── TOILETRIES ──
+  // ══ TOILETRIES — priority order ══
   toiletries.push({name:'Shampoo',qty:1});
   toiletries.push({name:'Conditioner',qty:1});
   toiletries.push({name:'Body Wash',qty:1});
-  if(isFemale) toiletries.push({name:'Detangler',qty:1});
-  toiletries.push({name:'Lotion',qty:1});
-  toiletries.push({name:'Face Wash',qty:1});
   toiletries.push({name:'Toothbrush',qty:1});
   toiletries.push({name:'Toothpaste',qty:1});
+  toiletries.push({name:'Face Wash',qty:1});
+  if(ageNum>=14) toiletries.push({name:'Skincare',qty:1});
+  if(ageNum>=10) toiletries.push({name:'Deodorant',qty:1});
+  if(ageNum>=12) toiletries.push({name:'Perfume / Cologne',qty:1});
+  toiletries.push({name:'Lotion',qty:1});
+  toiletries.push({name:'Q-Tips',qty:1});
+  if(ageNum>=12) toiletries.push({name:'Razor',qty:1});
+  if(isFemale) toiletries.push({name:'Detangler',qty:1});
   toiletries.push({name:'Hair Brush',qty:1});
   if(isFemale) toiletries.push({name:'Hair Ties',qty:1});
   if(isFemale) toiletries.push({name:'Water Spray Bottle',qty:1});
   if(isFemale) toiletries.push({name:'Curl Cream',qty:1});
-  toiletries.push({name:'Q-Tips',qty:1});
-  if(ageNum>=14&&isFemale) toiletries.push({name:'Hair Tools (Straightener/Curling Iron)',qty:1});
-  if(ageNum>=14&&isFemale) toiletries.push({name:'Make Up',qty:1});
-  if(ageNum>=14&&isFemale) toiletries.push({name:'Make Up Remover',qty:1});
-  if(ageNum>=14) toiletries.push({name:'Skincare',qty:1});
-  if(ageNum>=10) toiletries.push({name:'Deodorant',qty:1});
-  if(ageNum>=12) toiletries.push({name:'Razor',qty:1});
+  if(isFemale&&ageNum>=14) toiletries.push({name:'Hair Tools (Straightener/Curling Iron/Blow Dryer)',qty:1});
+  if(isFemale&&ageNum>=14) toiletries.push({name:'Make Up',qty:1});
+  if(isFemale&&ageNum>=14) toiletries.push({name:'Make Up Remover',qty:1});
   if(isFemale) toiletries.push({name:'Feminine Products',qty:Math.min(d*5,25)});
-  if(ageNum>=12) toiletries.push({name:'Perfume / Cologne',qty:1});
 
-  // ── WORK ──
+  // ══ WORK ══
   if(isBusiness&&ageNum>=18){
     work.push({name:'Work Laptop',qty:1});
     work.push({name:'Work Laptop Charger',qty:1});
@@ -1295,23 +1391,22 @@ function buildSections(t, days, nights, climate, packAll, activities){
     work.push({name:'Pen',qty:1});
   }
 
-  // Build sections — only include non-empty
   const sections=[];
-  if(clothing.length)    sections.push({cat:'Clothing',items:clothing});
+  if(clothing.length) sections.push({cat:'Clothing',items:clothing});
   if(feeding_items.length) sections.push({cat:'Feeding',items:feeding_items});
   if(entertainment.length) sections.push({cat:'Entertainment',items:entertainment});
-  if(toiletries.length)  sections.push({cat:'Toiletries',items:toiletries});
-  if(firstaid.length)    sections.push({cat:'First Aid',items:firstaid});
-  if(sleep.length)       sections.push({cat:'Sleep',items:sleep});
-  if(travelgear.length)  sections.push({cat:'Travel Gear',items:travelgear});
-  if(work.length)        sections.push({cat:'Work',items:work});
+  if(toiletries.length) sections.push({cat:'Toiletries',items:toiletries});
+  if(firstaid.length) sections.push({cat:'First Aid',items:firstaid});
+  if(sleep.length) sections.push({cat:'Sleep',items:sleep});
+  if(travelgear.length) sections.push({cat:'Travel Gear',items:travelgear});
+  if(work.length) sections.push({cat:'Work',items:work});
   return sections;
 }
 
 function getExpandDefaults(name){
   const map={
     'Make Up':['Foundation / tinted moisturizer','Mascara','Eyeliner','Blush / bronzer','Lipstick / gloss','Setting spray','Makeup remover wipes'],
-    'Hair Tools (Straightener/Curling Iron)':['Hair dryer','Flat iron / curling iron','Diffuser attachment','Heat protectant spray'],
+    'Hair Tools (Straightener/Curling Iron/Blow Dryer)':['Hair dryer','Flat iron','Curling iron','Heat protectant spray'],
     'Skincare':['Cleanser','Toner','Vitamin C serum','Moisturizer (AM)','Moisturizer (PM)','SPF face sunscreen','Eye cream'],
     'Baby Bottles':['4oz bottles','8oz bottles','Extra nipples','Bottle caps'],
     'Travel First Aid Kit':['Band-aids (assorted)','Neosporin','Antiseptic wipes','Medical tape','Tweezers'],
