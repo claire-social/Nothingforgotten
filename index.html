@@ -729,15 +729,20 @@ function updateHeader(page) {
 }
 
 window.addEventListener('load', async () => {
-  updateHeader('landing');
+  // Always show landing buttons immediately so header is never empty
+  const el = document.getElementById('header-actions');
+  el.innerHTML = `<div style="display:flex;gap:8px;align-items:center">
+    <button onclick="showPage('login')" class="btn-outline" style="font-size:13px">Log in</button>
+    <a href="https://claireoasis.gumroad.com/l/kcdjwp" target="_blank" class="btn-primary yellow" style="font-size:13px;padding:8px 16px">Get access — $9.99</a>
+  </div>`;
   loadLandingReviews();
   try {
     if (sb) {
       const { data: { session } } = await sb.auth.getSession();
       if (session) {
         currentUserEmail = session.user.email;
-        updateHeader('landing'); // re-render header now that we know user is logged in
         await loadTool(session.user.email);
+        return;
       }
     }
   } catch(e) { console.warn('Session check failed:', e); }
