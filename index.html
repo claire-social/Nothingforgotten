@@ -187,16 +187,20 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
 .pack-section-head { font-size: 14px; font-weight: 700; padding: 10px 0 6px; border-bottom: 2px solid var(--border-med); margin-bottom: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--text); }
 .pack-subsection-head { font-size: 11px; font-weight: 600; padding: 8px 0 4px; border-bottom: 1px solid var(--border); margin-bottom: 2px; color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: .05em; }
 .pack-items-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
-.pack-item-cell { border-bottom: 1px solid var(--border); padding: 7px 8px 4px 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.pack-item-cell { border-bottom: 1px solid var(--border); padding: 6px 8px 4px 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .pack-item-cell.full-width { grid-column: 1 / -1; }
-.pack-item-top { display: grid; grid-template-columns: 16px 1fr 36px; align-items: center; gap: 5px; }
-.pack-item-top input[type="checkbox"] { width: 13px; height: 13px; justify-self: center; }
-.pack-item-name { color: var(--text); font-size: 12px; line-height: 1.3; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Use table layout inside each cell for perfect column control */
+.pack-item-top { display: table; width: 100%; table-layout: fixed; }
+.pack-item-top-cb { display: table-cell; width: 20px; vertical-align: middle; }
+.pack-item-top-cb input[type="checkbox"] { width: 13px; height: 13px; }
+.pack-item-name { display: table-cell; vertical-align: middle; color: var(--text); font-size: 12px; line-height: 1.3; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-right: 4px; }
 .pack-item-link { font-size: 10px; color: var(--yellow-dark); text-decoration: none; white-space: nowrap; }
 .pack-item-link:hover { text-decoration: underline; }
-.pack-qty { width: 34px; height: 24px; text-align: center; font-size: 12px; color: var(--text); border: 1px solid var(--border-med); border-radius: 4px; padding: 0; background: var(--bg); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; display: block; }
-.pack-item-bottom { margin-top: 3px; padding-left: 21px; }
-.expand-btn { padding: 1px 6px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); font-size: 10px; cursor: pointer; color: var(--text-muted); white-space: nowrap; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.pack-item-top-qty { display: table-cell; width: 38px; vertical-align: middle; }
+.pack-qty { width: 34px; height: 24px; text-align: center; font-size: 12px; color: #1a1a1a; border: 1px solid #aaa; border-radius: 4px; padding: 0; background: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; -webkit-appearance: none; -moz-appearance: textfield; display: block; box-sizing: border-box; }
+.pack-qty::-webkit-inner-spin-button, .pack-qty::-webkit-outer-spin-button { -webkit-appearance: none; }
+.pack-item-bottom { margin-top: 3px; padding-left: 20px; }
+.expand-btn { padding: 1px 7px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); font-size: 10px; cursor: pointer; color: var(--text-muted); white-space: nowrap; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .expand-btn:hover, .expand-btn.open { border-color: var(--border-med); color: var(--text); }
 .sub-items { margin-left: 22px; padding: 4px 0; }
 .sub-item-row { display: flex; align-items: center; gap: 7px; padding: 4px 0; font-size: 13px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
@@ -313,8 +317,8 @@ textarea.review-text:focus { outline: none; border-color: var(--text); }
           <div class="q-screen active" id="dqs0">
             <p class="step-heading">Trip details</p>
             <div class="field-row">
-              <div><label class="field-label">Days</label><input type="number" id="d-days" value="7" min="1" max="30" onchange="dSyncN()"></div>
-              <div><label class="field-label">Nights</label><input type="number" id="d-nights" value="6" min="0" max="30" onchange="dSyncD()"></div>
+              <div><label class="field-label">How many days?</label><input type="number" id="d-days" value="7" min="1" max="30" onchange="dSyncN()"></div>
+              <div><label class="field-label">How many nights?</label><input type="number" id="d-nights" value="6" min="0" max="30" onchange="dSyncD()"></div>
             </div>
             <div class="field-row">
               <div><label class="field-label">Climate</label>
@@ -324,12 +328,16 @@ textarea.review-text:focus { outline: none; border-color: var(--text); }
                 <select id="d-travel"><option value="flying">Flying</option><option value="driving">Driving</option><option value="train">Train</option></select>
               </div>
             </div>
-            <div class="field-group">
-              <label class="field-label">Laundry access?</label>
-              <select id="d-laundry"><option value="no">No — pack for all days</option><option value="yes">Yes — can re-wear</option></select>
+            <div class="field-row">
+              <div><label class="field-label">Laundry access?</label>
+                <select id="d-laundry"><option value="no">No — pack for all days</option><option value="yes">Yes — can re-wear</option></select>
+              </div>
+              <div><label class="field-label">Trip type</label>
+                <select id="d-triptype"><option>Leisure / beach</option><option>City sightseeing</option><option>Outdoors / hiking</option><option>Business travel</option><option>Family road trip</option></select>
+              </div>
             </div>
             <div class="field-group">
-              <label class="field-label">Special activities</label>
+              <label class="field-label">Special activities (select all that apply)</label>
               <div class="activity-check-grid">
                 <label><input type="checkbox" value="beach"> Beach / swimming</label>
                 <label><input type="checkbox" value="formal"> Formal dinner / event</label>
@@ -900,6 +908,10 @@ async function loadDashTrips() {
           </div>
           <div class="trip-card-meta">${t.days||'?'} days · ${t.climate||''} · ${t.travelers||''} · ${formatDate(t.created_at)}</div>
         </div>
+        <div class="profile-card-actions">
+          <button class="mini-btn" onclick="reopenTrip(${i})">Open →</button>
+          <button class="mini-btn danger" onclick="deleteTrip('${t.id}')">Delete</button>
+        </div>
       </div>`).join('');
   } catch(e) { console.warn('Load trips failed:', e); }
 }
@@ -919,6 +931,31 @@ async function saveTripName(id) {
   const name = document.getElementById('tname-input-' + id).value.trim();
   if (!sb || !name) return;
   await sb.from('trip_history').update({ name }).eq('id', id);
+  loadDashTrips();
+}
+
+function reopenTrip(idx) {
+  const t = tripHistory[idx];
+  if (!t) return;
+  // Pre-fill tool with this trip's settings and go to step 0
+  showPage('tool');
+  toolStep(0);
+  setTimeout(() => {
+    const daysEl = document.getElementById('t-days');
+    const nightsEl = document.getElementById('t-nights');
+    const climateEl = document.getElementById('t-climate');
+    const travelEl = document.getElementById('t-travel');
+    if (daysEl && t.days) daysEl.value = t.days;
+    if (nightsEl && t.nights) nightsEl.value = t.nights;
+    if (climateEl && t.climate) climateEl.value = t.climate;
+    if (travelEl && t.travel_method) travelEl.value = t.travel_method;
+  }, 50);
+}
+
+async function deleteTrip(id) {
+  if (!sb) return;
+  if (!confirm('Delete this trip? This cannot be undone.')) return;
+  await sb.from('trip_history').delete().eq('id', id);
   loadDashTrips();
 }
 
@@ -1246,10 +1283,9 @@ function selectToolTab(idx){
         const isLastOdd = ii === items.length - 1 && items.length % 2 !== 0;
         html += `<div class="pack-item-cell${isLastOdd?' full-width':''}">
           <div class="pack-item-top">
-            <input type="checkbox" aria-label="${item.name}">
-            <span class="pack-item-name">${item.name}</span>
-            ${item.link?`<a href="${item.link}" target="_blank" class="pack-item-link">Shop →</a>`:''}
-            <input type="number" class="pack-qty" value="${item.qty}" min="0" onchange="toolLists['${t.name}'][${si}].items[${ii}].qty=parseInt(this.value)">
+            <div class="pack-item-top-cb"><input type="checkbox" aria-label="${item.name}"></div>
+            <div class="pack-item-name">${item.name}${item.link?` <a href="${item.link}" target="_blank" class="pack-item-link">Shop →</a>`:''}</div>
+            <div class="pack-item-top-qty"><input type="number" class="pack-qty" value="${item.qty}" min="0" onchange="toolLists['${t.name}'][${si}].items[${ii}].qty=parseInt(this.value)"></div>
           </div>
           <div class="pack-item-bottom">
             <button class="expand-btn ${expanded?'open':''}" onclick="toggleToolExpand('${key}',${idx},${si},${ii},'${t.name}')">${expanded?'− collapse':'+ expand'}</button>
