@@ -777,36 +777,81 @@ async function loadDashProfiles() {
     const { data } = await sb.from('traveler_profiles').select('*').order('name');
     const el = document.getElementById('dash-profiles-list');
     if (!data || !data.length) { el.innerHTML = '<div class="empty-state">No saved travelers yet. Generate a list and save profiles to see them here.</div>'; return; }
-    el.innerHTML = data.map(p => `
-      <div class="profile-card" id="pcard-${p.id}">
+    el.innerHTML = data.map(p => {
+      const role=p.role||roleFromAge(p.age||0);
+      const feedingLabel={nursing:'Nursing directly',bottle:'Pumped via bottle',formula:'Formula fed'}[p.feeding]||'';
+      const pottyLabel={no:'Not potty trained',partial:'In training',yes:'Potty trained'}[p.potty]||'';
+      const extras=[feedingLabel,pottyLabel].filter(Boolean).join(' · ');
+      const safeName=p.name.replace(/'/g,"\\'");
+      return `<div class="profile-card" id="pcard-${p.id}">
         <div class="profile-card-info">
-          <div class="profile-card-name" id="pname-${p.id}">${p.name}</div>
-          <div class="profile-card-meta">${roleLabel(p.role||roleFromAge(p.age||0))} · ${p.gender} · Age ${p.age||'?'}</div>
+          <div class="profile-card-name">${p.name}</div>
+          <div class="profile-card-meta">${roleLabel(role)} · ${p.gender} · Age ${p.age||'?'}${extras?' · '+extras:''}</div>
         </div>
         <div class="profile-card-actions">
-          <button class="mini-btn" onclick="editProfile('${p.id}','${p.name}',${p.age||0},'${p.gender}','${p.role||'adult'}')">Edit</button>
+          <button class="mini-btn" onclick="editProfile('${p.id}','${safeName}',${p.age||0},'${p.gender}','${role}','${p.feeding||''}','${p.potty||''}')">Edit</button>
           <button class="mini-btn danger" onclick="deleteProfile('${p.id}')">Delete</button>
         </div>
-      </div>`).join('');
+      </div>`;
+    }).join('');
   } catch(e) { console.warn('Load profiles failed:', e); }
 }
 
-function editProfile(id, name, age, gender, role) {
+function editProfile(id, name, age, gender, role, feeding, potty) {
+  const isBaby=role==='baby';
+  const isToddler=role==='toddler'&&age>=2&&age<=3;
   const card = document.getElementById('pcard-' + id);
   card.innerHTML = `
-    <div style="flex:1;display:flex;flex-wrap:wrap;gap:8px;align-items:center">
-      <input type="text" id="edit-name-${id}" value="${name}" class="edit-name-input" placeholder="Name" />
-      <input type="number" id="edit-age-${id}" value="${age}" style="width:60px;height:30px;border:1px solid var(--border-med);border-radius:4px;padding:0 6px;font-size:13px" />
-      <select id="edit-g-${id}" style="width:120px;height:30px;font-size:13px;border:1px solid var(--border-med);border-radius:4px">
-        <option ${gender==='Female'?'selected':''}>Female</option>
-        <option ${gender==='Male'?'selected':''}>Male</option>
-        <option ${gender==='Non-binary / prefer not to say'?'selected':''}>Non-binary / prefer not to say</option>
-      </select>
+    <div style="flex:1;display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start">
+      <div style="display:flex;flex-wrap:wrap;gap:8px;width:100%">
+        <input type="text" id="edit-name-${id}" value="${name}" class="edit-name-input" placeholder="Name" />
+        <input type="number" id="edit-age-${id}" value="${age}" style="width:60px;height:30px;border:1px solid var(--border-med);border-radius:4px;padding:0 6px;font-size:13px" oninput="refreshEditFollowUp('${id}')" />
+        <select id="edit-g-${id}" style="width:150px;height:30px;font-size:13px;border:1px solid var(--border-med);border-radius:4px">
+          <option ${gender==='Female'?'selected':''}>Female</option>
+          <option ${gender==='Male'?'selected':''}>Male</option>
+          <option ${gender==='Non-binary / prefer not to say'?'selected':''}>Non-binary / prefer not to say</option>
+        </select>
+      </div>
+      ${isBaby?`<div style="width:100%"><label class="field-label" style="margin-bottom:4px">Feeding method</label>
+        <select id="edit-feeding-${id}" style="max-width:260px;height:30px;font-size:13px;border:1px solid var(--border-med);border-radius:4px">
+          <option value="nursing" ${feeding==='nursing'?'selected':''}>Breastfed — nursing directly</option>
+          <option value="bottle" ${feeding==='bottle'?'selected':''}>Breastfed — pumped via bottle</option>
+          <option value="formula" ${feeding==='formula'?'selected':''}>Formula fed</option>
+        </select></div>`:''}
+      ${isToddler?`<div style="width:100%"><label class="field-label" style="margin-bottom:4px">Potty training status</label>
+        <select id="edit-potty-${id}" style="max-width:260px;height:30px;font-size:13px;border:1px solid var(--border-med);border-radius:4px">
+          <option value="no" ${potty==='no'?'selected':''}>Not yet — still in diapers / pull-ups</option>
+          <option value="partial" ${potty==='partial'?'selected':''}>Partially — in training</option>
+          <option value="yes" ${potty==='yes'?'selected':''}>Yes — fully potty trained</option>
+        </select></div>`:''}
+      <div id="edit-followup-${id}"></div>
     </div>
-    <div class="profile-card-actions">
+    <div class="profile-card-actions" style="align-self:flex-start;margin-top:4px">
       <button class="mini-btn" onclick="saveEditProfile('${id}')">Save</button>
       <button class="mini-btn" onclick="loadDashProfiles()">Cancel</button>
     </div>`;
+}
+
+function refreshEditFollowUp(id) {
+  const age=parseInt(document.getElementById('edit-age-'+id).value)||0;
+  const role=roleFromAge(age);
+  const el=document.getElementById('edit-followup-'+id);
+  if(!el) return;
+  if(role==='baby'){
+    el.innerHTML=`<div style="width:100%"><label class="field-label" style="margin-bottom:4px">Feeding method</label>
+      <select id="edit-feeding-${id}" style="max-width:260px;height:30px;font-size:13px;border:1px solid var(--border-med);border-radius:4px">
+        <option value="nursing">Breastfed — nursing directly</option>
+        <option value="bottle">Breastfed — pumped via bottle</option>
+        <option value="formula">Formula fed</option>
+      </select></div>`;
+  } else if(role==='toddler'&&age>=2&&age<=3){
+    el.innerHTML=`<div style="width:100%"><label class="field-label" style="margin-bottom:4px">Potty training status</label>
+      <select id="edit-potty-${id}" style="max-width:260px;height:30px;font-size:13px;border:1px solid var(--border-med);border-radius:4px">
+        <option value="no">Not yet — still in diapers / pull-ups</option>
+        <option value="partial">Partially — in training</option>
+        <option value="yes">Yes — fully potty trained</option>
+      </select></div>`;
+  } else { el.innerHTML=''; }
 }
 
 async function saveEditProfile(id) {
@@ -814,9 +859,12 @@ async function saveEditProfile(id) {
   const age = parseInt(document.getElementById('edit-age-' + id).value)||0;
   const gender = document.getElementById('edit-g-' + id).value;
   const role = roleFromAge(age);
+  const feedingEl = document.getElementById('edit-feeding-' + id);
+  const pottyEl = document.getElementById('edit-potty-' + id);
   if (!sb || !name) return;
-  await sb.from('traveler_profiles').update({ name, age, gender, role }).eq('id', id);
+  await sb.from('traveler_profiles').update({ name, age, gender, role, feeding: feedingEl?feedingEl.value:null, potty: pottyEl?pottyEl.value:null }).eq('id', id);
   loadDashProfiles();
+  loadSavedProfiles();
 }
 
 async function deleteProfile(id) {
@@ -916,28 +964,33 @@ async function loadSavedProfiles() {
 function addSavedProfile(idx) {
   const p = savedProfiles[idx]; if (!p) return;
   const n = parseInt(document.getElementById('t-num').value);
+  const applyProfile = (i) => {
+    document.getElementById('tn-name'+i).value = p.name;
+    document.getElementById('tn-age'+i).value = p.age;
+    document.getElementById('tn-g'+i).value = p.gender;
+    tUpdateRole(i);
+    // pre-fill follow-up answers after a short delay to let the DOM update
+    setTimeout(() => {
+      const feedingEl = document.getElementById('tn-feeding'+i);
+      const pottyEl = document.getElementById('tn-potty'+i);
+      if (feedingEl && p.feeding) feedingEl.value = p.feeding;
+      if (pottyEl && p.potty) pottyEl.value = p.potty;
+    }, 50);
+  };
   for (let i = 0; i < n; i++) {
     const nameEl = document.getElementById('tn-name' + i);
-    if (nameEl && !nameEl.value.trim()) {
-      nameEl.value = p.name;
-      document.getElementById('tn-age' + i).value = p.age;
-      document.getElementById('tn-g' + i).value = p.gender;
-      tUpdateRole(i); return;
-    }
+    if (nameEl && !nameEl.value.trim()) { applyProfile(i); return; }
   }
   if (n < 6) {
     document.getElementById('t-num').value = n + 1;
     buildToolTravelers();
-    setTimeout(() => {
-      const nameEl = document.getElementById('tn-name' + n);
-      if (nameEl) { nameEl.value = p.name; document.getElementById('tn-age' + n).value = p.age; document.getElementById('tn-g' + n).value = p.gender; tUpdateRole(n); }
-    }, 50);
+    setTimeout(() => applyProfile(n), 50);
   }
 }
 
-async function saveProfile(name, age, gender, role) {
+async function saveProfile(name, age, gender, role, feeding, potty) {
   if (!sb || !name || !currentUserEmail) return;
-  try { await sb.from('traveler_profiles').upsert({ name, age, gender, role, user_email: currentUserEmail }, { onConflict: 'user_email,name' }); } catch(e) {}
+  try { await sb.from('traveler_profiles').upsert({ name, age, gender, role, feeding: feeding||null, potty: potty||null, user_email: currentUserEmail }, { onConflict: 'user_email,name' }); } catch(e) {}
 }
 
 // ═══════════════════════════════════════════
@@ -1116,7 +1169,7 @@ function generateToolLists(){
     const feedingEl=document.getElementById('tn-feeding'+i);
     const pottyEl=document.getElementById('tn-potty'+i);
     toolTravelers.push({name,age,gender,role,feeding:feedingEl?feedingEl.value:null,potty:pottyEl?pottyEl.value:null});
-    saveProfile(name,age,gender,role);
+    saveProfile(name,age,gender,role,feedingEl?feedingEl.value:null,pottyEl?pottyEl.value:null);
   }
   toolLists={}; toolExpanded={};
   toolTravelers.forEach(t=>{toolLists[t.name]=buildSections(t,days,nights,climate,packAll,activities,travelMethod);});
