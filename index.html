@@ -1280,6 +1280,8 @@ function buildToolTravelers(){
 }
 buildToolTravelers();
 function tUpdateRole(i){const a=parseInt(document.getElementById('tn-age'+i).value)||0;document.getElementById('tn-role'+i).value=roleFromAge(a);tShowFollowUp(i);}
+
+function removeTravelerCard(idx) {
   const n = parseInt(document.getElementById('t-num').value);
   if (n <= 1) return; // must keep at least 1
 
