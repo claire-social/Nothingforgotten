@@ -183,18 +183,24 @@ input:focus, select:focus { outline: none; border-color: var(--text); }
 .person-name-row { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
 .person-name-input { font-size: 16px; font-weight: 500; height: 38px; max-width: 220px; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0 10px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .person-pill { font-size: 11px; padding: 3px 10px; border-radius: 100px; background: var(--bg-soft); border: 1px solid var(--border); color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-.pack-section { margin-bottom: 20px; }
-.pack-section-head { font-size: 14px; font-weight: 600; padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-.pack-section-head span { font-size: 11px; font-weight: 400; color: var(--text-muted); }
-.pack-item-row { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 13px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-.pack-item-row:last-child { border-bottom: none; }
-.pack-item-row input[type="checkbox"] { width: 15px; height: 15px; flex-shrink: 0; }
-.pack-item-name { flex: 1; color: var(--text); }
-.pack-item-link { font-size: 11px; color: var(--yellow-dark); text-decoration: none; white-space: nowrap; flex-shrink: 0; }
+.pack-section { margin-bottom: 24px; }
+.pack-section-head { font-size: 14px; font-weight: 700; padding: 10px 0 6px; border-bottom: 2px solid var(--border-med); margin-bottom: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--text); }
+.pack-subsection-head { font-size: 12px; font-weight: 600; padding: 8px 0 4px; border-bottom: 1px solid var(--border); margin-bottom: 2px; color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; text-transform: uppercase; letter-spacing: .04em; }
+/* 2-column grid for pack items */
+.pack-items-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+.pack-item-cell { border-bottom: 1px solid var(--border); padding: 6px 0; font-size: 13px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.pack-item-cell:last-child { border-bottom: none; }
+/* if odd number, last item spans full width */
+.pack-item-cell.full-width { grid-column: 1 / -1; }
+.pack-item-top { display: flex; align-items: center; gap: 6px; }
+.pack-item-top input[type="checkbox"] { width: 14px; height: 14px; flex-shrink: 0; }
+.pack-item-name { flex: 1; color: var(--text); font-size: 13px; line-height: 1.3; }
+.pack-item-link { font-size: 10px; color: var(--yellow-dark); text-decoration: none; white-space: nowrap; flex-shrink: 0; }
 .pack-item-link:hover { text-decoration: underline; }
-/* UNIFORM qty input — fixed width, consistent size across all rows */
-.pack-qty { width: 44px; height: 28px; text-align: center; font-size: 13px; border: 1px solid var(--border); border-radius: 4px; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; flex-shrink: 0; }
-.expand-btn { padding: 3px 9px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); font-size: 12px; cursor: pointer; color: var(--text-muted); white-space: nowrap; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; flex-shrink: 0; }
+/* UNIFORM qty input */
+.pack-qty { width: 40px; height: 26px; text-align: center; font-size: 12px; border: 1px solid var(--border); border-radius: 4px; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; flex-shrink: 0; }
+.pack-item-bottom { margin-top: 3px; margin-left: 20px; }
+.expand-btn { padding: 2px 7px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); font-size: 11px; cursor: pointer; color: var(--text-muted); white-space: nowrap; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .expand-btn:hover, .expand-btn.open { border-color: var(--border-med); color: var(--text); }
 .sub-items { margin-left: 22px; padding: 4px 0; }
 .sub-item-row { display: flex; align-items: center; gap: 7px; padding: 4px 0; font-size: 13px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
@@ -964,27 +970,59 @@ async function loadSavedProfiles() {
 function addSavedProfile(idx) {
   const p = savedProfiles[idx]; if (!p) return;
   const n = parseInt(document.getElementById('t-num').value);
+
   const applyProfile = (i) => {
-    document.getElementById('tn-name'+i).value = p.name;
-    document.getElementById('tn-age'+i).value = p.age;
-    document.getElementById('tn-g'+i).value = p.gender;
+    const nameEl = document.getElementById('tn-name'+i);
+    const ageEl = document.getElementById('tn-age'+i);
+    const gEl = document.getElementById('tn-g'+i);
+    if (!nameEl) return;
+    nameEl.value = p.name;
+    ageEl.value = p.age;
+    gEl.value = p.gender;
     tUpdateRole(i);
-    // pre-fill follow-up answers after a short delay to let the DOM update
+    // pre-fill follow-ups after DOM updates
     setTimeout(() => {
       const feedingEl = document.getElementById('tn-feeding'+i);
       const pottyEl = document.getElementById('tn-potty'+i);
       if (feedingEl && p.feeding) feedingEl.value = p.feeding;
       if (pottyEl && p.potty) pottyEl.value = p.potty;
-    }, 50);
+    }, 60);
   };
+
+  // Find first empty slot
   for (let i = 0; i < n; i++) {
     const nameEl = document.getElementById('tn-name' + i);
     if (nameEl && !nameEl.value.trim()) { applyProfile(i); return; }
   }
+
+  // No empty slot — increase count WITHOUT rebuilding existing cards
   if (n < 6) {
-    document.getElementById('t-num').value = n + 1;
-    buildToolTravelers();
-    setTimeout(() => applyProfile(n), 50);
+    const newCount = n + 1;
+    document.getElementById('t-num').value = newCount;
+    // Only append the new card, don't rebuild all of them
+    const c = document.getElementById('tool-traveler-forms');
+    const i = n;
+    const newCard = document.createElement('div');
+    newCard.className = 'traveler-card';
+    newCard.id = 'tcard' + i;
+    newCard.innerHTML = `<h4>Traveler ${i+1}</h4>
+      <div class="field-row">
+        <div><label class="field-label">Name / nickname</label><input type="text" id="tn-name${i}" placeholder="e.g. Mom, Jake…"></div>
+        <div><label class="field-label">Age</label><input type="number" id="tn-age${i}" min="0" max="100" value="30" oninput="tUpdateRole(${i})"></div>
+      </div>
+      <div class="field-row">
+        <div><label class="field-label">Gender</label><select id="tn-g${i}"><option>Female</option><option>Male</option><option>Non-binary / prefer not to say</option></select></div>
+        <div><label class="field-label">Age group</label>
+          <select id="tn-role${i}" onchange="tShowFollowUp(${i})">
+            <option value="baby">Baby (under 1)</option><option value="toddler">Toddler (1–4)</option>
+            <option value="child">Child (5–12)</option><option value="teen">Teen (13–17)</option>
+            <option value="adult" selected>Adult (18+)</option>
+          </select>
+        </div>
+      </div>
+      <div id="tn-followup${i}"></div>`;
+    c.appendChild(newCard);
+    setTimeout(() => applyProfile(i), 60);
   }
 }
 
@@ -1190,26 +1228,48 @@ function selectToolTab(idx){
     <span class="person-pill">${roleLabel(t.role)} · ${t.gender}</span>
     <button class="save-profile-btn" onclick="saveProfile('${t.name}',${t.age},'${t.gender}','${t.role}').then(()=>{this.textContent='✓ Saved';setTimeout(()=>this.textContent='Save profile',2000)})">Save profile</button>
   </div>`;
-  sections.forEach((sec,si)=>{
-    html+=`<div class="pack-section"><div class="pack-section-head">${sec.cat} <span>(${sec.items.length} items)</span></div>`;
-    sec.items.forEach((item,ii)=>{
-      const key=`${idx}-${si}-${ii}`; const expanded=toolExpanded[key];
-      html+=`<div class="pack-item-row">
-        <input type="checkbox" aria-label="${item.name}">
-        <span class="pack-item-name">${item.name}</span>
-        ${item.link?`<a href="${item.link}" target="_blank" class="pack-item-link">Shop →</a>`:''}
-        <input type="number" class="pack-qty" value="${item.qty}" min="0" onchange="toolLists['${t.name}'][${si}].items[${ii}].qty=parseInt(this.value)">
-        <button class="expand-btn ${expanded?'open':''}" onclick="toggleToolExpand('${key}',${idx},${si},${ii},'${t.name}')">${expanded?'− collapse':'+ expand'}</button>
-      </div>`;
-      if(expanded){
-        html+=`<div class="sub-items">`;
-        (expanded.subs||[]).forEach((s,si2)=>{html+=`<div class="sub-item-row"><input type="checkbox"><input type="text" value="${s}" onchange="toolExpanded['${key}'].subs[${si2}]=this.value"><button class="remove-sub" onclick="removeToolSub('${key}',${si2},${idx})">remove</button></div>`;});
-        html+=`</div><button class="add-sub-btn" onclick="addToolSub('${key}',${idx})">+ add item</button>`;
-      }
-    });
-    html+=`</div>`;
+
+  // Group sections by category, then sub-category
+  const catMap = {};
+  sections.forEach((sec, si) => {
+    const [cat, subcat] = sec.cat.includes('|') ? sec.cat.split('|') : [sec.cat, null];
+    if (!catMap[cat]) catMap[cat] = [];
+    catMap[cat].push({ subcat, items: sec.items, si });
   });
-  out.innerHTML=html;
+
+  Object.entries(catMap).forEach(([cat, subsections]) => {
+    const totalItems = subsections.reduce((sum, s) => sum + s.items.length, 0);
+    html += `<div class="pack-section"><div class="pack-section-head">${cat} <span style="font-size:11px;font-weight:400;color:var(--text-muted)">(${totalItems} items)</span></div>`;
+
+    subsections.forEach(({ subcat, items, si }) => {
+      if (subcat) html += `<div class="pack-subsection-head">${subcat}</div>`;
+      html += `<div class="pack-items-grid">`;
+      items.forEach((item, ii) => {
+        const key = `${idx}-${si}-${ii}`;
+        const expanded = toolExpanded[key];
+        const isLastOdd = ii === items.length - 1 && items.length % 2 !== 0;
+        html += `<div class="pack-item-cell${isLastOdd?' full-width':''}">
+          <div class="pack-item-top">
+            <input type="checkbox" aria-label="${item.name}">
+            <span class="pack-item-name">${item.name}</span>
+            ${item.link?`<a href="${item.link}" target="_blank" class="pack-item-link">Shop →</a>`:''}
+            <input type="number" class="pack-qty" value="${item.qty}" min="0" onchange="toolLists['${t.name}'][${si}].items[${ii}].qty=parseInt(this.value)">
+          </div>
+          <div class="pack-item-bottom">
+            <button class="expand-btn ${expanded?'open':''}" onclick="toggleToolExpand('${key}',${idx},${si},${ii},'${t.name}')">${expanded?'− collapse':'+ expand'}</button>
+          </div>
+          ${expanded?`<div class="sub-items">`+
+            (expanded.subs||[]).map((s,si2)=>`<div class="sub-item-row"><input type="checkbox"><input type="text" value="${s}" onchange="toolExpanded['${key}'].subs[${si2}]=this.value"><button class="remove-sub" onclick="removeToolSub('${key}',${si2},${idx})">remove</button></div>`).join('')+
+            `</div><button class="add-sub-btn" onclick="addToolSub('${key}',${idx})">+ add item</button>`
+          :''}
+        </div>`;
+      });
+      html += `</div>`;
+    });
+    html += `</div>`;
+  });
+
+  out.innerHTML = html;
 }
 function toggleToolExpand(key,ti,si,ii,tname){if(toolExpanded[key]){delete toolExpanded[key];}else{toolExpanded[key]={subs:getExpandDefaults(toolLists[tname][si].items[ii].name)};}selectToolTab(ti);}
 function addToolSub(key,ti){if(!toolExpanded[key])return;toolExpanded[key].subs.push('New item');selectToolTab(ti);}
@@ -1445,8 +1505,26 @@ function buildSections(t, days, nights, climate, packAll, activities, travelMeth
   }
 
   const sections=[];
-  if(clothing.length) sections.push({cat:'Clothing',items:clothing});
-  if(feeding_items.length) sections.push({cat:'Feeding',items:feeding_items});
+  if(clothing.length){
+    const outfitNames=['Short Sleeve Tops','Shorts','Long Sleeve Tops','Dinner Outfits','Sweaters','Sweatshirts','Light Sweater / Jacket','PJs','Athleisure Tops','Athleisure Bottoms','Base Layer Top','Base Layer Bottom','Swimsuit Coverup','Bathing Suit','Ski / Snowboard Jacket','Snow Pants'];
+    const underNames=['Diapers','Diapers / Pull-ups','Wipes','Daytime Underwear','Sleeping Underwear','Regular Bra','Strapless Bra','Sports Bra','Sleeping Bra (nursing)','Socks','Swim Diapers','Ski/Snowboard Boot Socks'];
+    const accNames=['Sneakers','Sandals','Purse','Sunglasses','Sun Hat','Winter Hat','Winter Gloves','Winter Coat','Ski Goggles','Ski Helmet','Mittens / Snow Gloves','Ski / Snowboard Boots'];
+    const outfits=clothing.filter(i=>outfitNames.includes(i.name));
+    const unders=clothing.filter(i=>underNames.includes(i.name));
+    const accs=clothing.filter(i=>accNames.includes(i.name));
+    const other=clothing.filter(i=>![...outfitNames,...underNames,...accNames].includes(i.name));
+    if(outfits.length) sections.push({cat:'Clothing|Outfits',items:outfits});
+    if(unders.length) sections.push({cat:'Clothing|Undergarments',items:unders});
+    if(accs.length) sections.push({cat:'Clothing|Accessories',items:accs});
+    if(other.length) sections.push({cat:'Clothing|Other',items:other});
+  }
+  if(feeding_items.length){
+    const pumpNames=['Pump Parts','Regular Pump','Wearable Pump','Pump Chargers','Pumping Bra','Nursing Cover','Container for Parts','Milk Pitcher','Ceres Chill','Pump Wipes','Milk Storage Bags'];
+    const gen=feeding_items.filter(i=>!pumpNames.includes(i.name));
+    const pump=feeding_items.filter(i=>pumpNames.includes(i.name));
+    if(gen.length) sections.push({cat:'Feeding|General Feeding',items:gen});
+    if(pump.length) sections.push({cat:'Feeding|Pumping Items',items:pump});
+  }
   if(entertainment.length) sections.push({cat:'Entertainment',items:entertainment});
   if(toiletries.length) sections.push({cat:'Toiletries',items:toiletries});
   if(firstaid.length) sections.push({cat:'First Aid',items:firstaid});
